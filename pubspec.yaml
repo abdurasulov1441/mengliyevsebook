@@ -1,0 +1,68 @@
+name: mengliyevsebook
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  firebase_core: ^4.2.0
+  dio: ^5.9.0
+  logger: ^2.6.2
+  permission_handler: ^12.0.1
+  firebase_messaging: ^16.0.3
+  flutter_local_notifications: ^19.4.2
+  easy_localization: ^3.0.8
+  toastification: ^3.0.3
+  flutter_riverpod: ^3.0.3
+  flutter_secure_storage: ^9.2.4
+  go_router: ^16.2.5
+  firebase_crashlytics: ^5.0.3
+  icons_launcher: ^3.0.3
+  firebase_auth: ^6.1.1
+  email_validator: ^3.0.0
+  cloud_firestore: ^6.0.3
+  google_sign_in: ^7.2.0
+  flutter_svg: ^1.1.6
+  fluid_bottom_nav_bar: ^1.4.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+icons_launcher:
+  image_path: "assets/images/logo.jpg"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+
+
+  flutter_lints: ^5.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+    - assets/translations/
+    - assets/lottie/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "481793055707",
+    "project_id": "mengliyevsebook",
+    "storage_bucket": "mengliyevsebook.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481793055707:android:f64c6e529a5f42c8d1a5fe",
+        "android_client_info": {
+          "package_name": "uz.mengliyevsebook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMsUW8iVe3wCYqRuV8_ITwIf-GfPTbY7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
