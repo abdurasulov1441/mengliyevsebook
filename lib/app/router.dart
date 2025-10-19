@@ -1,10 +1,12 @@
 import 'package:go_router/go_router.dart';
+import 'package:mengliyevsebook/pages/admin/admin_page.dart';
 import 'package:mengliyevsebook/pages/home_screen.dart';
 import 'package:mengliyevsebook/pages/sign/login_screen.dart';
 
 abstract class Routes {
   static const loginScreen = '/loginScreen';
   static const homeScreen = '/homeScreen';
+  static const adminPage = '/adminPage';
 }
 
 String _initialLocation() {
@@ -36,6 +38,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.homeScreen,
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: Routes.adminPage,
+      builder: (context, state) => const AdminPage(),
     ),
   ],
 );

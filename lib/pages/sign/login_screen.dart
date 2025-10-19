@@ -71,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(50),
                     child: Image.asset(
                       'assets/images/logo.jpg',
-                      width: 100,
-                      height: 100,
+                      width: 200,
+                      height: 200,
                     ),
                   ),
                 ),
@@ -192,6 +192,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+
+                Center(
+                  child: TextButton(
+                    onPressed: () => context.push(Routes.adminPage),
+                    child: Text(
+                      'Admin sifatida kirish',
+                      style: AppStyle.fontStyle.copyWith(),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ),
