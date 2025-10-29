@@ -5,6 +5,6 @@ abstract class AppStyle {
   static const fontStyle = TextStyle(
     fontSize: 15,
     color: AppColors.textColor,
-    fontFamily: 'Mulish',
+    fontFamily: 'Poppins',
   );
 }

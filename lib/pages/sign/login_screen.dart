@@ -1,208 +1,222 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:mengliyevsebook/app/router.dart';
+import 'dart:math';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mengliyevsebook/app/router.dart';
+import 'package:mengliyevsebook/services/gradientbutton.dart';
+import 'package:mengliyevsebook/services/language/language_provider.dart';
+import 'package:mengliyevsebook/services/request_helper.dart';
+import 'package:mengliyevsebook/services/utils/toats/error.dart';
+import 'package:mengliyevsebook/services/utils/toats/succes.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 import 'package:mengliyevsebook/services/style/app_style.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool isHiddenPassword = true;
-  TextEditingController emailTextInputController = TextEditingController();
-  TextEditingController passwordTextInputController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  TextEditingController phoneTextInputController = TextEditingController(
+    text: '+998 ',
+  );
   final formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    emailTextInputController.dispose();
-    passwordTextInputController.dispose();
-    super.dispose();
+  final _phoneNumberFormatter = TextInputFormatter.withFunction((
+    oldValue,
+    newValue,
+  ) {
+    if (!newValue.text.startsWith('+998 ')) {
+      return TextEditingValue(
+        text: '+998 ',
+        selection: TextSelection.collapsed(offset: 5),
+      );
+    }
+
+    String rawText = newValue.text
+        .replaceAll(RegExp(r'[^0-9]'), '')
+        .substring(3);
+
+    if (rawText.length > 9) {
+      rawText = rawText.substring(0, 9);
+    }
+
+    String formattedText = '+998 ';
+    if (rawText.isNotEmpty) {
+      formattedText += '(${rawText.substring(0, min(2, rawText.length))}';
+    }
+    if (rawText.length > 2) {
+      formattedText += ') ${rawText.substring(2, min(5, rawText.length))}';
+    }
+    if (rawText.length > 5) {
+      formattedText += ' ${rawText.substring(5, min(7, rawText.length))}';
+    }
+    if (rawText.length > 7) {
+      formattedText += ' ${rawText.substring(7)}';
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  });
+
+  Future<void> login() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    try {
+      final response = await requestHelper.post(
+        '/api/services/zyber/auth/login',
+        {'phone_number': phoneTextInputController.text.trim()},
+        log: false,
+      );
+
+      if (response['status'] == 200) {
+        String status = response['message'];
+        showSuccessToast(context, 'PayGo', status);
+        context.push(
+          Routes.verfySMS,
+          extra: phoneTextInputController.text.trim(),
+        );
+      } else if (response['status'] == 400) {
+        String status = response['message'];
+        showSuccessToast(context, 'PayGo', status);
+        context.push(
+          Routes.verfySMS,
+          extra: phoneTextInputController.text.trim(),
+        );
+      } else {
+        String status = response['message'];
+        showErrorToast(context, 'PayGo', status);
+      }
+    } catch (error) {
+      showErrorToast(context, 'PayGo', error.toString());
+    }
   }
-
-  void togglePasswordView() {
-    setState(() {
-      isHiddenPassword = !isHiddenPassword;
-    });
-  }
-
-  // Future<void> login() async {
-  //   final isValid = formKey.currentState!.validate();
-  //   if (!isValid) return;
-
-  //   try {
-  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: emailTextInputController.text.trim(),
-  //       password: passwordTextInputController.text.trim(),
-  //     );
-  //     context.go(Routes.loginScreen);
-  //   } on FirebaseAuthException catch (e) {
-  //     String message = 'Xatolik yuz berdi';
-  //     if (e.code == 'user-not-found') {
-  //       message = 'Foydalanuvchi topilmadi';
-  //     } else if (e.code == 'wrong-password') {
-  //       message = 'Noto‘g‘ri parol';
-  //     }
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(SnackBar(content: Text(message)));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(languageProvider);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.ui,
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
-          child: Form(
-            key: formKey,
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+          key: formKey,
+          child: SafeArea(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      'assets/images/logo.jpg',
-                      width: 200,
-                      height: 200,
-                    ),
+                SizedBox(height: 40),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [LanguageSelectionButton()],
+                // ),
+                SizedBox(height: 30),
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                Text(
+                  'Hush kelibsiz',
+                  style: AppStyle.fontStyle.copyWith(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.grade1,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    'Xush kelibsiz!',
-                    style: AppStyle.fontStyle.copyWith(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
+                const SizedBox(height: 30),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 2,
                   ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: Text(
-                    'Tizimga kirishingiz mumkin',
-                    style: AppStyle.fontStyle.copyWith(
-                      color: Colors.grey[500],
-                      fontSize: 16,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextFormField(
+                    style: AppStyle.fontStyle.copyWith(color: AppColors.grade1),
+                    controller: phoneTextInputController,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [_phoneNumberFormatter],
+                    validator: (phone) {
+                      if (phone == null || phone.isEmpty) {
+                        return 'Telefon raqamingizni kiriting';
+                      } else if (!RegExp(
+                        r'^\+998 \(\d{2}\) \d{3} \d{2} \d{2}$',
+                      ).hasMatch(phone)) {
+                        return 'Telefon raqamingizni to\'g\'ri kiriting';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          'assets/icons/phone.svg',
+                          width: 10,
+                          height: 10,
+                          color: AppColors.grade1,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Telefon raqam',
+                      hintStyle: AppStyle.fontStyle.copyWith(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 30),
-                TextFormField(
-                  style: AppStyle.fontStyle,
-                  controller: emailTextInputController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.grade1,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: 'Emailingizni kiriting',
-                    hintStyle: AppStyle.fontStyle.copyWith(
-                      color: Colors.grey[400],
-                    ),
-                  ),
-                  validator: (email) =>
-                      email != null && !EmailValidator.validate(email)
-                      ? 'To\'g\'ri email kiriting'
-                      : null,
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  style: AppStyle.fontStyle,
-                  controller: passwordTextInputController,
-                  obscureText: isHiddenPassword,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.grade1,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: 'Parolingizni kiriting',
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        isHiddenPassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: AppColors.grade1,
-                      ),
-                      onPressed: togglePasswordView,
-                    ),
-                  ),
-                  validator: (value) => value != null && value.length < 6
-                      ? 'Parol kamida 6 belgidan iborat bo\'lishi kerak'
-                      : null,
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4CAF50),
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    onPressed: () {
-                      // login();
-                      context.push(Routes.homeScreen);
-                    },
-                    child: Text(
-                      'Kirish',
-                      style: AppStyle.fontStyle.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
+                GradientButton(
+                  onPressed: () {
+                    context.push(Routes.homeScreen);
+                  },
+
+                  // login,
+                  text: 'Kirish',
                 ),
                 const SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      'Akkuntingiz yo\'qmi?',
+                      style: AppStyle.fontStyle,
+                    ).tr(),
+                    const SizedBox(width: 5),
                     TextButton(
                       onPressed: () {
-                        // context.push(Routes.resetPasswordPage);
+                        context.push(Routes.register);
                       },
                       child: Text(
-                        'Parolni unutdingizmi?',
-                        style: AppStyle.fontStyle.copyWith(),
+                        'Ro\'yxatdan o\'tish',
+                        style: AppStyle.fontStyle.copyWith(
+                          color: AppColors.grade1,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                Center(
-                  child: TextButton(
-                    onPressed: () => context.push(Routes.loginScreen),
-                    child: Text(
-                      'Hisobingiz yo‘qmi? Ro‘yxatdan o‘ting',
-                      style: AppStyle.fontStyle.copyWith(),
-                    ),
-                  ),
-                ),
-
-                Center(
-                  child: TextButton(
-                    onPressed: () => context.push(Routes.adminPage),
-                    child: Text(
-                      'Admin sifatida kirish',
-                      style: AppStyle.fontStyle.copyWith(),
-                    ),
-                  ),
-                ),
-
               ],
             ),
           ),

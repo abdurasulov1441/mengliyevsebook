@@ -7,7 +7,7 @@ abstract class AppColors {
   static const dividerColor = Color.fromARGB(255, 131, 131, 131);
   static const iconColor = Color.fromARGB(255, 219, 34, 35);
   static const taxi = Color(0xFF0DAB85);
-  static const grade1 = Color.fromARGB(255, 0, 126, 67);
+  static const grade1 = Color.fromARGB(255, 0, 65, 126);
   static const grade2 = Color.fromARGB(255, 0, 119, 119);
   static const uiText = Color(0xFFABABAB);
   static const ratingColor = Color(0xFFFFC100);
