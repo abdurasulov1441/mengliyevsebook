@@ -189,7 +189,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 30),
                 GradientButton(
                   onPressed: () {
-                    context.push(Routes.homeScreen);
+                    context.go(Routes.homeScreen);
                   },
 
                   // login,
@@ -206,7 +206,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(width: 5),
                     TextButton(
                       onPressed: () {
-                        context.push(Routes.register);
+                        context.go(Routes.adminPage);
+                        // context.push(Routes.register);
                       },
                       child: Text(
                         'Ro\'yxatdan o\'tish',

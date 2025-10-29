@@ -12,21 +12,16 @@ class UserAccountScreen extends StatelessWidget {
       backgroundColor: AppColors.ui,
       appBar: AppBar(
         backgroundColor: AppColors.ui,
+        centerTitle: true,
         elevation: 0,
         title: Text(
-          "My Account",
+          "Akkaunt",
           style: AppStyle.fontStyle.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 22,
             color: Colors.black87,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined, color: Colors.black87),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -47,40 +42,20 @@ class UserAccountScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Abdulaziz Mengliyev",
+                      "Abdulaziz Abdurasulov",
                       style: AppStyle.fontStyle.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      "abdulaziz@example.com",
+                      "+998 90 123 45 67",
                       style: AppStyle.fontStyle.copyWith(
                         color: Colors.grey[600],
                         fontSize: 13,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.grade1,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                      ),
-                      child: Text(
-                        "Edit Profile",
-                        style: AppStyle.fontStyle.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -88,23 +63,31 @@ class UserAccountScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 30),
-          _buildSectionTitle("My Library"),
-          _buildListTile(Icons.bookmark_outline, "Saved Books", () {}),
-          _buildListTile(Icons.favorite_outline, "Favorites", () {}),
-          _buildListTile(Icons.download_done_outlined, "Downloads", () {}),
-          _buildListTile(Icons.history, "Reading History", () {}),
+          _buildSectionTitle("Mening kutubxonam"),
+          _buildListTile(Icons.bookmark_outline, "Saqlangan kitoblar", () {}),
+          _buildListTile(Icons.favorite_outline, "Sevimli kitoblarim", () {}),
+          _buildListTile(
+            Icons.download_done_outlined,
+            "Yuklab olingan kitoblar",
+            () {},
+          ),
+          _buildListTile(Icons.history, "O'qilgan kitoblar", () {}),
 
           const SizedBox(height: 25),
-          _buildSectionTitle("Settings"),
-          _buildListTile(Icons.language_outlined, "Language", () {}),
-          _buildListTile(Icons.notifications_none, "Notifications", () {}),
-          _buildListTile(Icons.dark_mode_outlined, "Dark Mode", () {}),
-          _buildListTile(Icons.security_outlined, "Privacy & Security", () {}),
+          _buildSectionTitle("Sozlamalar"),
+          _buildListTile(Icons.language_outlined, "Til", () {}),
+          _buildListTile(Icons.notifications_none, "Bildirishnomalar", () {}),
+          _buildListTile(Icons.dark_mode_outlined, "Tungi rejim", () {}),
+          _buildListTile(
+            Icons.security_outlined,
+            "Maxfiylik va xavfsizlik",
+            () {},
+          ),
 
           const SizedBox(height: 25),
-          _buildSectionTitle("Help & Support"),
-          _buildListTile(Icons.help_outline, "FAQ & Support", () {}),
-          _buildListTile(Icons.info_outline, "About App", () {}),
+          _buildSectionTitle("Yordam va qo'llab-quvvatlash"),
+          _buildListTile(Icons.help_outline, "Yordam", () {}),
+          _buildListTile(Icons.info_outline, "Ilova haqida", () {}),
 
           const SizedBox(height: 25),
           _buildLogoutButton(context),
@@ -171,14 +154,14 @@ class UserAccountScreen extends StatelessWidget {
         onPressed: () {},
         icon: const Icon(Icons.logout, color: Colors.white),
         label: Text(
-          "Log Out",
+          "Chiqish",
           style: AppStyle.fontStyle.copyWith(
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: AppColors.grade1,
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

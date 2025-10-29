@@ -7,28 +7,28 @@ class BooksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final genres = [
-      'Autobiography',
-      'Arts & Crafts',
-      'Thriller',
-      'Romance',
-      'Science',
+      'Avtobiografiya',
+      'Sanʼat va hunar',
+      'Biznes',
+      'Bolalar',
+      'Fan',
     ];
 
     final books = [
       {
         'title': 'Very Nice',
         'author': 'Jane Doe',
-        'image': 'https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg',
+        'image': 'assets/images/book1.jpeg',
       },
       {
         'title': 'Dream Walker',
         'author': 'John Hill',
-        'image': 'https://m.media-amazon.com/images/I/81af+MCATTL.jpg',
+        'image': 'assets/images/book2.jpg',
       },
       {
         'title': 'Stars in the Sky',
         'author': 'Lucy Hale',
-        'image': 'https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg',
+        'image': 'assets/images/book3.jpg',
       },
     ];
 
@@ -95,7 +95,7 @@ class BooksScreen extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: "Search by author, category, etc...",
+                          hintText: "Qidiruv: kitob, muallif yoki janr",
                           hintStyle: TextStyle(color: Colors.grey[500]),
                           border: InputBorder.none,
                         ),
@@ -110,7 +110,7 @@ class BooksScreen extends StatelessWidget {
 
               // 🏷️ Genres
               SizedBox(
-                height: 56,
+                height: 40,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: genres.length,
@@ -122,8 +122,7 @@ class BooksScreen extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.primaries[index % Colors.primaries.length]
-                            .withOpacity(0.2),
+                        color: Colors.blue[100],
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -139,7 +138,7 @@ class BooksScreen extends StatelessWidget {
 
               // 🆕 Fresh Arrivals
               const Text(
-                "Fresh Arrivals",
+                "Yangi yuklanganlar",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -159,11 +158,11 @@ class BooksScreen extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(16),
-                            child: Image.network(
+                            child: Image.asset(
                               book['image']!,
                               height: 180,
                               width: 140,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -190,7 +189,7 @@ class BooksScreen extends StatelessWidget {
 
               // 👨‍🎓 Authors
               const Text(
-                "Authors",
+                "Mualliflar",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -229,7 +228,7 @@ class BooksScreen extends StatelessWidget {
 
               // 📖 Top Reads
               const Text(
-                "Top Reads",
+                "Eng ko'p o'qilganlar",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -263,7 +262,7 @@ class BooksScreen extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
-                        "by ${book['author']} • Published ${book['year']}",
+                        " ${book['author']} tomonidan •  ${book['year']} nashr etilgan",
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
