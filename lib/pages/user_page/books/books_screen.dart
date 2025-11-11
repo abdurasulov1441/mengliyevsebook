@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mengliyevsebook/pages/user_page/books/authors_list.dart';
+import 'package:mengliyevsebook/pages/user_page/books/geners_list.dart';
+import 'package:mengliyevsebook/pages/user_page/books/new_arrivals.dart';
+import 'package:mengliyevsebook/pages/user_page/books/top_reads_list.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -6,6 +10,7 @@ class BooksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final genres = [
       'Avtobiografiya',
       'Sanʼat va hunar',
@@ -81,7 +86,7 @@ class BooksScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 🔍 Search Bar
+              // 🔍 Поисковая строка
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -108,174 +113,19 @@ class BooksScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // 🏷️ Genres
-              SizedBox(
-                height: 40,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: genres.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 8),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.blue[100],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        genres[index],
-                        style: const TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              GenresList(genres: genres),
 
               const SizedBox(height: 20),
 
-              // 🆕 Fresh Arrivals
-              const Text(
-                "Yangi yuklanganlar",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-
-              SizedBox(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: books.length,
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return Container(
-                      width: 160,
-                      margin: const EdgeInsets.only(right: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              book['image']!,
-                              height: 180,
-                              width: 140,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            book['title']!,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          // Text(
-                          //   book['author']!,
-                          //   style: TextStyle(
-                          //     color: Colors.grey[600],
-                          //     fontSize: 13,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              NewArrivals(books: books),
 
               const SizedBox(height: 20),
 
-              // 👨‍🎓 Authors
-              const Text(
-                "Mualliflar",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-
-              SizedBox(
-                height: 90,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: authors.length,
-                  itemBuilder: (context, index) {
-                    final author = authors[index];
-                    return Container(
-                      margin: const EdgeInsets.only(right: 14),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 28,
-                            backgroundImage: NetworkImage(author['image']!),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            author['name']!,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              AuthorsList(authors: authors),
 
               const SizedBox(height: 20),
 
-              // 📖 Top Reads
-              const Text(
-                "Eng ko'p o'qilganlar",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-
-              Column(
-                children: topReads.map((book) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          book['image']! as String,
-                          width: 50,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      title: Text(
-                        book['title']! as String,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        " ${book['author']} tomonidan •  ${book['year']} nashr etilgan",
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 18),
-                          const SizedBox(width: 4),
-                          Text(book['rating'].toString()),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
+              TopReadsList(topReads: topReads),
             ],
           ),
         ),

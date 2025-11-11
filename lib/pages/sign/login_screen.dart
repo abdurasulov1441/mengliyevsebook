@@ -121,7 +121,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 //   children: [LanguageSelectionButton()],
                 // ),
                 SizedBox(height: 30),
-                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                SvgPicture.asset(
+                  'assets/images/logo.svg',
+                  width: 200,
+                  height: 200,
+                  color: AppColors.grade1,
+                ),
                 Text(
                   'Hush kelibsiz',
                   style: AppStyle.fontStyle.copyWith(
