@@ -85,11 +85,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!isValid) return;
 
     try {
-      final response = await requestHelper
-          .post('/api/services/zyber/auth/register', {
-            'name': nameTextInputController.text.trim(),
-            'phone_number': phoneTextInputController.text.trim(),
-          }, log: false);
+      final response = await requestHelper.post('/api/auth/register', {
+        'name': nameTextInputController.text.trim(),
+        'phone_number': phoneTextInputController.text.trim(),
+      }, log: false);
 
       SnackBarService.showSnackBar(context, response['message'], false);
 

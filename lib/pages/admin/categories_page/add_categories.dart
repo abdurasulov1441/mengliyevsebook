@@ -1,19 +1,26 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mengliyevsebook/services/request_helper.dart';
+import 'package:mengliyevsebook/services/utils/errors.dart';
 
 class AddCategories extends StatefulWidget {
   /// Если [categoryId] == null → создаём новую категорию
   /// Если [categoryId] != null → редактируем существующую категорию
-  final String? categoryId;
+  final int? categoryId;
 
-  const AddCategories({super.key, this.categoryId});
+  /// Передаём существующие данные для редактирования
+  final Map<String, dynamic>? existingData;
+
+  const AddCategories({super.key, this.categoryId, this.existingData});
 
   @override
   State<AddCategories> createState() => _AddCategoriesState();
 }
 
 class _AddCategoriesState extends State<AddCategories> {
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameUzController = TextEditingController();
+  final TextEditingController _nameRuController = TextEditingController();
+  final TextEditingController _nameEnController = TextEditingController();
+
   bool _isLoading = false;
   bool _isEditMode = false;
 
@@ -22,60 +29,65 @@ class _AddCategoriesState extends State<AddCategories> {
     super.initState();
     if (widget.categoryId != null) {
       _isEditMode = true;
-      _loadCategoryData();
+      _loadExistingData();
     }
   }
 
-  /// Загружаем данные категории для редактирования
-  Future<void> _loadCategoryData() async {
-    try {
-      final doc = await FirebaseFirestore.instance
-          .collection('categories')
-          .doc(widget.categoryId)
-          .get();
-      if (doc.exists) {
-        _nameController.text = doc['name'] ?? '';
-      }
-    } catch (e) {
+  void _loadExistingData() {
+    final data = widget.existingData;
+    if (data != null) {
+      _nameUzController.text = data['name1'] ?? '';
+      _nameRuController.text = data['name2'] ?? '';
+      _nameEnController.text = data['name3'] ?? '';
+    }
+  }
+
+  Future<void> _saveCategory() async {
+    final nameUz = _nameUzController.text.trim();
+    final nameRu = _nameRuController.text.trim();
+    final nameEn = _nameEnController.text.trim();
+
+    if (nameUz.isEmpty || nameRu.isEmpty || nameEn.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Ошибка загрузки категории: $e')));
-    }
-  }
-
-  /// Добавление или обновление категории
-  Future<void> _saveCategory() async {
-    final name = _nameController.text.trim();
-
-    if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Введите название категории')),
-      );
+      ).showSnackBar(const SnackBar(content: Text('Заполните все поля')));
       return;
     }
 
     setState(() => _isLoading = true);
 
     try {
-      final collection = FirebaseFirestore.instance.collection('categories');
-
       if (_isEditMode) {
-        // 🔄 Редактирование
-        await collection.doc(widget.categoryId).update({'name': name});
+        await requestHelper.putWithAuth(
+          '/api/categories/update-category/${widget.categoryId}',
+          {'name1': nameUz, 'name2': nameRu, 'name3': nameEn},
+          log: true,
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Категория успешно обновлена')),
         );
       } else {
-        // 🆕 Добавление
-        await collection.add({
-          'name': name,
-          'createdAt': FieldValue.serverTimestamp(),
-        });
+        await requestHelper.postWithAuth('/api/categories/create-category', {
+          'name1': nameUz,
+          'name2': nameRu,
+          'name3': nameEn,
+        }, log: true);
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Категория успешно добавлена')),
         );
-        _nameController.clear();
+
+        _nameUzController.clear();
+        _nameRuController.clear();
+        _nameEnController.clear();
       }
+
+      if (mounted) Navigator.pop(context, true);
+    } on UnauthenticatedError {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Ошибка авторизации')));
     } catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -83,6 +95,14 @@ class _AddCategoriesState extends State<AddCategories> {
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  @override
+  void dispose() {
+    _nameUzController.dispose();
+    _nameRuController.dispose();
+    _nameEnController.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,22 +115,47 @@ class _AddCategoriesState extends State<AddCategories> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const Text(
-              'Название категории:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              'Название категории (на узбекском):',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             TextField(
-              controller: _nameController,
+              controller: _nameUzController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Введите название категории',
+                hintText: 'Masalan: Tarix',
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            const Text(
+              'Название категории (на русском):',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            TextField(
+              controller: _nameRuController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Например: История',
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Название категории (на английском):',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            TextField(
+              controller: _nameEnController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Example: History',
+              ),
+            ),
+            const SizedBox(height: 24),
             Center(
               child: ElevatedButton.icon(
                 onPressed: _isLoading ? null : _saveCategory,

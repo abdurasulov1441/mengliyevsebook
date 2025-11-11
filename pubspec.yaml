@@ -38,6 +38,7 @@ dependencies:
   smart_auth: ^3.2.0
   otp_timer_button: ^1.1.1
   flutter_epub_viewer: ^1.2.3
+  image_picker: ^1.2.0
 
 
 

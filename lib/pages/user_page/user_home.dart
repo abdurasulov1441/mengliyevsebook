@@ -6,14 +6,14 @@ import 'package:mengliyevsebook/pages/user_page/shop/shop_screen.dart';
 import 'package:mengliyevsebook/pages/user_page/user/user_account_screen.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class UserHome extends StatefulWidget {
+  const UserHome({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UserHome> createState() => _UserHomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _UserHomeState extends State<UserHome> {
   Widget _child = const BooksScreen();
 
   @override

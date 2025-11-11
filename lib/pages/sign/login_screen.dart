@@ -71,11 +71,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!isValid) return;
 
     try {
-      final response = await requestHelper.post(
-        '/api/services/zyber/auth/login',
-        {'phone_number': phoneTextInputController.text.trim()},
-        log: false,
-      );
+      final response = await requestHelper.post('/api/auth/login', {
+        'phone_number': phoneTextInputController.text.trim(),
+      }, log: false);
 
       if (response['status'] == 200) {
         String status = response['message'];
@@ -194,7 +192,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 30),
                 GradientButton(
                   onPressed: () {
-                    context.go(Routes.homeScreen);
+                    login();
                   },
 
                   // login,
@@ -211,8 +209,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(width: 5),
                     TextButton(
                       onPressed: () {
-                        context.go(Routes.adminPage);
-                        // context.push(Routes.register);
+                        context.push(Routes.register);
                       },
                       child: Text(
                         'Ro\'yxatdan o\'tish',

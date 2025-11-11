@@ -115,12 +115,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
     });
 
     try {
-      final response = await requestHelper
-          .post('/api/services/zyber/auth/verify', {
-            'phone_number': widget.phoneNumber,
-            'verification_code': enteredCode,
-            'fcm_token': cache.getString('fcm_token') ?? '',
-          }, log: false);
+      final response = await requestHelper.post('/api/auth/verify', {
+        'phone_number': widget.phoneNumber,
+        'verification_code': enteredCode,
+        'fcm_token': cache.getString('fcm_token') ?? '',
+      }, log: true);
       print(cache.getString('fcm_token') ?? '');
       if (response['accessToken'] != null && response['refreshToken'] != null) {
         cache.setString('user_token', response['accessToken']);
