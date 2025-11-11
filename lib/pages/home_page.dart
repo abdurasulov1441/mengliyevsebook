@@ -98,9 +98,9 @@ class _HomePageState extends State<HomePage> {
             case 0:
               return const LoginScreen();
             case 1:
-              return const UserHome();
-            case 2:
               return const AdminPage();
+            case 2:
+              return const UserHome();
             default:
               return const ErrorPage();
           }

@@ -43,7 +43,7 @@ class _AdminPageState extends State<AdminPage> {
   void _onItemTap(int index) {
     setState(() {
       _selectedIndex = index;
-      Navigator.pop(context); // закрываем Drawer
+      Navigator.pop(context);
     });
   }
 

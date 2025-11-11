@@ -39,6 +39,8 @@ dependencies:
   otp_timer_button: ^1.1.1
   flutter_epub_viewer: ^1.2.3
   image_picker: ^1.2.0
+  file_picker: ^10.3.3
+  http_parser: ^4.1.2
 
 
 

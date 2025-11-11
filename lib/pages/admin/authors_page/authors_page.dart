@@ -85,15 +85,15 @@ class _AuthorsPageState extends State<AuthorsPage> {
         log: true,
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Автор успешно удалён')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Автор успешно удалён')));
 
       fetchAuthors(); // 🔁 обновляем список
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка при удалении: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Ошибка при удалении: $e')));
     }
   }
 
@@ -156,7 +156,7 @@ class _AuthorsPageState extends State<AuthorsPage> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: photo != null
-                        ? NetworkImage('https://etimolog.uz$photo')
+                        ? NetworkImage('https://etimolog.uz/_files$photo')
                         : null,
                     child: photo == null
                         ? const Icon(Icons.person, color: Colors.white)
