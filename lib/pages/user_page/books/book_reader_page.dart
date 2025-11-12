@@ -1,154 +1,140 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_epub_viewer/flutter_epub_viewer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:epub_pro/epub_pro.dart';
+import 'package:path/path.dart' as path;
 
-class BookReaderScreen extends StatefulWidget {
-  final String bookPath; // Можно путь в assets или URL
+class EpubProReaderPage extends StatefulWidget {
+  final String bookPath;
   final String title;
 
-  const BookReaderScreen({
+  const EpubProReaderPage({
     super.key,
     required this.bookPath,
     required this.title,
   });
 
   @override
-  State<BookReaderScreen> createState() => _BookReaderScreenState();
+  State<EpubProReaderPage> createState() => _EpubProReaderPageState();
 }
 
-class _BookReaderScreenState extends State<BookReaderScreen> {
-  final EpubController epubController = EpubController();
-
-  double fontSize = 16;
-  bool isDarkMode = false;
-  String? lastCfi;
-  List<EpubChapter> chapters = [];
+class _EpubProReaderPageState extends State<EpubProReaderPage> {
   bool isLoading = true;
+  String? errorMessage;
+  EpubBook? _book;
+  int _currentChapter = 0;
+  double _fontSize = 16.0;
 
   @override
   void initState() {
     super.initState();
-    _loadLastPosition().then((_) => _openBook());
+    _loadBook();
   }
 
-  Future<void> _loadLastPosition() async {
-    final prefs = await SharedPreferences.getInstance();
-    lastCfi = prefs.getString('last_cfi_${widget.title}');
-  }
+  Future<void> _loadBook() async {
+    try {
+      final file = File(widget.bookPath);
+      final bytes = await file.readAsBytes();
+      final epub = await EpubReader.readBook(bytes);
 
-  Future<void> _saveLastPosition(String cfi) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('last_cfi_${widget.title}', cfi);
-  }
-
-  Future<void> _openBook() async {
-    await epubController;
-  }
-
-  void _changeFontSize(double value) {
-    setState(() => fontSize = value);
-    epubController.setFontSize(fontSize: value);
-  }
-
-  void _highlightSelection(String cfi) {
-    epubController.addHighlight(cfi: cfi, color: Colors.yellow, opacity: 0.4);
-  }
-
-  void _search(String query) async {
-    final results = await epubController.search(query: query);
-    if (results.isNotEmpty) {
-      epubController.display(cfi: results.first.cfi);
+      setState(() {
+        _book = epub;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Kitobni ochib bo‘lmadi: $e';
+      });
     }
+  }
+
+  void _nextChapter() {
+    if (_book == null) return;
+    if (_currentChapter < _book!.chapters.length - 1) {
+      setState(() => _currentChapter++);
+    }
+  }
+
+  void _prevChapter() {
+    if (_currentChapter > 0) {
+      setState(() => _currentChapter--);
+    }
+  }
+
+  void _changeFontSize(double delta) {
+    setState(() => _fontSize += delta);
   }
 
   @override
   Widget build(BuildContext context) {
+    final chapter = _book?.chapters.isNotEmpty == true
+        ? _book!.chapters[_currentChapter]
+        : null;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Поиск',
-            onPressed: () async {
-              final query = await showDialog<String>(
-                context: context,
-                builder: (context) {
-                  final controller = TextEditingController();
-                  return AlertDialog(
-                    title: const Text('Поиск по книге'),
-                    content: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(
-                        hintText: 'Введите слово или фразу',
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pop(context, controller.text.trim()),
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
-              );
-              if (query != null && query.isNotEmpty) _search(query);
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.text_increase),
-            tooltip: 'Увеличить шрифт',
-            onPressed: () => _changeFontSize(fontSize + 2),
+            onPressed: () => _changeFontSize(2),
           ),
           IconButton(
             icon: const Icon(Icons.text_decrease),
-            tooltip: 'Уменьшить шрифт',
-            onPressed: () => _changeFontSize(fontSize - 2),
+            onPressed: () => _changeFontSize(-2),
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              child: Text('Оглавление', style: TextStyle(fontSize: 20)),
-            ),
-            ...chapters.map(
-              (ch) => ListTile(
-                title: Text(ch.title ?? 'Без названия'),
-                onTap: () {
-                  epubController.display(cfi: ch.href ?? '');
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : EpubViewer(
-              epubController: epubController,
-              epubSource: EpubSource.fromAsset(widget.bookPath),
-              displaySettings: EpubDisplaySettings(flow: EpubFlow.paginated),
+          : errorMessage != null
+          ? Center(child: Text(errorMessage!))
+          : chapter == null
+          ? const Center(child: Text('Bo‘limlar topilmadi'))
+          : Padding(
+              padding: const EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      chapter.title ?? 'Bo‘lim ${_currentChapter + 1}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SelectableText(
+                      // HTML из главы без тегов
+                      _stripHtml(chapter.htmlContent ?? ''),
+                      style: TextStyle(fontSize: _fontSize, height: 1.6),
+                    ),
+                  ],
+                ),
+              ),
             ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton.small(
             heroTag: 'prev',
-            onPressed: epubController.prev,
+            onPressed: _prevChapter,
             child: const Icon(Icons.chevron_left),
           ),
           const SizedBox(width: 8),
           FloatingActionButton.small(
             heroTag: 'next',
-            onPressed: epubController.next,
+            onPressed: _nextChapter,
             child: const Icon(Icons.chevron_right),
           ),
         ],
       ),
     );
+  }
+
+  String _stripHtml(String html) {
+    final regex = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: false);
+    return html.replaceAll(regex, '').replaceAll('&nbsp;', ' ').trim();
   }
 }
