@@ -41,6 +41,9 @@ dependencies:
   file_picker: ^10.3.3
   http_parser: ^4.1.2
   epub_pro: ^5.6.0
+  icons_launcher: ^3.0.3
+  lottie: ^3.3.2
+  flutter_html: ^3.0.0
   
 
 
@@ -50,7 +53,7 @@ dev_dependencies:
     sdk: flutter
 
 # icons_launcher:
-#   image_path: "assets/images/logo.jpg"
+#   image_path: "assets/images/logo.png"
 #   platforms:
 #     android:
 #       enable: true

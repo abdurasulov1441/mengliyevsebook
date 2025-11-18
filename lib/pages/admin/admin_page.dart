@@ -6,7 +6,7 @@ import 'package:mengliyevsebook/pages/admin/books_page/books_page.dart';
 import 'package:mengliyevsebook/pages/admin/categories_page/categories_page.dart';
 import 'package:mengliyevsebook/pages/admin/main_page/main_page.dart';
 import 'package:mengliyevsebook/pages/admin/settings_page/settings_page.dart';
-import 'package:mengliyevsebook/pages/admin/user_stats_page/user_stats_page.dart';
+import 'package:mengliyevsebook/services/style/app_colors.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -24,20 +24,18 @@ class _AdminPageState extends State<AdminPage> {
     AuthorsPage(),
     BooksPage(),
     AudioBooksPage(),
-    BookStatsPage(),
-    UserStatsPage(),
+    PaymentAcceptPage(),
     SettingsPage(),
   ];
 
   final List<String> _titles = [
-    'Основная страница',
-    'Добавление категории',
-    'Добавление автора',
-    'Добавление книги',
-    'Добавление аудиокниги',
-    'Статистика книг',
-    'Статистика пользователей',
-    'Настройки',
+    'Asosiy sahifa',
+    'Kategoriya qo‘shish',
+    'Muallif qo‘shish',
+    'Kitob qo‘shish',
+    'Audio kitob qo‘shish',
+    'To‘lov xabarlari',
+    'Sozlamalar',
   ];
 
   void _onItemTap(int index) {
@@ -56,10 +54,10 @@ class _AdminPageState extends State<AdminPage> {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: AppColors.grade1),
               child: Center(
                 child: Text(
-                  'Admin Panel',
+                  'E-Book Admin',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -68,14 +66,13 @@ class _AdminPageState extends State<AdminPage> {
                 ),
               ),
             ),
-            _drawerItem(Icons.dashboard, 'Основная страница', 0),
-            _drawerItem(Icons.category, 'Добавление категории', 1),
-            _drawerItem(Icons.person_add, 'Добавление автора', 2),
-            _drawerItem(Icons.book, 'Добавление книги', 3),
-            _drawerItem(Icons.audiotrack, 'Добавление аудиокниги', 4),
-            _drawerItem(Icons.bar_chart, 'Статистика книг', 5),
-            _drawerItem(Icons.people, 'Статистика пользователей', 6),
-            _drawerItem(Icons.settings, 'Настройки', 7),
+            _drawerItem(Icons.dashboard, 'Asosiy sahifa', 0),
+            _drawerItem(Icons.category, 'Kategoriya qo‘shish', 1),
+            _drawerItem(Icons.person_add, 'Muallif qo‘shish', 2),
+            _drawerItem(Icons.book, 'Kitob qo‘shish', 3),
+            _drawerItem(Icons.audiotrack, 'Audio kitob qo‘shish', 4),
+            _drawerItem(Icons.payment, 'To‘lov xabarlari', 5),
+            _drawerItem(Icons.settings, 'Sozlamalar', 6),
           ],
         ),
       ),
@@ -85,12 +82,17 @@ class _AdminPageState extends State<AdminPage> {
 
   ListTile _drawerItem(IconData icon, String title, int index) {
     return ListTile(
-      leading: Icon(icon, color: _selectedIndex == index ? Colors.blue : null),
+      leading: Icon(
+        icon,
+        color: _selectedIndex == index ? AppColors.grade1 : AppColors.uiText,
+      ),
       title: Text(
         title,
         style: TextStyle(
-          color: _selectedIndex == index ? Colors.blue : null,
-          fontWeight: _selectedIndex == index ? FontWeight.bold : null,
+          color: _selectedIndex == index ? AppColors.grade1 : AppColors.uiText,
+          fontWeight: _selectedIndex == index
+              ? FontWeight.bold
+              : FontWeight.normal,
         ),
       ),
       onTap: () => _onItemTap(index),

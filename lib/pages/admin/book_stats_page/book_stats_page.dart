@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BookStatsPage extends StatelessWidget {
-  const BookStatsPage({super.key});
+class PaymentAcceptPage extends StatelessWidget {
+  const PaymentAcceptPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(child: Container());
   }
 }

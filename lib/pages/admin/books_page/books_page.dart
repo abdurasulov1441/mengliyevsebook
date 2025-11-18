@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mengliyevsebook/pages/admin/books_page/bookd_add_page.dart';
-import 'package:mengliyevsebook/pages/admin/books_page/subbooks.dart';
+
 import 'package:mengliyevsebook/services/request_helper.dart';
 import 'package:mengliyevsebook/services/utils/errors.dart';
 
@@ -35,9 +35,9 @@ class _BooksPageState extends State<BooksPage> {
         log: true,
       );
 
-      if (response is List) {
+      if (response is Map && response['books'] is List) {
         setState(() {
-          books = response;
+          books = response['books'];
           isLoading = false;
         });
       } else {
@@ -154,14 +154,7 @@ class _BooksPageState extends State<BooksPage> {
                 final isFree = book['is_free'] == true;
 
                 return ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SubBooksPage(bookId: id),
-                      ),
-                    ).then((_) => fetchBooks());
-                  },
+                  onTap: () {},
 
                   leading: const Icon(Icons.book, color: Colors.blueAccent),
                   title: Text(slug),
