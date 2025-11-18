@@ -35,7 +35,7 @@ class _BooksScreenState extends State<BooksScreen> {
 
       // Barcha kitoblar
       final booksResp = await requestHelper.getWithAuth(
-        "/api/books/get-books?page=1&limit=50",
+        "/api/books/get-books?page=1&limit=50&is_free=true",
         log: true,
       );
 
