@@ -6,7 +6,6 @@ import 'package:mengliyevsebook/services/db/cache.dart';
 import 'package:mengliyevsebook/services/gradientbutton.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -52,38 +51,6 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
-  Future<void> _downloadBook(Map book) async {
-    try {
-      final dio = Dio();
-
-      final fileUrl = "https://etimolog.uz/_files${book['epub_file']}";
-      final dir = await getApplicationDocumentsDirectory();
-      final savePath = "${dir.path}/${book['id']}.epub";
-
-      await dio.download(fileUrl, savePath);
-
-      cache.setString("book_${book['id']}_path", savePath);
-
-      Navigator.pop(context);
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Kitob yuklab olindi!")));
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              EpubProReaderPage(bookPath: savePath, title: book["title"]),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Yuklab olishda xato: $e")));
-    }
-  }
-
   void _openBookBuySheet(Map book) {
     final img = book["photo"] != null
         ? "https://etimolog.uz/_files${book['photo']}"
@@ -92,6 +59,7 @@ class _ShopScreenState extends State<ShopScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+
       isScrollControlled: true, // ➤ to‘liq ekranga chiqishiga ruxsat
       builder: (_) {
         return DraggableScrollableSheet(

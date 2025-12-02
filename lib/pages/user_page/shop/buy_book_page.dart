@@ -82,7 +82,7 @@ class _BuyBookScreenState extends State<BuyBookScreen> {
         ),
       });
 
-      final resp = await requestHelper.postWithAuthMultipart(
+      await requestHelper.postWithAuthMultipart(
         "/api/payments/create-payment",
         formData,
         log: true,
