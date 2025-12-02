@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mengliyevsebook/app/router.dart';
+import 'package:mengliyevsebook/services/db/cache.dart';
 
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 import 'package:mengliyevsebook/services/style/app_style.dart';
@@ -151,7 +153,10 @@ class UserAccountScreen extends StatelessWidget {
   Widget _buildLogoutButton(BuildContext context) {
     return Center(
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          cache.clear();
+          router.go(Routes.loginScreen);
+        },
         icon: const Icon(Icons.logout, color: Colors.white),
         label: Text(
           "Chiqish",

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mengliyevsebook/services/db/cache.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 
@@ -67,11 +68,12 @@ class _BuyBookScreenState extends State<BuyBookScreen> {
       ).showSnackBar(const SnackBar(content: Text("Vaqtni tanlang")));
       return;
     }
+    final userId = cache.getInt("user_id");
 
     try {
       final formData = FormData.fromMap({
         "book_id": widget.book["id"],
-        "user_id": 1, // TODO: cache dan olish kerak bo‘lsa ayt
+        "user_id": userId,
         "comment": commentController.text.trim(),
         "approved_at": approvedAt.toString(),
         "image": await MultipartFile.fromFile(

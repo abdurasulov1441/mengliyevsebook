@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mengliyevsebook/pages/user_page/books/book_open/book_reader_page.dart';
 import 'package:mengliyevsebook/pages/user_page/shop/buy_book_page.dart';
 import 'package:mengliyevsebook/services/db/cache.dart';
+import 'package:mengliyevsebook/services/gradientbutton.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 import 'package:path_provider/path_provider.dart';
@@ -84,76 +85,89 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   void _openBookBuySheet(Map book) {
+    final img = book["photo"] != null
+        ? "https://etimolog.uz/_files${book['photo']}"
+        : "https://via.placeholder.com/200";
+
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true, // ➤ to‘liq ekranga chiqishiga ruxsat
       builder: (_) {
-        final img = book["photo"] != null
-            ? "https://etimolog.uz/_files${book['photo']}"
-            : "https://via.placeholder.com/200";
-
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(img, width: 150, height: 200),
-                ),
+        return DraggableScrollableSheet(
+          initialChildSize: 0.6, // boshlang'ich ochilish (60%)
+          minChildSize: 0.4,
+          maxChildSize: 0.95, // deyarli to‘liq ekran
+          expand: false,
+          builder: (context, scrollController) {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
-              const SizedBox(height: 16),
-
-              Text(
-                book["title"],
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 6),
-              Text(
-                book["author"]?["uz"] ?? "Muallif",
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-
-              const SizedBox(height: 16),
-              Text(book["description"] ?? ""),
-
-              const SizedBox(height: 14),
-
-              Text(
-                "Narxi: ${book['price']} so‘m",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // 👉 Sotib olish tugmasi
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context); // bottom sheet yopiladi
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BuyBookScreen(book: book),
+              child: SingleChildScrollView(
+                controller: scrollController, // ➤ scroll boshqaruvchisi
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(img, width: 150, height: 200),
+                      ),
                     ),
-                  );
-                },
-                icon: const Icon(Icons.shopping_cart),
-                label: const Text("Sotib olish"),
+                    const SizedBox(height: 16),
+
+                    Text(
+                      book["title"] ?? "",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    Text(
+                      book["author"]?["uz"] ?? "Muallif",
+                      style: const TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    Text(book["description"] ?? ""),
+
+                    const SizedBox(height: 20),
+
+                    Text(
+                      "Narxi: ${book['price']} so‘m",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+                    GradientButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BuyBookScreen(book: book),
+                          ),
+                        );
+                      },
+                      text: "Sotib olish",
+                    ),
+
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -196,15 +210,6 @@ class _ShopScreenState extends State<ShopScreen> {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  Text(
-                    "Pullik kitoblar",
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
                   ...paidBooks.map((book) {
                     final img = book['photo'] != null
                         ? 'https://etimolog.uz/_files${book['photo']}'
@@ -213,14 +218,16 @@ class _ShopScreenState extends State<ShopScreen> {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            img,
-                            width: 60,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        tileColor: AppColors.backgroundColor,
+                        leading: Image.network(
+                          img,
+                          width: 40,
+                          height: 64,
+
+                          fit: BoxFit.fitHeight,
                         ),
                         title: Text(
                           book["title"],
@@ -230,7 +237,10 @@ class _ShopScreenState extends State<ShopScreen> {
                         subtitle: Text(
                           "${book['author']?['uz'] ?? "Muallif"} • ${book['price']} so‘m",
                         ),
-                        trailing: const Icon(Icons.chevron_right),
+                        trailing: Icon(
+                          Icons.chevron_right,
+                          color: AppColors.grade1,
+                        ),
                         onTap: () => _onBookTap(book),
                       ),
                     );

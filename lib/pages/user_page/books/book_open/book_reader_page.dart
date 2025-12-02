@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:epub_pro/epub_pro.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:epubx/epubx.dart';
 
 class EpubProReaderPage extends StatefulWidget {
   final String bookPath;
@@ -22,7 +21,9 @@ class _EpubProReaderPageState extends State<EpubProReaderPage> {
   String? errorMessage;
   EpubBook? epubBook;
 
+  List<EpubChapter> chapters = [];
   int chapterIndex = 0;
+
   double fontSize = 18;
   bool darkMode = false;
 
@@ -34,23 +35,53 @@ class _EpubProReaderPageState extends State<EpubProReaderPage> {
 
   Future<void> loadBook() async {
     try {
-      final bytes = File(widget.bookPath).readAsBytesSync();
+      final bytes = await File(widget.bookPath).readAsBytes();
       final book = await EpubReader.readBook(bytes);
+
+      // Agar Chapters bo‘lmasa, Content orqali yuklaymiz
+      List<EpubChapter> loadedChapters = [];
+
+      if (book.Chapters != null && book.Chapters!.isNotEmpty) {
+        loadedChapters = book.Chapters!;
+      } else {
+        // TOC yo‘q bo‘lsa — HTML sahifalarni o‘qib bo‘lim qilamiz
+        book.Content?.Html?.forEach((key, value) {
+          loadedChapters.add(EpubChapter());
+        });
+      }
 
       setState(() {
         epubBook = book;
+        chapters = loadedChapters;
         isLoading = false;
       });
     } catch (e) {
       setState(() {
-        isLoading = false;
         errorMessage = "Kitobni ochib bo‘lmadi: $e";
+        isLoading = false;
       });
     }
   }
 
+  // HTML → Plain text
+  String cleanHtml(String html) {
+    if (html.isEmpty) return "";
+
+    // Удаляем теги
+    String text = html.replaceAll(RegExp(r'<[^>]*>'), '');
+
+    // Декодируем HTML сущности (&nbsp; &quot; …)
+    text = text.replaceAll("&nbsp;", " ");
+    text = text.replaceAll("&quot;", "\"");
+    text = text.replaceAll("&amp;", "&");
+    text = text.replaceAll("&lt;", "<");
+    text = text.replaceAll("&gt;", ">");
+
+    return text.trim();
+  }
+
   void nextChapter() {
-    if (chapterIndex < epubBook!.chapters.length - 1) {
+    if (chapterIndex < chapters.length - 1) {
       setState(() => chapterIndex++);
     }
   }
@@ -63,9 +94,10 @@ class _EpubProReaderPageState extends State<EpubProReaderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final chapter = epubBook?.chapters.isNotEmpty == true
-        ? epubBook!.chapters[chapterIndex]
-        : null;
+    final chapter = chapters.isNotEmpty ? chapters[chapterIndex] : null;
+    final plainText = chapter == null
+        ? ""
+        : cleanHtml(chapter.HtmlContent ?? "");
 
     return Scaffold(
       backgroundColor: darkMode ? Colors.black : Colors.white,
@@ -91,24 +123,22 @@ class _EpubProReaderPageState extends State<EpubProReaderPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : errorMessage != null
-              ? Center(child: Text(errorMessage!))
-              : chapter == null
-                  ? const Center(child: Text("Bo‘limlar topilmadi"))
-                  : SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Html(
-                        data: chapter.htmlContent ?? "",
-                        style: {
-                          "body": Style(
-                            color: darkMode ? Colors.white : Colors.black,
-                            fontSize: FontSize(fontSize),
-                            lineHeight: LineHeight(1.7),
-                          )
-                        },
-                      ),
-                    ),
+          ? Center(child: Text(errorMessage!))
+          : chapter == null
+          ? const Center(child: Text("Bo‘limlar topilmadi"))
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                plainText,
+                style: TextStyle(
+                  fontSize: fontSize,
+                  color: darkMode ? Colors.white : Colors.black,
+                  height: 1.7,
+                ),
+              ),
+            ),
 
-      bottomNavigationBar: epubBook == null
+      bottomNavigationBar: chapters.isEmpty
           ? null
           : BottomAppBar(
               color: darkMode ? Colors.grey[900] : Colors.grey[200],
@@ -121,11 +151,13 @@ class _EpubProReaderPageState extends State<EpubProReaderPage> {
                     label: const Text("Oldingi"),
                   ),
                   Text(
-                    "Bo‘lim ${chapterIndex + 1}/${epubBook!.chapters.length}",
-                    style: TextStyle(color: darkMode ? Colors.white : Colors.black),
+                    "Bo‘lim ${chapterIndex + 1}/${chapters.length}",
+                    style: TextStyle(
+                      color: darkMode ? Colors.white : Colors.black,
+                    ),
                   ),
                   TextButton.icon(
-                    onPressed: chapterIndex < epubBook!.chapters.length - 1
+                    onPressed: chapterIndex < chapters.length - 1
                         ? nextChapter
                         : null,
                     icon: const Icon(Icons.chevron_right),

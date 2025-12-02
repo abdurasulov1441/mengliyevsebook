@@ -45,7 +45,7 @@ final class RequestHelper {
   }) async {
     try {
       final refreshResponse = await dio.post(
-        '$baseUrl/api/services/zyber/auth/refresh',
+        '$baseUrl/api/auth/refresh',
         data: {'refreshToken': refreshToken},
         options: Options(
           headers: {
@@ -181,7 +181,7 @@ final class RequestHelper {
 
         try {
           final refreshResponse = await dio.post(
-            '$baseUrl/api/services/zyber/auth/refresh',
+            '$baseUrl/api/auth/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {
@@ -304,7 +304,7 @@ final class RequestHelper {
 
       if (e.response?.statusCode == 401 || e.response?.statusCode == 403) {
         router.go(Routes.homeScreen);
-        if (path == "/api/services/zyber/auth/refresh") {
+        if (path == "/api/auth/refresh") {
           router.go(Routes.loginScreen);
           throw Unauthenticated();
         }
@@ -368,7 +368,7 @@ final class RequestHelper {
       if (status == 401 || status == 403) {
         try {
           final refreshResponse = await dio.post(
-            '$baseUrl/api/services/zyber/auth/refresh',
+            '$baseUrl/api/auth/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {
@@ -535,7 +535,7 @@ final class RequestHelper {
       if (status == 401 || status == 403) {
         try {
           final refreshResponse = await dio.post(
-            '$baseUrl/api/services/zyber/auth/refresh',
+            '$baseUrl/api/auth/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {
@@ -694,7 +694,7 @@ final class RequestHelper {
       if (status == 401 || status == 403) {
         try {
           final refreshResponse = await dio.post(
-            '$baseUrl/api/services/zyber/auth/refresh',
+            '$baseUrl/api/auth/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {
@@ -1058,7 +1058,7 @@ final class RequestHelper {
       if (status == 401 || status == 403) {
         try {
           final refreshResponse = await dio.post(
-            '$baseUrl/api/services/zyber/auth/refresh',
+            '$baseUrl/api/auth/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {
