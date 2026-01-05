@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
 import 'epub_reader_controller.dart';
-import 'epub_reader_service.dart';
 
 class EpubReaderScreen extends StatefulWidget {
   final String bookId;

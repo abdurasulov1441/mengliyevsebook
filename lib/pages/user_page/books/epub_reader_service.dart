@@ -55,7 +55,7 @@ class EpubReaderService {
       return {
         'title': bookRef.title ?? 'Noma\'lum',
         'author': bookRef.author ?? 'Muallif',
-        'authors': bookRef.authors?.join(', ') ?? '',
+        'authors': bookRef.authors.join(', '),
         'coverImage': await _getCoverImage(bookRef),
         'chapterCount': (await bookRef.getChapters()).length,
         'success': true,
