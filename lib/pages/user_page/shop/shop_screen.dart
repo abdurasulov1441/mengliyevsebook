@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mengliyevsebook/pages/user_page/books/book_open/book_reader_page.dart';
 import 'package:mengliyevsebook/pages/user_page/shop/buy_book_page.dart';
 import 'package:mengliyevsebook/services/db/cache.dart';
 import 'package:mengliyevsebook/services/gradientbutton.dart';
@@ -146,13 +144,13 @@ class _ShopScreenState extends State<ShopScreen> {
     final localPath = cache.getString("book_${id}_path");
 
     if (localPath != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              EpubProReaderPage(bookPath: localPath, title: book["title"]),
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) =>
+      //         EpubProReaderPage(bookPath: localPath,),
+      //   ),
+      // );
     } else {
       _openBookBuySheet(book);
     }
