@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%238a5a2b%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22 font-weight=%22bold%22%3EM%3C/text%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#fbfaf7">
+<title>Kitob o'qish</title>
+<link rel="stylesheet" href="reader.css">
+</head>
+<body>
+<div id="loader"><div class="spinner"></div><div data-i18n="loading">Kitob yuklanmoqda…</div></div>
+<div id="error" class="hidden"><b data-i18n="errorTitle">Kitobni ochib bo'lmadi</b><div id="errorText"></div><button class="btn" id="errorBack" data-i18n="back">Orqaga</button></div>
+
+<main id="stage">
+  <div id="pageHead"><span id="headLeft"></span><span id="headRight"></span></div>
+  <div id="viewport">
+    <div id="bookmarkFlag" class="hidden"></div>
+    <div id="content"></div>
+  </div>
+  <div id="pageFoot"><span id="footLeft"></span><span id="footRight"></span></div>
+</main>
+
+<header id="topbar" class="bar">
+  <button class="icon" id="btnBack" data-icon="back" aria-label="Back"></button>
+  <div class="titles"><div id="barTitle"></div><div id="barSub"></div></div>
+  <button class="icon" id="btnSearch" data-icon="search" aria-label="Search"></button>
+  <button class="icon" id="btnBookmark" data-icon="bookmark" aria-label="Bookmark"></button>
+  <button class="icon" id="btnToc" data-icon="list" aria-label="Contents"></button>
+  <button class="icon" id="btnSettings" data-icon="type" aria-label="Settings"></button>
+</header>
+
+<footer id="bottombar" class="bar">
+  <div class="slider-row">
+    <button class="icon" id="btnPrevCh" data-icon="prev" aria-label="Previous chapter"></button>
+    <input type="range" id="slider" min="0" max="1000" value="0" aria-label="Progress">
+    <button class="icon" id="btnNextCh" data-icon="next" aria-label="Next chapter"></button>
+  </div>
+  <div class="loc-row"><span id="locLeft"></span><span id="locRight"></span></div>
+</footer>
+<div id="sliderTip" class="hidden"></div>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="tocPanel">
+  <div class="panel-head"><h3 id="tocBookTitle"></h3><button class="icon" data-close data-icon="close" aria-label="Close"></button></div>
+  <div class="tabs">
+    <button data-tab="toc" class="on" data-i18n="contents">Mundarija</button>
+    <button data-tab="bookmarks" data-i18n="bookmarks">Xatcho'plar</button>
+    <button data-tab="notes" data-i18n="notes">Belgilar</button>
+  </div>
+  <div class="list" id="tocList"></div>
+</aside>
+
+<aside class="drawer" id="searchPanel">
+  <div class="panel-head"><h3 data-i18n="search">Qidirish</h3><button class="icon" data-close data-icon="close" aria-label="Close"></button></div>
+  <form class="search-box" id="searchForm"><input id="searchInput" type="search" autocomplete="off" enterkeyhint="search"></form>
+  <div class="search-status" id="searchStatus"></div>
+  <div class="list" id="searchList"></div>
+</aside>
+
+<section class="sheet" id="settingsPanel">
+  <div class="grip"></div>
+  <div class="set-row"><label data-i18n="fontSize">Shrift</label>
+    <div class="sizes"><button id="fsMinus" style="font-size:14px">A</button><span id="fsValue">19</span><button id="fsPlus" style="font-size:20px">A</button></div></div>
+  <div class="set-row"><label data-i18n="theme">Fon</label>
+    <div class="seg" id="segTheme">
+      <button class="swatch t-light" data-v="light">A</button><button class="swatch t-sepia" data-v="sepia">A</button>
+      <button class="swatch t-dark" data-v="dark">A</button><button class="swatch t-black" data-v="black">A</button></div></div>
+  <div class="set-row"><label data-i18n="font">Harf</label>
+    <div class="seg" id="segFont"><button data-v="serif" style="font-family:Georgia,serif">Serif</button><button data-v="sans" style="font-family:system-ui,sans-serif">Sans</button><button data-v="mono" style="font-family:ui-monospace,monospace">Mono</button></div></div>
+  <div class="set-row"><label data-i18n="spacing">Qator</label>
+    <div class="seg" id="segLine"><button data-v="1.35">1.35</button><button data-v="1.6">1.6</button><button data-v="1.9">1.9</button></div></div>
+  <div class="set-row"><label data-i18n="margins">Chekka</label>
+    <div class="seg" id="segMargin"><button data-v="12">S</button><button data-v="22">M</button><button data-v="40">L</button></div></div>
+  <div class="set-row"><label data-i18n="align">Tekislash</label>
+    <div class="seg" id="segAlign"><button data-v="justify" data-i18n="justify">Kenglik</button><button data-v="left" data-i18n="left">Chap</button></div></div>
+  <div class="set-row"><label data-i18n="mode">Rejim</label>
+    <div class="seg" id="segMode"><button data-v="paged" data-i18n="paged">Sahifa</button><button data-v="scroll" data-i18n="scroll">Aylantirish</button></div></div>
+  <div class="set-row"><label data-i18n="brightness">Yorug'lik</label>
+    <div class="bright"><input type="range" id="brightness" min="0" max="70" value="0"></div></div>
+</section>
+
+<section class="sheet" id="noteSheet"><div class="grip"></div><div class="note-body" id="noteBody"></div></section>
+
+<section class="sheet" id="noteEdit">
+  <div class="grip"></div>
+  <div class="quote" id="noteQuote"></div>
+  <textarea id="noteText"></textarea>
+  <div class="btn-row"><button class="btn danger" id="noteDelete" data-i18n="delete">O'chirish</button><span style="flex:1"></span><button class="btn" data-close data-i18n="cancel">Bekor</button><button class="btn primary" id="noteSave" data-i18n="save">Saqlash</button></div>
+</section>
+
+<div id="selbar" class="hidden">
+  <button class="dot yellow" data-color="yellow" aria-label="Yellow"></button>
+  <button class="dot green" data-color="green" aria-label="Green"></button>
+  <button class="dot blue" data-color="blue" aria-label="Blue"></button>
+  <button class="dot pink" data-color="pink" aria-label="Pink"></button>
+  <span class="sep"></span>
+  <button class="icon" id="selNote" data-icon="note" aria-label="Note"></button>
+  <button class="icon" id="selCopy" data-icon="copy" aria-label="Copy"></button>
+  <button class="icon hidden" id="selDelete" data-icon="trash" aria-label="Delete"></button>
+</div>
+
+<div id="imgViewer" class="hidden"><img alt=""><button class="icon" data-icon="close" id="imgClose" aria-label="Close"></button></div>
+<div id="dim"></div>
+<div id="toast"></div>
+
+<script src="reader.js"></script>
+</body>
+</html>

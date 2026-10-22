@@ -1,3 +1,4 @@
+import 'package:mengliyevsebook/services/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:mengliyevsebook/pages/admin/authors_page/add_authors_page.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
@@ -156,7 +157,7 @@ class _AuthorsPageState extends State<AuthorsPage> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: photo != null
-                        ? NetworkImage('https://etimolog.uz/_files$photo')
+                        ? NetworkImage(Constants.fileUrl(photo)!)
                         : null,
                     child: photo == null
                         ? const Icon(Icons.person, color: Colors.white)

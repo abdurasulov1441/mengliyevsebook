@@ -1,3 +1,4 @@
+import 'package:mengliyevsebook/services/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:mengliyevsebook/pages/admin/book_stats_page/full_view.dart';
 import 'package:mengliyevsebook/services/gradientbutton.dart';
@@ -158,7 +159,7 @@ class _PaymentAcceptPageState extends State<PaymentAcceptPage> {
                                 MaterialPageRoute(
                                   builder: (context) => FullScreenImageView(
                                     imageUrl:
-                                        "https://etimolog.uz/_files${p["receipt_image"]}",
+                                        Constants.fileUrl(p["receipt_image"])!,
                                   ),
                                 ),
                               );
@@ -166,7 +167,7 @@ class _PaymentAcceptPageState extends State<PaymentAcceptPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
-                                "https://etimolog.uz/_files${p["receipt_image"]}",
+                                Constants.fileUrl(p["receipt_image"])!,
                                 height: 180,
                                 width: double.infinity,
                                 fit: BoxFit.cover,

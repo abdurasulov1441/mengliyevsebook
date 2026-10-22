@@ -1,3 +1,4 @@
+import 'package:mengliyevsebook/services/utils/constants.dart';
 import 'dart:io';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ class _AddAuthorPageState extends State<AddAuthorPage> {
                     ? FileImage(_selectedImage!)
                     : widget.existingData?['photo'] != null
                     ? NetworkImage(
-                        'https://etimolog.uz${widget.existingData!['photo']}',
+                        Constants.fileUrl(widget.existingData!['photo'])!,
                       )
                     : null,
                 child:

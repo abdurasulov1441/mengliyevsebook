@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mengliyevsebook/pages/user_page/shop/buy_book_page.dart';
-import 'package:mengliyevsebook/services/db/cache.dart';
+import 'package:mengliyevsebook/pages/user_page/books/book_reader_page.dart';
+import 'package:mengliyevsebook/services/utils/constants.dart';
 import 'package:mengliyevsebook/services/gradientbutton.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
 import 'package:mengliyevsebook/services/style/app_colors.dart';
@@ -51,7 +52,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
   void _openBookBuySheet(Map book) {
     final img = book["photo"] != null
-        ? "https://etimolog.uz/_files${book['photo']}"
+        ? Constants.fileUrl(book['photo'])!
         : "https://via.placeholder.com/200";
 
     showModalBottomSheet(
@@ -140,20 +141,18 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   void _onBookTap(Map book) async {
-    final id = book["id"].toString();
-    final localPath = cache.getString("book_${id}_path");
-
-    if (localPath != null) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) =>
-      //         EpubProReaderPage(bookPath: localPath,),
-      //   ),
-      // );
-    } else {
-      _openBookBuySheet(book);
+    // Already bought: read it right away.
+    if (book['has_access'] == true) {
+      try {
+        await openBook(context, book);
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))));
+        }
+      }
+      return;
     }
+    _openBookBuySheet(book);
   }
 
   @override
@@ -178,7 +177,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 children: [
                   ...paidBooks.map((book) {
                     final img = book['photo'] != null
-                        ? 'https://etimolog.uz/_files${book['photo']}'
+                        ? Constants.fileUrl(book['photo'])!
                         : 'https://via.placeholder.com/100';
 
                     return Container(
@@ -201,7 +200,9 @@ class _ShopScreenState extends State<ShopScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
-                          "${book['author']?['uz'] ?? "Muallif"} • ${book['price']} so‘m",
+                          book['has_access'] == true
+                              ? "${book['author']?['uz'] ?? "Muallif"} • sotib olingan"
+                              : "${book['author']?['uz'] ?? "Muallif"} • ${book['price']} so‘m",
                         ),
                         trailing: Icon(
                           Icons.chevron_right,

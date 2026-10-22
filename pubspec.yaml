@@ -40,7 +40,11 @@ dependencies:
   image_picker: ^1.2.0
   file_picker: ^10.3.3
   http_parser: ^4.1.2
-  epub_pro: ^5.6.0
+  webview_flutter: ^4.13.0
+  webview_flutter_android: ^4.10.0
+  archive: ^4.0.7
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
 
 
 
@@ -83,8 +87,7 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/translations/
-    - assets/lottie/
-    - assets/books/
+    - assets/reader/
 
   fonts:
     - family: Poppins
