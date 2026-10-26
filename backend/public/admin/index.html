@@ -2,33 +2,37 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%238a5a2b%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22 font-weight=%22bold%22%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mengliyev's eBook — Admin</title>
+<title>BookHub — Boshqaruv paneli</title>
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 <div id="login" class="login hidden">
   <form class="login-card" id="loginForm">
-    <div class="brand"><span class="logo">M</span><div><b>Mengliyev's eBook</b><small>Boshqaruv paneli</small></div></div>
+    <div class="brand"><img class="logo" src="logo.png" alt=""><div><b>BookHub</b><small>Boshqaruv paneli</small></div></div>
+    <div class="tabs" id="loginTabs"><button type="button" data-mode="sms">SMS kod</button><button type="button" data-mode="password">Parol</button></div>
     <label>Telefon<input name="phone" type="tel" placeholder="+998 90 123 45 67" autocomplete="username" required></label>
-    <label>Parol<input name="password" type="password" autocomplete="current-password" required></label>
-    <button class="btn primary block" type="submit">Kirish</button>
+    <label id="codeField" class="hidden">SMS kod<input name="code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label>
+    <label id="pwdField" class="hidden">Parol<input name="password" type="password" autocomplete="current-password"></label>
+    <button class="btn primary block" type="submit" id="loginBtn">Kirish</button>
     <p class="err" id="loginErr"></p>
   </form>
 </div>
 
 <div id="shell" class="shell hidden">
   <aside class="side" id="side">
-    <div class="brand"><span class="logo">M</span><div><b>Mengliyev's eBook</b><small>Admin</small></div></div>
+    <div class="brand"><img class="logo" src="logo.png" alt=""><div><b>BookHub</b><small>Admin</small></div></div>
     <nav id="nav">
       <a href="#/dashboard" data-route="dashboard"><i data-ic="home"></i>Asosiy</a>
-      <a href="#/books" data-route="books"><i data-ic="book"></i>Kitoblar</a>
-      <a href="#/payments" data-route="payments"><i data-ic="card"></i>To'lovlar <span class="pill hidden" id="pendingBadge"></span></a>
-      <a href="#/users" data-route="users"><i data-ic="users"></i>Foydalanuvchilar</a>
+      <a href="#/moderation" data-route="moderation"><i data-ic="shield"></i>Moderatsiya <span class="pill hidden" id="pendingBadge"></span></a>
       <a href="#/authors" data-route="authors"><i data-ic="pen"></i>Mualliflar</a>
+      <a href="#/payouts" data-route="payouts"><i data-ic="wallet"></i>To'lovlar</a>
+      <a href="#/orders" data-route="orders"><i data-ic="receipt"></i>Buyurtmalar</a>
+      <a href="#/users" data-route="users"><i data-ic="users"></i>Foydalanuvchilar</a>
       <a href="#/categories" data-route="categories"><i data-ic="tag"></i>Kategoriyalar</a>
       <a href="#/settings" data-route="settings"><i data-ic="gear"></i>Sozlamalar</a>
+      <a href="/api/docs" target="_blank"><i data-ic="book"></i>API (Swagger)</a>
     </nav>
     <div class="side-foot"><div id="me"></div><button class="btn ghost sm" id="logout">Chiqish</button></div>
   </aside>

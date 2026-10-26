@@ -57,6 +57,7 @@
 
   const I18N = {
     uz: {
+      previewEnd: 'Parcha tugadi', previewText: "Davomini o'qish uchun kitobni kutubxonangizga qo'shing", buyFull: "To'liq kitobni olish", previewBadge: 'Parcha',
       pageTurn: 'Varaqlash', turnSlide: 'Surish', turnFlip: 'Varaq', turnFade: 'Xira', turnNone: "Yo'q", turnSpeed: 'Tezlik', fast: 'Tez', normal: "O'rta", slow: 'Sekin',
       loading: 'Kitob yuklanmoqda…', errorTitle: "Kitobni ochib bo'lmadi", back: 'Orqaga', contents: 'Mundarija', bookmarks: "Xatcho'plar",
       notes: 'Belgilar', search: 'Qidirish', fontSize: 'Shrift', theme: 'Fon', font: 'Harf', spacing: 'Qator', margins: 'Chekka', align: 'Tekislash',
@@ -67,6 +68,7 @@
       bookmarkAdded: "Xatcho'p qo'shildi", bookmarkRemoved: "Xatcho'p olib tashlandi", notePlaceholder: 'Izoh yozing…', chapter: 'Bob', percentRead: "o'qildi",
     },
     ru: {
+      previewEnd: 'Конец фрагмента', previewText: 'Чтобы читать дальше, добавьте книгу в библиотеку', buyFull: 'Получить полную книгу', previewBadge: 'Фрагмент',
       pageTurn: 'Листание', turnSlide: 'Сдвиг', turnFlip: 'Страница', turnFade: 'Растворение', turnNone: 'Нет', turnSpeed: 'Скорость', fast: 'Быстро', normal: 'Средне', slow: 'Медленно',
       loading: 'Загрузка книги…', errorTitle: 'Не удалось открыть книгу', back: 'Назад', contents: 'Оглавление', bookmarks: 'Закладки',
       notes: 'Заметки', search: 'Поиск', fontSize: 'Шрифт', theme: 'Фон', font: 'Гарнитура', spacing: 'Интервал', margins: 'Поля', align: 'Выравнивание',
@@ -77,6 +79,7 @@
       bookmarkAdded: 'Закладка добавлена', bookmarkRemoved: 'Закладка удалена', notePlaceholder: 'Напишите заметку…', chapter: 'Глава', percentRead: 'прочитано',
     },
     en: {
+      previewEnd: 'End of sample', previewText: 'Get the book to keep reading', buyFull: 'Get the full book', previewBadge: 'Sample',
       pageTurn: 'Page turn', turnSlide: 'Slide', turnFlip: 'Curl', turnFade: 'Fade', turnNone: 'None', turnSpeed: 'Speed', fast: 'Fast', normal: 'Normal', slow: 'Slow',
       loading: 'Loading book…', errorTitle: 'Could not open the book', back: 'Back', contents: 'Contents', bookmarks: 'Bookmarks',
       notes: 'Notes', search: 'Search', fontSize: 'Text size', theme: 'Theme', font: 'Font', spacing: 'Spacing', margins: 'Margins', align: 'Align',
@@ -561,7 +564,9 @@
     const ch = book.chapters[index];
     const isLast = index === book.chapters.length - 1;
     const next = book.chapters[index + 1];
-    const end = isLast
+    const end = isLast && book.preview
+      ? `<div class="chapter-end preview-end"><b>${esc(T.previewEnd)}</b><br>${esc(T.previewText)}<br><button data-buy>${esc(T.buyFull)}</button></div>`
+      : isLast
       ? `<div class="chapter-end">— ${esc(T.bookEnd)} —</div>`
       : `<div class="chapter-end">${esc(T.chapterEnd)}<br><button data-next-chapter>${esc(T.nextChapter)}: ${esc(shorten(next.title, 48))}</button></div>`;
     els.content.classList.remove('anim');
@@ -1337,6 +1342,7 @@
       if (sel && !sel.isCollapsed) return;
       if (moved && S.settings.mode === 'scroll') return;
       const target = e.target;
+      if (target.closest('[data-buy]')) return post('buy', { id: S.book.id });
       const nextBtn = target.closest('[data-next-chapter]');
       if (nextBtn) return renderChapter(S.ch + 1, { page: 0 });
       const a = target.closest('a');
@@ -1588,7 +1594,7 @@
     }
     const book = S.book;
     document.title = book.title;
-    els.barTitle.textContent = book.title;
+    els.barTitle.textContent = book.preview ? `${T.previewBadge} · ${book.title}` : book.title;
     $('#tocBookTitle').textContent = book.title;
     let acc = 0;
     S.charsBefore = book.chapters.map((c) => {

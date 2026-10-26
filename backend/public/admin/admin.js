@@ -1,4 +1,4 @@
-/* Mengliyev's eBook — admin panel (no build step, talks to /api). */
+/* BookHub — web admin panel (no build step, talks to /api). */
 (function () {
   'use strict';
 
@@ -28,13 +28,16 @@
     download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
     upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
     check: '<path d="M20 6L9 17l-5-5"/>',
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>',
+    wallet: '<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+    receipt: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
     gift: '<rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
   };
   const icon = (n) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
   const paintIcons = (root = document) => $$('[data-ic]', root).forEach((el) => !el.firstChild && (el.innerHTML = icon(el.dataset.ic)));
 
   // ------------------------------------------------------------- session & api
-  const SESSION_KEY = 'mb_admin_session';
+  const SESSION_KEY = 'bookhub_admin_session';
   let session = null;
   try {
     session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
@@ -139,19 +142,6 @@
   $('#lightbox').onclick = () => $('#lightbox').classList.add('hidden');
 
   const confirmAsk = (msg) => window.confirm(msg);
-
-  function statusBadge(b) {
-    const map = {
-      ready: ['ok', 'Tayyor'],
-      processing: ['info', '<span class="spin"></span> Konvertatsiya'],
-      pending: ['info', '<span class="spin"></span> Navbatda'],
-      failed: ['bad', 'Xato'],
-      none: ['mute', 'Fayl yo‘q'],
-    };
-    const [cls, label] = map[b.conversion_status] || map.none;
-    return `<span class="badge ${cls}">${label}</span>`;
-  }
-
   function coverEl(b, cls = 'cover') {
     return b.photo ? `<img class="${cls}" src="${esc(fileUrl(b.photo))}" alt="" loading="lazy">` : `<div class="${cls}">${esc((b.title || '?')[0])}</div>`;
   }
@@ -184,6 +174,20 @@
     }
   }
 
+  const period = (p) => {
+    const m = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'];
+    return p && p.length >= 7 ? `${m[+p.slice(5, 7) - 1]} ${p.slice(0, 4)}` : p || '';
+  };
+  const card = (c) => String(c || '').replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+
+  function statusBadge(b) {
+    if (b.conversion_status === 'pending' || b.conversion_status === 'processing') return '<span class="badge info"><span class="spin"></span> Tayyorlanmoqda</span>';
+    if (b.conversion_status === 'failed') return '<span class="badge bad">Fayl xatosi</span>';
+    const map = { approved: ['ok', 'Nashrda'], pending: ['warn', 'Moderatsiyada'], rejected: ['bad', 'Rad etilgan'], unpublished: ['mute', 'Yashirilgan'], draft: ['mute', 'Qoralama'] };
+    const [cls, label] = map[b.status] || map.draft;
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
   // ------------------------------------------------------------- auth screens
   function showLogin() {
     $('#shell').classList.add('hidden');
@@ -195,12 +199,37 @@
     showLogin();
   }
   $('#logout').onclick = logout;
+
+  // Two ways in: SMS code (same as the app) or phone + password.
+  let loginMode = 'sms';
+  let codeSent = false;
+  function paintLogin() {
+    $$('#loginTabs button').forEach((b) => b.classList.toggle('on', b.dataset.mode === loginMode));
+    $('#pwdField').classList.toggle('hidden', loginMode !== 'password');
+    $('#codeField').classList.toggle('hidden', loginMode !== 'sms' || !codeSent);
+    $('#loginBtn').textContent = loginMode === 'sms' && !codeSent ? 'Kod olish' : 'Kirish';
+    $('#loginErr').textContent = '';
+  }
+  $$('#loginTabs button').forEach((b) => (b.onclick = () => ((loginMode = b.dataset.mode), (codeSent = false), paintLogin())));
   $('#loginForm').onsubmit = async (e) => {
     e.preventDefault();
     const f = new FormData(e.target);
+    const phone = String(f.get('phone') || '').replace(/\D/g, '');
     $('#loginErr').textContent = '';
     try {
-      const d = await api('POST', '/api/auth/admin-login', { phone: f.get('phone'), password: f.get('password') });
+      let d;
+      if (loginMode === 'password') {
+        d = await api('POST', '/api/auth/admin-login', { phone, password: f.get('password') });
+      } else if (!codeSent) {
+        await api('POST', '/api/auth/request-otp', { phone });
+        codeSent = true;
+        paintLogin();
+        $('#codeField input').focus();
+        return;
+      } else {
+        d = await api('POST', '/api/auth/verify', { phone, code: f.get('code') });
+      }
+      if (!d.user.is_admin) throw new Error('Bu hisob administrator emas');
       saveSession({ accessToken: d.accessToken, refreshToken: d.refreshToken, user: d.user });
       start();
     } catch (err) {
@@ -211,16 +240,17 @@
   // ------------------------------------------------------------- router
   const ROUTES = {
     dashboard: ['Asosiy', renderDashboard],
-    books: ['Kitoblar', renderBooks],
-    payments: ["To'lovlar", renderPayments],
-    users: ['Foydalanuvchilar', renderUsers],
+    moderation: ['Moderatsiya va kitoblar', renderBooks],
     authors: ['Mualliflar', renderAuthors],
+    payouts: ["Mualliflarga to'lovlar", renderPayouts],
+    orders: ['Buyurtmalar', renderOrders],
+    users: ['Foydalanuvchilar', renderUsers],
     categories: ['Kategoriyalar', renderCategories],
     settings: ['Sozlamalar', renderSettings],
   };
   let pageTimer = null;
   function route() {
-    const name = (location.hash.replace(/^#\/?/, '').split('?')[0] || 'dashboard');
+    const name = location.hash.replace(/^#\/?/, '').split('?')[0] || 'dashboard';
     const r = ROUTES[name] || ROUTES.dashboard;
     if (pageTimer) clearInterval(pageTimer);
     pageTimer = null;
@@ -244,12 +274,16 @@
 
   async function refreshBadge() {
     try {
-      const d = await api('GET', '/api/payments/get-payments?status=1&limit=1');
+      const s = await api('GET', '/api/admin/stats');
       const b = $('#pendingBadge');
-      b.textContent = d.pending;
-      b.classList.toggle('hidden', !d.pending);
+      b.textContent = s.moderation_pending;
+      b.classList.toggle('hidden', !s.moderation_pending);
     } catch (e) { /* ignore */ }
   }
+
+  const stat = (label, value, sub) => `<div class="card stat"><small>${label}</small><b>${value}</b><span>${sub || ''}</span></div>`;
+  const listRows = (rows, fn) => (rows && rows.length ? rows.map((r) => fn(r)).map(([a, b]) => `<div class="list-row"><span>${a}</span><b>${b}</b></div>`).join('') : '<div class="muted">Hozircha ma\'lumot yo\'q</div>');
+  const empty = (text) => `<div class="empty">${text}</div>`;
 
   // ------------------------------------------------------------- dashboard
   async function renderDashboard() {
@@ -261,601 +295,301 @@
     const bars = s.sales_series
       .map((d, i) => {
         const h = Math.round((d.revenue / max) * (H - 24));
-        return `<rect x="${i * bw + 2}" y="${H - 16 - h}" width="${bw - 4}" height="${Math.max(h, d.revenue ? 2 : 0)}" rx="2"><title>${d.day}: ${money(d.revenue)} (${d.sales} ta)</title></rect>` +
-          '';
+        return `<rect x="${i * bw + 2}" y="${H - 16 - h}" width="${bw - 4}" height="${Math.max(h, d.revenue ? 2 : 0)}" rx="2"><title>${d.day}: ${money(d.revenue)} (${d.sales} ta)</title></rect>`;
       })
       .join('');
     $('#view').innerHTML = `
+      ${s.moderation_pending ? `<a class="card notice" href="#/moderation"><b>${s.moderation_pending} ta kitob moderatsiyani kutmoqda</b><span>Ko'rish →</span></a>` : ''}
       <div class="grid stats">
-        ${stat('Foydalanuvchilar', num(s.users), `bugun +${s.users_today}`)}
-        ${stat('Kitoblar', num(s.books_ready), `jami ${s.books}${s.books_failed ? ` · <span style="color:var(--bad)">${s.books_failed} xato</span>` : ''}`)}
-        ${stat("Tekshiriladigan to'lovlar", num(s.payments_pending), `<a href="#/payments">ko'rish →</a>`)}
-        ${stat('Bugun sotildi', num(s.sales_today), `jami ${num(s.sales_total)} ta`)}
         ${stat('Shu oy tushum', money(s.revenue_month), `jami ${money(s.revenue_total)}`)}
-        ${stat("Faol o'quvchilar", num(s.active_readers_week), 'oxirgi 7 kun')}
+        ${stat('Shu oy komissiya', money(s.commission_month), `jami ${money(s.commission_total)} · ${s.settings.commission_percent}%`)}
+        ${stat('Bugun sotildi', num(s.sales_today), '')}
+        ${stat('Mualliflarga qarz', money(s.authors_balance), `to'lov kutilmoqda: ${money(s.payouts_pending)}`)}
+        ${stat('Foydalanuvchilar', num(s.users), `bugun +${s.users_today}`)}
+        ${stat('Mualliflar', num(s.authors), s.authors_unverified ? `<a href="#/authors">${s.authors_unverified} ta karta tekshiruvda</a>` : 'kartalar tekshirilgan')}
+        ${stat('Nashr qilingan kitoblar', num(s.books_published), s.converting ? `${s.converting} ta tayyorlanmoqda` : '')}
       </div>
       <div class="grid two">
         <div class="card"><h3>Tushum — oxirgi 30 kun</h3><svg class="chart" viewBox="0 0 ${W} ${H - 14}" preserveAspectRatio="none">${bars}</svg><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:11px">${s.sales_series.filter((_, i) => i % 5 === 0).map((d) => `<span>${d.day.slice(5)}</span>`).join('')}</div></div>
-        <div class="card"><h3>Eng ko'p sotilgan</h3>${listRows(s.top_books, (b) => [esc(b.title), `${b.sold} ta`])}</div>
-      </div>
-      <div class="grid two" style="margin-top:14px">
-        <div class="card"><h3>Eng ko'p o'qilayotgan</h3>${listRows(s.most_read, (b) => [esc(b.title), `${b.readers} o'quvchi · o'rtacha ${b.avg_percent || 0}%`])}</div>
-        <div class="card"><h3>Konvertatsiya navbati</h3><div class="list-row"><span>Hozir ishlayapti</span><b>${s.queue.running ? 'ha' : "yo'q"}</b></div><div class="list-row"><span>Navbatda</span><b>${s.queue.queued}</b></div></div>
+        <div class="card"><h3>Eng ko'p sotilgan</h3>${listRows(s.top_books, (b) => [`${esc(b.title)}<br><small class="muted">${esc(b.author_name || '')}</small>`, `${b.sales_count} ta`])}</div>
       </div>`;
   }
-  const stat = (label, value, sub) => `<div class="card stat"><small>${label}</small><b>${value}</b><span>${sub || ''}</span></div>`;
-  const listRows = (rows, fn) => (rows && rows.length ? rows.map((r) => fn(r)).map(([a, b]) => `<div class="list-row"><span>${a}</span><b>${b}</b></div>`).join('') : '<div class="muted">Hozircha ma\'lumot yo\'q</div>');
 
-  // ------------------------------------------------------------- books
-  let lookups = { authors: [], categories: [] };
-  async function loadLookups() {
-    const [a, c] = await Promise.all([api('GET', '/api/authors/get-authors?limit=500'), api('GET', '/api/categories/categories')]);
-    lookups = { authors: a.authors, categories: c };
-  }
-
+  // ------------------------------------------------------------- books & moderation
+  let booksStatus = 'pending';
+  let booksQuery = '';
   async function renderBooks() {
-    $('#topActions').innerHTML = `<button class="btn primary" id="addBook"><i data-ic="plus"></i>Kitob qo'shish</button>`;
-    paintIcons($('#topActions'));
-    $('#addBook').onclick = () => bookModal(null);
-    await loadLookups();
-    const view = $('#view');
-    view.innerHTML = `
-      <div class="toolbar">
-        <input type="search" id="bq" placeholder="Qidirish: nom, muallif…">
-        <select id="bstatus"><option value="">Barcha holatlar</option><option value="ready">Tayyor</option><option value="work">Konvertatsiyada</option><option value="failed">Xato</option><option value="hidden">Yashirilgan</option></select>
-        <select id="bcat"><option value="">Barcha kategoriyalar</option>${lookups.categories.map((c) => `<option value="${c.id}">${esc(c.name.uz)}</option>`).join('')}</select>
-      </div>
-      <div id="bookTable"></div>`;
-    let books = [];
-    const draw = () => {
-      const qv = $('#bq').value.toLowerCase();
-      const st = $('#bstatus').value;
-      const cat = $('#bcat').value;
-      const list = books.filter((b) => {
-        if (qv && !(b.title + ' ' + b.author.uz).toLowerCase().includes(qv)) return false;
-        if (cat && String(b.category_id) !== cat) return false;
-        if (st === 'ready' && b.conversion_status !== 'ready') return false;
-        if (st === 'work' && !['pending', 'processing'].includes(b.conversion_status)) return false;
-        if (st === 'failed' && b.conversion_status !== 'failed') return false;
-        if (st === 'hidden' && b.is_published) return false;
-        return true;
-      });
-      $('#bookTable').innerHTML = list.length
-        ? `<div class="table-wrap"><table><thead><tr><th>Kitob</th><th>Kategoriya</th><th>Narx</th><th>Holat</th><th>Hajm</th><th></th></tr></thead><tbody>${list
-            .map(
-              (b) => `<tr data-id="${b.id}">
-              <td><div class="cell-book">${coverEl(b)}<div><b>${esc(b.title)}</b><small>${esc(b.author.uz || 'Muallif ko‘rsatilmagan')}</small></div></div></td>
-              <td>${esc(b.category.uz || '—')}</td>
-              <td>${b.is_free ? '<span class="badge ok">Bepul</span>' : money(b.price)}</td>
-              <td>${statusBadge(b)} ${b.is_published ? '' : '<span class="badge mute">Yashirin</span>'}</td>
-              <td class="muted">${b.chapters ? `${b.chapters} bob · ${num(b.words)} so‘z` : '—'}</td>
-              <td><div class="actions">
-                ${b.conversion_status === 'ready' ? `<button class="btn sm" data-act="read" title="O'qib ko'rish"><i data-ic="eye"></i>O'qish</button>` : ''}
-                <button class="btn sm" data-act="edit"><i data-ic="edit"></i></button>
-                ${b.conversion_status === 'ready' ? `<button class="btn sm" data-act="epub" title="EPUB yuklab olish"><i data-ic="download"></i></button>` : ''}
-                <button class="btn sm danger" data-act="del"><i data-ic="trash"></i></button>
-              </div></td></tr>`
-            )
-            .join('')}</tbody></table></div>`
-        : `<div class="empty">${books.length ? 'Hech narsa topilmadi' : "Hozircha kitob yo'q. «Kitob qo'shish» tugmasini bosing va Word faylni yuklang."}</div>`;
-      paintIcons($('#bookTable'));
-    };
-    const load = async () => {
-      const d = await api('GET', '/api/books/get-books?all=1&limit=500');
-      books = d.books;
-      draw();
-      const busy = books.some((b) => ['pending', 'processing'].includes(b.conversion_status));
-      if (busy && !pageTimer) pageTimer = setInterval(() => load().catch(() => {}), 3000);
-      if (!busy && pageTimer) {
-        clearInterval(pageTimer);
-        pageTimer = null;
-      }
-    };
-    $('#bq').oninput = draw;
-    $('#bstatus').onchange = draw;
-    $('#bcat').onchange = draw;
-    $('#bookTable').onclick = async (e) => {
-      const btn = e.target.closest('[data-act]');
-      if (!btn) return;
-      const id = +btn.closest('tr').dataset.id;
-      const b = books.find((x) => x.id === id);
-      if (btn.dataset.act === 'read') openReader(id);
-      if (btn.dataset.act === 'edit') bookModal(b);
-      if (btn.dataset.act === 'epub') downloadAuthed(`/api/books/${id}/epub`, `${b.slug || 'book'}.epub`);
-      if (btn.dataset.act === 'del' && confirmAsk(`"${b.title}" kitobini o'chirasizmi? Sotib olganlar ham undan mahrum bo'ladi.`)) {
-        await api('DELETE', `/api/books/delete-book/${id}`).then(() => toast("O'chirildi"), fail);
-        load();
-      }
-    };
-    window.__reloadBooks = load;
-    await load();
-  }
-
-  function reportHtml(b) {
-    if (b.conversion_status === 'failed') return `<div class="report" style="background:var(--bad-soft);color:var(--bad)"><b>Konvertatsiya xatosi</b><div>${esc(b.conversion_error || '')}</div></div>`;
-    if (b.conversion_status !== 'ready' || !b.conversion_report) {
-      return ['pending', 'processing'].includes(b.conversion_status) ? `<div class="report"><b><span class="spin" style="display:inline-block"></span> Konvertatsiya ketmoqda…</b><div class="muted">Word fayl telefon uchun qulay formatga o'girilmoqda. Odatda bir necha soniya.</div></div>` : '';
-    }
-    const r = b.conversion_report;
-    const toc = (r.toc || []).map((t) => `<div class="l${t.level}">${esc(t.title)}</div>`).join('');
-    return `<div class="report">
-      <b>✔ Kitob tayyor${b.source_name ? ` — ${esc(b.source_name)}` : ''}</b>
-      <div class="nums"><div><b>${r.chapters}</b>bob</div><div><b>${r.tocEntries}</b>mundarija</div><div><b>${num(r.words)}</b>so'z</div><div><b>${r.images}</b>rasm</div><div><b>${r.footnotes}</b>izoh</div><div><b>${(r.stats && r.stats.readingMinutes) || '—'}</b>daqiqa</div></div>
-      ${r.warnings && r.warnings.length ? `<ul class="warn-list">${r.warnings.map((w) => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}
-      ${toc ? `<div class="hint">Avtomatik topilgan mundarija (to'g'riligini tekshiring):</div><div class="toc-preview">${toc}</div>` : ''}
-      <div><button class="btn sm" type="button" data-read="${b.id}"><i data-ic="eye"></i>O'qib ko'rish</button> <button class="btn sm" type="button" data-reconvert="${b.id}"><i data-ic="refresh"></i>Qayta konvertatsiya</button></div>
-    </div>`;
-  }
-
-  function bookModal(book) {
-    const isEdit = !!book;
-    const b = book || { title: '', description: '', is_free: true, price: 0, is_published: true };
-    const body = openModal(isEdit ? 'Kitobni tahrirlash' : "Yangi kitob", `
-      <form id="bookForm" class="modal-body" style="padding:0">
-        <div class="drop ${b.source_name ? 'has' : ''}" id="fileDrop">
-          <i data-ic="upload" style="width:28px;height:28px"></i>
-          <b id="fileLabel">${b.source_name ? esc(b.source_name) : 'Word faylni shu yerga tashlang yoki bosing'}</b>
-          <span>.docx (tavsiya), .doc, .epub, .txt, .rtf, .odt — tizim o'zi telefon uchun formatlaydi</span>
-          <input type="file" name="file" accept=".docx,.doc,.epub,.txt,.rtf,.odt" hidden>
-        </div>
-        <label>Kitob nomi <span class="hint">${isEdit ? '' : "— bo'sh qoldirsangiz, kitobning titul sahifasidan avtomatik olinadi"}</span><input type="text" name="title" value="${esc(b.title)}" ${isEdit ? 'required' : ''} maxlength="300"></label>
-        <label>Tavsif<textarea name="description" maxlength="10000">${esc(b.description)}</textarea></label>
-        <div class="form-row">
-          <label>Muallif<select name="author_id"><option value="">— tanlang —</option>${lookups.authors.map((a) => `<option value="${a.id}" ${a.id === b.author_id ? 'selected' : ''}>${esc(a.name.uz)}</option>`).join('')}</select></label>
-          <label>Kategoriya<select name="category_id"><option value="">— tanlang —</option>${lookups.categories.map((c) => `<option value="${c.id}" ${c.id === b.category_id ? 'selected' : ''}>${esc(c.name.uz)}</option>`).join('')}</select></label>
-        </div>
-        <div class="form-row">
-          <label class="check"><input type="checkbox" name="is_free" ${b.is_free ? 'checked' : ''}> Bepul kitob</label>
-          <label id="priceWrap" class="${b.is_free ? 'hidden' : ''}">Narx (so'm)<input type="number" name="price" min="0" step="1000" value="${b.price || ''}"></label>
-        </div>
-        <label class="check"><input type="checkbox" name="is_published" ${b.is_published ? 'checked' : ''}> Ilovada ko'rsatish <span class="hint">(o'chirsangiz, faqat admin ko'radi — avval tekshirib oling)</span></label>
-        <div class="cover-pick">
-          <div id="coverPrev">${coverEl(b)}</div>
-          <div><button type="button" class="btn sm" id="coverBtn"><i data-ic="upload"></i>Muqova rasmi</button><div class="hint">JPG/PNG, 2:3 nisbat tavsiya etiladi</div></div>
-          <input type="file" name="image" accept="image/*" hidden>
-        </div>
-        <div class="progress hidden" id="upProg"><i></i></div>
-        <div id="reportBox">${isEdit ? reportHtml(b) : ''}</div>
-        ${isEdit ? `<details><summary class="muted" style="cursor:pointer">Foydalanuvchiga bepul berish</summary><div class="toolbar" style="margin:10px 0 0"><input type="tel" id="grantPhone" placeholder="+998 90 123 45 67" style="max-width:220px"><button type="button" class="btn sm" id="grantBtn"><i data-ic="gift"></i>Berish</button></div></details>` : ''}
-        <div class="form-foot"><button type="button" class="btn" data-close>Yopish</button><button type="submit" class="btn primary" id="saveBook">${isEdit ? 'Saqlash' : 'Yaratish'}</button></div>
-      </form>`, true);
-    paintIcons(body);
-    const form = $('#bookForm');
-    const fileInput = $('input[name=file]', form);
-    const imgInput = $('input[name=image]', form);
-    const drop = $('#fileDrop');
-    drop.onclick = () => fileInput.click();
-    drop.ondragover = (e) => {
-      e.preventDefault();
-      drop.classList.add('over');
-    };
-    drop.ondragleave = () => drop.classList.remove('over');
-    drop.ondrop = (e) => {
-      e.preventDefault();
-      drop.classList.remove('over');
-      if (e.dataTransfer.files[0]) {
-        fileInput.files = e.dataTransfer.files;
-        fileInput.onchange();
-      }
-    };
-    fileInput.onchange = () => {
-      const f = fileInput.files[0];
-      if (!f) return;
-      drop.classList.add('has');
-      $('#fileLabel').textContent = `${f.name} (${(f.size / 1048576).toFixed(1)} MB)`;
-    };
-    $('#coverBtn').onclick = () => imgInput.click();
-    imgInput.onchange = () => {
-      const f = imgInput.files[0];
-      if (f) $('#coverPrev').innerHTML = `<img class="cover" src="${URL.createObjectURL(f)}" alt="">`;
-    };
-    $('input[name=is_free]', form).onchange = (e) => $('#priceWrap').classList.toggle('hidden', e.target.checked);
-
-    const bindReport = () => {
-      $$('[data-read]', form).forEach((x) => (x.onclick = () => openReader(+x.dataset.read)));
-      $$('[data-reconvert]', form).forEach((x) => (x.onclick = async () => {
-        try {
-          const d = await api('POST', `/api/books/${x.dataset.reconvert}/reconvert`);
-          watch(d.book.id);
-        } catch (e) {
-          fail(e);
-        }
-      }));
-      paintIcons(form);
-    };
-    bindReport();
-    const watch = (id) => {
-      if (modalTimer) clearInterval(modalTimer);
-      const tickFn = async () => {
-        const fresh = await api('GET', `/api/books/${id}`);
-        if (!$('#reportBox')) return clearInterval(modalTimer);
-        $('#reportBox').innerHTML = reportHtml(fresh);
-        bindReport();
-        if (!['pending', 'processing'].includes(fresh.conversion_status)) {
-          clearInterval(modalTimer);
-          if (window.__reloadBooks) window.__reloadBooks();
-          if (fresh.conversion_status === 'ready') toast('Kitob tayyor!');
-        }
-      };
-      modalTimer = setInterval(() => tickFn().catch(() => {}), 1500);
-      tickFn().catch(() => {});
-    };
-    if (isEdit && ['pending', 'processing'].includes(b.conversion_status)) watch(b.id);
-
-    if (isEdit) {
-      $('#grantBtn').onclick = async () => {
-        try {
-          await api('POST', `/api/books/${b.id}/grant`, { phone: $('#grantPhone').value });
-          toast('Kitob berildi');
-          $('#grantPhone').value = '';
-        } catch (e) {
-          fail(e);
-        }
-      };
-    }
-
-    form.onsubmit = async (e) => {
-      e.preventDefault();
-      const fd = new FormData();
-      fd.set('title', form.title.value.trim());
-      fd.set('description', form.description.value.trim());
-      fd.set('author_id', form.author_id.value);
-      fd.set('category_id', form.category_id.value);
-      fd.set('is_free', form.is_free.checked ? 'true' : 'false');
-      fd.set('price', form.is_free.checked ? '0' : form.price.value || '0');
-      fd.set('is_published', form.is_published.checked ? 'true' : 'false');
-      if (fileInput.files[0]) fd.set('file', fileInput.files[0]);
-      if (imgInput.files[0]) fd.set('image', imgInput.files[0]);
-      const btn = $('#saveBook');
-      btn.disabled = true;
-      const prog = $('#upProg');
-      prog.classList.remove('hidden');
-      try {
-        const d = await upload(isEdit ? 'PUT' : 'POST', isEdit ? `/api/books/update-book/${b.id}` : '/api/books/create-book', fd, (p) => ($('i', prog).style.width = Math.round(p * 100) + '%'));
-        toast(d.message || 'Saqlandi');
-        if (window.__reloadBooks) window.__reloadBooks();
-        if (!isEdit) {
-          // Switch the dialog to edit mode for the new book and follow conversion.
-          bookModal(d.book);
-        } else if (['pending', 'processing'].includes(d.book.conversion_status)) {
-          watch(d.book.id);
-        }
-      } catch (err) {
-        fail(err);
-      } finally {
-        if ($('#saveBook')) $('#saveBook').disabled = false;
-        if ($('#upProg')) $('#upProg').classList.add('hidden');
-      }
-    };
-  }
-
-  // ------------------------------------------------------------- payments
-  async function renderPayments() {
-    const state = { status: '1', q: '' };
+    const tabs = [['pending', 'Moderatsiya'], ['approved', 'Nashrda'], ['rejected', 'Rad etilgan'], ['unpublished', 'Yashirilgan'], ['', 'Hammasi']];
+    const qs = new URLSearchParams({ limit: 200 });
+    if (booksStatus) qs.set('status', booksStatus);
+    if (booksQuery) qs.set('q', booksQuery);
+    const d = await api('GET', '/api/admin/books?' + qs);
     $('#view').innerHTML = `
       <div class="toolbar">
-        <div class="tabs" id="ptabs"><button data-s="1" class="on">Kutilmoqda</button><button data-s="2">Tasdiqlangan</button><button data-s="3">Rad etilgan</button><button data-s="">Hammasi</button></div>
-        <input type="search" id="pq" placeholder="Ism, telefon yoki kitob">
+        <div class="tabs">${tabs.map(([k, l]) => `<button data-st="${k}" class="${k === booksStatus ? 'on' : ''}">${l}</button>`).join('')}</div>
+        <input type="search" id="bq" placeholder="Nom yoki muallif" value="${esc(booksQuery)}">
+        <span class="muted">${d.total} ta</span>
       </div>
-      <div id="plist"></div>`;
-    const load = async () => {
-      const d = await api('GET', `/api/payments/get-payments?limit=200&status=${state.status}&q=${encodeURIComponent(state.q)}`);
-      $('#plist').innerHTML = d.payments.length
-        ? `<div class="grid pay-grid">${d.payments
-            .map(
-              (p) => `<div class="card pay" data-id="${p.id}">
-          ${p.receipt_image ? `<img class="receipt" src="${esc(fileUrl(p.receipt_image))}" alt="Chek" loading="lazy">` : ''}
-          <dl>
-            <dt>Kitob</dt><dd>${esc(p.book_title)}</dd>
-            <dt>Summa</dt><dd>${money(p.amount)}</dd>
-            <dt>Foydalanuvchi</dt><dd>${esc(p.user_name || '—')}</dd>
-            <dt>Telefon</dt><dd><a href="tel:+${esc((p.phone_number || '').replace(/\D/g, ''))}">${esc(p.phone_number)}</a></dd>
-            <dt>To'lov vaqti</dt><dd>${esc(p.approved_at || '—')}</dd>
-            <dt>Izoh</dt><dd>${esc(p.comment || '—')}</dd>
-            <dt>Yuborilgan</dt><dd>${date(p.created_at)}</dd>
-            <dt>Holat</dt><dd><span class="badge ${p.status_id === 2 ? 'ok' : p.status_id === 3 ? 'bad' : 'warn'}">${esc(p.status.uz)}</span>${p.admin_comment ? ` <span class="muted">${esc(p.admin_comment)}</span>` : ''}</dd>
-          </dl>
-          <div class="actions">
-            ${p.status_id !== 2 ? `<button class="btn ok" data-st="2"><i data-ic="check"></i>Tasdiqlash</button>` : ''}
-            ${p.status_id !== 3 ? `<button class="btn danger" data-st="3"><i data-ic="x"></i>Rad etish</button>` : ''}
-          </div></div>`
-            )
-            .join('')}</div>`
-        : `<div class="empty">${state.status === '1' ? "Tekshiriladigan to'lov yo'q 🎉" : "To'lovlar yo'q"}</div>`;
-      paintIcons($('#plist'));
-      refreshBadge();
-    };
-    $('#ptabs').onclick = (e) => {
-      const b = e.target.closest('button');
-      if (!b) return;
-      state.status = b.dataset.s;
-      $$('#ptabs button').forEach((x) => x.classList.toggle('on', x === b));
-      load().catch(fail);
-    };
+      ${d.books.length ? `<div class="table-wrap"><table>
+        <thead><tr><th>Kitob</th><th>Yuklagan</th><th>Narx</th><th>Holat</th><th>Sotuv</th><th>Sana</th><th></th></tr></thead>
+        <tbody>${d.books.map((b) => `<tr>
+          <td><div class="cell-book">${coverEl(b)}<div><b>${esc(b.title)}</b><small>${esc(b.author_name)}</small></div></div></td>
+          <td>${esc(b.owner ? b.owner.name : '—')}</td>
+          <td>${b.is_free ? '<span class="badge ok">Bepul</span>' : money(b.price)}</td>
+          <td>${statusBadge(b)}</td>
+          <td>${num(b.sales_count)}</td>
+          <td class="muted">${date(b.submitted_at || b.created_at)}</td>
+          <td><div class="actions"><button class="btn sm" data-open="${b.id}">Ko'rish</button></div></td>
+        </tr>`).join('')}</tbody></table></div>` : empty(booksStatus === 'pending' ? "Navbat bo'sh — yangi kitoblar shu yerda paydo bo'ladi" : "Kitoblar yo'q")}`;
+    $$('.tabs button').forEach((b) => (b.onclick = () => ((booksStatus = b.dataset.st), renderBooks().catch(fail))));
     let t;
-    $('#pq').oninput = (e) => {
+    $('#bq').oninput = (e) => {
       clearTimeout(t);
-      t = setTimeout(() => {
-        state.q = e.target.value;
-        load().catch(fail);
-      }, 300);
+      t = setTimeout(() => ((booksQuery = e.target.value.trim()), renderBooks().then(() => $('#bq').focus()).catch(fail)), 400);
     };
-    $('#plist').onclick = async (e) => {
-      if (e.target.classList.contains('receipt')) return lightbox(e.target.src);
-      const btn = e.target.closest('[data-st]');
-      if (!btn) return;
-      const id = btn.closest('.pay').dataset.id;
-      const st = +btn.dataset.st;
-      let comment = st === 2 ? 'Tasdiqlandi' : '';
-      if (st === 3) {
-        comment = prompt("Rad etish sababi (foydalanuvchi ko'radi):", "To'lov topilmadi");
-        if (comment === null) return;
-      }
-      try {
-        const d = await api('PUT', `/api/payments/update-payment/${id}`, { status: st, comment });
-        toast(d.message);
-        load();
-      } catch (err) {
-        fail(err);
-      }
-    };
-    await load();
+    $$('[data-open]').forEach((b) => (b.onclick = () => bookModal(b.dataset.open)));
+    if (d.books.some((b) => b.conversion_status === 'pending' || b.conversion_status === 'processing')) pageTimer = setInterval(() => renderBooks().catch(() => {}), 4000);
   }
 
-  // ------------------------------------------------------------- users
-  async function renderUsers() {
-    $('#topActions').innerHTML = `<button class="btn" id="addAdmin"><i data-ic="plus"></i>Administrator</button>`;
-    paintIcons($('#topActions'));
-    $('#addAdmin').onclick = () => {
-      const body = openModal('Yangi administrator', `
-        <form id="admForm" class="modal-body" style="padding:0">
-          <label>Ism<input type="text" name="name" required></label>
-          <label>Telefon<input type="tel" name="phone" placeholder="+998 90 123 45 67" required></label>
-          <label>Parol (kamida 8 belgi)<input type="password" name="password" minlength="8" required></label>
-          <div class="form-foot"><button type="button" class="btn" data-close>Bekor</button><button class="btn primary">Yaratish</button></div>
-        </form>`);
-      $('#admForm', body).onsubmit = async (e) => {
-        e.preventDefault();
-        const f = e.target;
-        try {
-          await api('POST', '/api/admin/users', { name: f.name.value, phone: f.phone.value, password: f.password.value, role_id: 1 });
-          toast('Administrator yaratildi');
-          closeModal();
-          load();
-        } catch (err) {
-          fail(err);
-        }
-      };
-    };
-    $('#view').innerHTML = `<div class="toolbar"><input type="search" id="uq" placeholder="Ism yoki telefon"><select id="urole"><option value="">Hammasi</option><option value="2">Foydalanuvchilar</option><option value="1">Administratorlar</option></select></div><div id="ulist"></div>`;
-    const load = async () => {
-      const d = await api('GET', `/api/admin/users?limit=300&q=${encodeURIComponent($('#uq').value)}&role=${$('#urole').value}`);
-      $('#ulist').innerHTML = d.users.length
-        ? `<div class="table-wrap"><table><thead><tr><th>Foydalanuvchi</th><th>Rol</th><th>Kitoblar</th><th>Ro'yxatdan o'tgan</th><th>Oxirgi kirish</th><th></th></tr></thead><tbody>${d.users
-            .map(
-              (u) => `<tr data-id="${u.id}"><td><b>${esc(u.name || '—')}</b><div class="muted">${esc(u.phone_number)}</div></td>
-            <td>${u.role_id === 1 ? '<span class="badge info">Admin</span>' : '<span class="badge mute">Foydalanuvchi</span>'} ${u.is_blocked ? '<span class="badge bad">Bloklangan</span>' : ''}</td>
-            <td>${u.books_count}</td><td class="muted">${date(u.created_at)}</td><td class="muted">${date(u.last_login_at)}</td>
-            <td><div class="actions"><button class="btn sm" data-open>Batafsil</button></div></td></tr>`
-            )
-            .join('')}</tbody></table></div><div class="pager">Jami: ${d.total}</div>`
-        : '<div class="empty">Foydalanuvchilar topilmadi</div>';
-    };
-    let t;
-    $('#uq').oninput = () => {
-      clearTimeout(t);
-      t = setTimeout(() => load().catch(fail), 300);
-    };
-    $('#urole').onchange = () => load().catch(fail);
-    $('#ulist').onclick = (e) => {
-      if (!e.target.closest('[data-open]')) return;
-      userModal(+e.target.closest('tr').dataset.id, load);
-    };
-    await load();
-  }
-
-  async function userModal(id, reload) {
-    const [u, books] = await Promise.all([api('GET', `/api/admin/users/${id}`), api('GET', '/api/books/get-books?all=1&limit=500')]);
-    const owned = new Set(u.books.map((b) => b.id));
-    const body = openModal(u.name || u.phone_number, `
-      <div class="report"><div class="nums"><div><b>${esc(u.phone_number)}</b>telefon</div><div><b>${u.books.length}</b>kitob</div><div><b>${date(u.created_at)}</b>ro'yxatdan o'tgan</div></div></div>
-      <h3 style="margin:4px 0 0">Kitoblari</h3>
-      ${u.books.length ? u.books.map((b) => `<div class="list-row"><span>${esc(b.title)} <span class="muted">· ${b.source === 'admin' ? 'admin bergan' : "to'lov"} · ${date(b.created_at)}</span></span><span>${Math.round((b.percent || 0) * 100)}% <button class="btn sm danger" data-revoke="${b.id}">Olish</button></span></div>`).join('') : '<div class="muted">Sotib olingan kitob yo‘q (bepul kitoblar hammaga ochiq)</div>'}
-      <div class="toolbar" style="margin:0"><select id="grantSel" style="max-width:320px"><option value="">Kitobni bepul berish…</option>${books.books.filter((b) => !b.is_free && !owned.has(b.id)).map((b) => `<option value="${b.id}">${esc(b.title)}</option>`).join('')}</select><button class="btn sm" id="grantGo"><i data-ic="gift"></i>Berish</button></div>
-      <h3 style="margin:4px 0 0">Boshqaruv</h3>
-      <form id="uForm" class="modal-body" style="padding:0">
-        <div class="form-row"><label>Ism<input type="text" name="name" value="${esc(u.name)}"></label>
-        <label>Rol<select name="role_id"><option value="2" ${u.role_id === 2 ? 'selected' : ''}>Foydalanuvchi</option><option value="1" ${u.role_id === 1 ? 'selected' : ''}>Administrator</option></select></label></div>
-        <label>Yangi parol (admin panelga kirish uchun, ixtiyoriy)<input type="password" name="password" minlength="8" placeholder="${u.has_password ? 'o‘rnatilgan — o‘zgartirish uchun yozing' : 'kamida 8 belgi'}"></label>
-        <label class="check"><input type="checkbox" name="is_blocked" ${u.is_blocked ? 'checked' : ''}> Bloklash</label>
-        <div class="form-foot"><button type="button" class="btn" data-close>Yopish</button><button class="btn primary">Saqlash</button></div>
-      </form>`);
-    paintIcons(body);
-    $('#grantGo').onclick = async () => {
-      const bid = $('#grantSel').value;
-      if (!bid) return;
+  async function bookModal(id) {
+    const b = await api('GET', `/api/admin/books/${id}`);
+    const o = b.owner_profile;
+    const r = b.conversion_report || {};
+    const ready = b.conversion_status === 'ready';
+    const body = openModal(b.title, `
+      <div class="cover-pick">${coverEl(b)}<div>
+        <div>${statusBadge(b)} ${b.is_free ? '<span class="badge ok">Bepul</span>' : `<b>${money(b.price)}</b>`}</div>
+        <div class="muted">${esc(b.author_name)}${b.category ? ' · ' + esc(b.category.uz) : ''}</div>
+        <div class="muted">Yuborilgan: ${date(b.submitted_at)}${b.reviewed_at ? ' · ko‘rib chiqilgan: ' + date(b.reviewed_at) : ''}</div>
+      </div></div>
+      ${b.rejection_reason ? `<div class="report" style="color:var(--bad)">Rad etish sababi: ${esc(b.rejection_reason)}</div>` : ''}
+      ${b.conversion_error ? `<div class="report" style="color:var(--bad)">Konvertatsiya xatosi: ${esc(b.conversion_error)}</div>` : ''}
+      ${o ? `<div class="report"><b>${esc(o.display_name)}</b><span>${esc(o.phone || '')} · karta: ${o.card_number ? card(o.card_number) : "yo'q"} ${o.card_verified ? '<span class="badge ok">tasdiqlangan</span>' : '<span class="badge warn">tasdiqlanmagan</span>'} ${o.status === 'blocked' ? '<span class="badge bad">bloklangan</span>' : ''}</span></div>` : ''}
+      ${b.description ? `<div><b>Tavsif</b><p style="white-space:pre-wrap;margin:6px 0 0">${esc(b.description)}</p></div>` : ''}
+      ${ready ? `<div class="report"><div class="nums"><span><b>${num(r.chapters)}</b>bob</span><span><b>${num(r.words)}</b>so'z</span><span><b>${num(r.images)}</b>rasm</span><span><b>${num(r.footnotes)}</b>izoh</span></div>
+        ${b.source_name ? `<span class="muted">${esc(b.source_name)}</span>` : ''}
+        ${(r.warnings || []).length ? `<ul class="warn-list">${r.warnings.slice(0, 8).map((w) => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}</div>` : ''}
+      <div class="form-foot" style="flex-wrap:wrap">
+        ${ready ? `<button class="btn" data-a="read"><i data-ic="eye"></i>O'qish</button>` : ''}
+        <button class="btn sm ghost" data-a="reconvert"><i data-ic="refresh"></i>Qayta konvertatsiya</button>
+        <button class="btn sm ghost danger" data-a="delete"><i data-ic="trash"></i>O'chirish</button>
+        ${b.status === 'approved' ? `<button class="btn" data-a="unpublish">Do'kondan olish</button>` : ''}
+        ${b.status === 'pending' || b.status === 'approved' ? `<button class="btn danger" data-a="reject">Rad etish</button>` : ''}
+        ${ready && b.status !== 'approved' ? `<button class="btn primary" data-a="approve"><i data-ic="check"></i>Tasdiqlash</button>` : ''}
+      </div>`, true);
+    const act = async (fn, msg) => {
       try {
-        await api('POST', `/api/books/${bid}/grant`, { user_id: id });
-        toast('Kitob berildi');
-        userModal(id, reload);
+        const res = await fn();
+        toast((res && res.message) || msg || 'Bajarildi');
+        closeModal();
+        route();
+        refreshBadge();
       } catch (e) {
         fail(e);
       }
     };
-    $$('[data-revoke]', body).forEach((b) => (b.onclick = async () => {
-      if (!confirmAsk('Kitobni foydalanuvchidan olib qo‘yasizmi?')) return;
-      await api('DELETE', `/api/books/${b.dataset.revoke}/grant/${id}`).catch(fail);
-      userModal(id, reload);
-    }));
-    $('#uForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const f = e.target;
-      const payload = { name: f.name.value, role_id: +f.role_id.value, is_blocked: f.is_blocked.checked };
-      if (f.password.value) payload.password = f.password.value;
-      try {
-        await api('PUT', `/api/admin/users/${id}`, payload);
-        toast('Saqlandi');
-        closeModal();
-        reload();
-      } catch (err) {
-        fail(err);
+    $$('[data-a]', body).forEach((btn) => (btn.onclick = () => {
+      const a = btn.dataset.a;
+      if (a === 'read') return openReader(b.id);
+      if (a === 'approve') return act(() => api('POST', `/api/admin/books/${b.id}/approve`));
+      if (a === 'reconvert') return act(() => api('POST', `/api/admin/books/${b.id}/reconvert`));
+      if (a === 'unpublish') return confirmAsk("Kitob do'kondan olinsinmi? Sotib olganlar o'qishda davom etadi.") && act(() => api('POST', `/api/admin/books/${b.id}/unpublish`));
+      if (a === 'delete') return confirmAsk("Kitob butunlay o'chirilsinmi?") && act(() => api('DELETE', `/api/admin/books/${b.id}`));
+      if (a === 'reject') {
+        const reason = window.prompt('Rad etish sababi (muallif ko‘radi):');
+        if (reason && reason.trim()) act(() => api('POST', `/api/admin/books/${b.id}/reject`, { reason: reason.trim() }));
       }
-    };
+    }));
   }
 
   // ------------------------------------------------------------- authors
+  let authorsUnverified = false;
   async function renderAuthors() {
-    $('#topActions').innerHTML = `<button class="btn primary" id="addAuthor"><i data-ic="plus"></i>Muallif qo'shish</button>`;
-    paintIcons($('#topActions'));
-    const load = async () => {
-      const d = await api('GET', '/api/authors/get-authors?limit=500');
-      $('#view').innerHTML = d.authors.length
-        ? `<div class="table-wrap"><table><thead><tr><th>Muallif</th><th>Ruscha / Inglizcha</th><th>Kitoblar</th><th></th></tr></thead><tbody>${d.authors
-            .map(
-              (a) => `<tr data-id="${a.id}"><td><div class="cell-book">${a.photo ? `<img class="avatar" src="${esc(fileUrl(a.photo))}" alt="">` : `<span class="avatar">${esc(a.name.uz[0] || '?')}</span>`}<div><b>${esc(a.name.uz)}</b><small>${esc((a.about.uz || '').slice(0, 80))}</small></div></div></td>
-            <td class="muted">${esc(a.name.ru)}<br>${esc(a.name.en)}</td><td>${a.books_count}</td>
-            <td><div class="actions"><button class="btn sm" data-edit><i data-ic="edit"></i></button><button class="btn sm danger" data-del><i data-ic="trash"></i></button></div></td></tr>`
-            )
-            .join('')}</tbody></table></div>`
-        : '<div class="empty">Mualliflar yo‘q</div>';
-      paintIcons($('#view'));
-      $('#view').onclick = async (e) => {
-        const tr = e.target.closest('tr');
-        if (!tr) return;
-        const a = d.authors.find((x) => x.id === +tr.dataset.id);
-        if (e.target.closest('[data-edit]')) authorModal(a, load);
-        if (e.target.closest('[data-del]') && confirmAsk(`"${a.name.uz}" o'chirilsinmi? Kitoblari muallifsiz qoladi.`)) {
-          await api('DELETE', `/api/authors/delete-author/${a.id}`).then(() => toast("O'chirildi"), fail);
-          load();
-        }
-      };
-    };
-    $('#addAuthor').onclick = () => authorModal(null, load);
-    await load();
+    const d = await api('GET', '/api/admin/authors' + (authorsUnverified ? '?unverified=1' : ''));
+    $('#view').innerHTML = `
+      <div class="toolbar"><label class="check"><input type="checkbox" id="unv" ${authorsUnverified ? 'checked' : ''}>Faqat karta tekshiruvini kutayotganlar</label></div>
+      ${d.authors.length ? `<div class="table-wrap"><table>
+        <thead><tr><th>Muallif</th><th>Karta</th><th>Kitoblar</th><th>Balans</th><th>Jami daromad</th><th>Holat</th><th></th></tr></thead>
+        <tbody>${d.authors.map((a) => `<tr>
+          <td><div class="cell-book">${a.photo ? `<img class="avatar" src="${esc(fileUrl(a.photo))}">` : `<span class="avatar">${esc((a.display_name || '?')[0])}</span>`}<div><b>${esc(a.display_name)}</b><small>${esc(a.phone || '')}</small></div></div></td>
+          <td>${a.card_number ? `${card(a.card_number)}<br><small class="muted">${esc(a.card_holder || '')}</small>` : '<span class="muted">—</span>'}</td>
+          <td>${num(a.books_count)}</td>
+          <td>${money(a.balance)}</td>
+          <td>${money(a.earned)}</td>
+          <td>${a.status === 'blocked' ? '<span class="badge bad">Bloklangan</span>' : a.card_verified ? '<span class="badge ok">Karta tasdiqlangan</span>' : a.card_number ? '<span class="badge warn">Tekshirish kerak</span>' : '<span class="badge mute">Karta yo‘q</span>'}</td>
+          <td><div class="actions">
+            ${a.card_number ? `<button class="btn sm ${a.card_verified ? '' : 'ok'}" data-verify="${a.user_id}" data-v="${a.card_verified ? 0 : 1}">${a.card_verified ? 'Tasdiqni olish' : 'Kartani tasdiqlash'}</button>` : ''}
+            <button class="btn sm ${a.status === 'blocked' ? '' : 'danger'}" data-block="${a.user_id}" data-s="${a.status === 'blocked' ? 'active' : 'blocked'}">${a.status === 'blocked' ? 'Blokdan chiqarish' : 'Bloklash'}</button>
+          </div></td></tr>`).join('')}</tbody></table></div>` : empty("Mualliflar yo'q")}`;
+    $('#unv').onchange = (e) => ((authorsUnverified = e.target.checked), renderAuthors().catch(fail));
+    $$('[data-verify]').forEach((b) => (b.onclick = async () => {
+      try {
+        await api('PUT', `/api/admin/authors/${b.dataset.verify}`, { card_verified: b.dataset.v === '1' });
+        toast('Saqlandi');
+        renderAuthors();
+      } catch (e) { fail(e); }
+    }));
+    $$('[data-block]').forEach((b) => (b.onclick = async () => {
+      const blocking = b.dataset.s === 'blocked';
+      const note = blocking ? window.prompt('Bloklash sababi (muallifga yuboriladi):') : '';
+      if (blocking && note === null) return;
+      try {
+        await api('PUT', `/api/admin/authors/${b.dataset.block}`, { status: b.dataset.s, ...(blocking ? { admin_note: note } : {}) });
+        toast('Saqlandi');
+        renderAuthors();
+      } catch (e) { fail(e); }
+    }));
   }
 
-  function authorModal(a, reload) {
-    const v = a || { name: {}, about: {} };
-    const body = openModal(a ? 'Muallifni tahrirlash' : 'Yangi muallif', `
-      <form id="aForm" class="modal-body" style="padding:0">
-        <div class="form-row three"><label>Ism (uz)<input type="text" name="name1" value="${esc(v.name.uz)}" required></label><label>Имя (ru)<input type="text" name="name2" value="${esc(v.name.ru)}"></label><label>Name (en)<input type="text" name="name3" value="${esc(v.name.en)}"></label></div>
-        <label>Haqida (uz)<textarea name="about1">${esc(v.about.uz)}</textarea></label>
-        <div class="form-row"><label>Об авторе (ru)<textarea name="about2">${esc(v.about.ru)}</textarea></label><label>About (en)<textarea name="about3">${esc(v.about.en)}</textarea></label></div>
-        <div class="cover-pick"><div id="aPrev">${v.photo ? `<img class="avatar" style="width:64px;height:64px" src="${esc(fileUrl(v.photo))}">` : '<span class="avatar" style="width:64px;height:64px">?</span>'}</div><button type="button" class="btn sm" id="aPhotoBtn"><i data-ic="upload"></i>Rasm</button><input type="file" name="image" accept="image/*" hidden></div>
-        <div class="form-foot"><button type="button" class="btn" data-close>Bekor</button><button class="btn primary">Saqlash</button></div>
-      </form>`);
-    paintIcons(body);
-    const f = $('#aForm');
-    $('#aPhotoBtn').onclick = () => f.image.click();
-    f.image.onchange = () => f.image.files[0] && ($('#aPrev').innerHTML = `<img class="avatar" style="width:64px;height:64px" src="${URL.createObjectURL(f.image.files[0])}">`);
-    f.onsubmit = async (e) => {
-      e.preventDefault();
-      const fd = new FormData(f);
-      if (!f.image.files[0]) fd.delete('image');
+  // ------------------------------------------------------------- payouts
+  async function renderPayouts() {
+    const d = await api('GET', '/api/admin/payouts');
+    const pending = d.payouts.filter((p) => p.status === 'pending');
+    const paid = d.payouts.filter((p) => p.status !== 'pending');
+    const row = (p, canPay) => `<tr>
+      <td><b>${esc(p.author_name || '')}</b></td><td>${period(p.period)}</td><td><b>${money(p.amount)}</b></td>
+      <td>${card(p.card_number)}<br><small class="muted">${esc(p.card_holder || '')}</small></td>
+      <td class="muted">${canPay ? date(p.created_at) : date(p.paid_at) + (p.reference ? '<br>' + esc(p.reference) : '')}</td>
+      <td><div class="actions">${canPay ? `<button class="btn sm" data-copy="${esc(p.card_number || '')}">Kartani nusxalash</button><button class="btn sm primary" data-pay="${p.id}">To'landi</button>` : '<span class="badge ok">O‘tkazildi</span>'}</div></td></tr>`;
+    const table = (rows, canPay) => `<div class="table-wrap"><table><thead><tr><th>Muallif</th><th>Davr</th><th>Summa</th><th>Karta</th><th>Sana</th><th></th></tr></thead><tbody>${rows.map((p) => row(p, canPay)).join('')}</tbody></table></div>`;
+    $('#topActions').innerHTML = `<button class="btn primary" id="gen"><i data-ic="plus"></i>${period(d.last_month)} uchun to'lovlar</button>`;
+    paintIcons($('#topActions'));
+    $('#gen').onclick = async () => {
+      if (!confirmAsk(`${period(d.last_month)} oxirigacha yig'ilgan daromad bo'yicha to'lovlar yaratilsinmi? (karta tasdiqlangan, summa ≥ ${money(d.payout_min)})`)) return;
       try {
-        await upload(a ? 'PUT' : 'POST', a ? `/api/authors/update-author/${a.id}` : '/api/authors/create-author', fd);
-        toast('Saqlandi');
-        closeModal();
-        reload();
-      } catch (err) {
-        fail(err);
-      }
+        const r = await api('POST', '/api/admin/payouts/generate', { period: d.last_month });
+        toast(`${r.created.length} ta to'lov yaratildi${r.skipped.length ? `, ${r.skipped.length} ta o'tkazib yuborildi` : ''}`);
+        renderPayouts();
+      } catch (e) { fail(e); }
     };
+    $('#view').innerHTML = `
+      <div class="card" style="margin-bottom:14px"><h3>Yig'ilgan daromad (hali to'lovga kiritilmagan)</h3>
+        ${listRows(d.accrued, (a) => [`${esc(a.author_name || 'Muallif #' + a.author_user_id)} ${a.card_verified ? '' : '<span class="badge warn">karta tasdiqlanmagan</span>'}`, money(a.amount)])}
+        <p class="hint">Minimal to'lov: ${money(d.payout_min)}. Kamroq summa keyingi oyga o'tadi.</p></div>
+      <h3>To'lanishi kerak (${pending.length})</h3>
+      ${pending.length ? table(pending, true) : empty("Kutilayotgan to'lovlar yo'q")}
+      ${paid.length ? `<h3 style="margin-top:22px">To'langanlar</h3>${table(paid, false)}` : ''}`;
+    $$('[data-copy]').forEach((b) => (b.onclick = () => navigator.clipboard.writeText(b.dataset.copy).then(() => toast('Nusxalandi'))));
+    $$('[data-pay]').forEach((b) => (b.onclick = async () => {
+      const ref = window.prompt("To'lov raqami / izoh (ixtiyoriy):", '');
+      if (ref === null) return;
+      try {
+        await api('POST', `/api/admin/payouts/${b.dataset.pay}/mark-paid`, { reference: ref });
+        toast("Muallifga xabar yuborildi");
+        renderPayouts();
+      } catch (e) { fail(e); }
+    }));
+  }
+
+  // ------------------------------------------------------------- orders
+  let ordersStatus = 'paid';
+  async function renderOrders() {
+    const d = await api('GET', `/api/admin/orders?status=${ordersStatus}&limit=200`);
+    const tabs = [['paid', "To'langan"], ['created', 'Kutilmoqda'], ['refunded', 'Qaytarilgan'], ['cancelled', 'Bekor']];
+    $('#view').innerHTML = `
+      <div class="toolbar"><div class="tabs">${tabs.map(([k, l]) => `<button data-st="${k}" class="${k === ordersStatus ? 'on' : ''}">${l}</button>`).join('')}</div><span class="muted">${d.total} ta</span></div>
+      ${d.orders.length ? `<div class="table-wrap"><table><thead><tr><th>№</th><th>Kitob</th><th>Xaridor</th><th>Summa</th><th>Usul</th><th>Sana</th><th></th></tr></thead>
+        <tbody>${d.orders.map((o) => `<tr><td>${o.id}</td><td>${esc(o.book_title)}</td><td>${esc(o.user_name || '')}<br><small class="muted">${esc(o.phone_number || '')}</small></td>
+          <td><b>${money(o.amount)}</b></td><td>${esc(o.provider || '—')}</td><td class="muted">${date(o.paid_at || o.created_at)}</td>
+          <td><div class="actions">${o.status === 'created' ? `<button class="btn sm" data-paid="${o.id}">To'landi</button>` : ''}</div></td></tr>`).join('')}</tbody></table></div>` : empty("Buyurtmalar yo'q")}`;
+    $$('.tabs button').forEach((b) => (b.onclick = () => ((ordersStatus = b.dataset.st), renderOrders().catch(fail))));
+    $$('[data-paid]').forEach((b) => (b.onclick = async () => {
+      if (!confirmAsk("Pul haqiqatan tushganini tekshirdingizmi? Kitob xaridorga beriladi, muallifga daromad yoziladi.")) return;
+      try {
+        await api('POST', `/api/admin/orders/${b.dataset.paid}/mark-paid`);
+        toast('Belgilandi');
+        renderOrders();
+      } catch (e) { fail(e); }
+    }));
+  }
+
+  // ------------------------------------------------------------- users
+  let usersQuery = '';
+  async function renderUsers() {
+    const d = await api('GET', `/api/admin/users?limit=300${usersQuery ? '&q=' + encodeURIComponent(usersQuery) : ''}`);
+    const me = session.user && session.user.id;
+    $('#view').innerHTML = `
+      <div class="toolbar"><input type="search" id="uq" placeholder="Ism yoki telefon" value="${esc(usersQuery)}"><span class="muted">${d.total} ta</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Foydalanuvchi</th><th>Telefon</th><th>Kitoblar</th><th>Ro'yxatdan o'tgan</th><th>Rol</th><th></th></tr></thead>
+      <tbody>${d.users.map((u) => `<tr>
+        <td><b>${esc(u.name || 'Ismsiz')}</b></td><td>${esc(u.phone_number)}</td><td>${num(u.books_count)}</td><td class="muted">${date(u.created_at)}</td>
+        <td>${u.is_admin ? '<span class="badge bad">Admin</span> ' : ''}${u.is_author ? '<span class="badge info">Muallif</span> ' : ''}${u.is_blocked ? '<span class="badge mute">Bloklangan</span>' : ''}</td>
+        <td><div class="actions">${u.id === me ? '<span class="muted">siz</span>' : `
+          <button class="btn sm" data-role="${u.id}" data-r="${u.is_admin ? 2 : 1}">${u.is_admin ? 'Adminlikdan olish' : 'Admin qilish'}</button>
+          <button class="btn sm ${u.is_blocked ? '' : 'danger'}" data-blk="${u.id}" data-b="${u.is_blocked ? 0 : 1}">${u.is_blocked ? 'Blokdan chiqarish' : 'Bloklash'}</button>`}</div></td></tr>`).join('')}</tbody></table></div>`;
+    let t;
+    $('#uq').oninput = (e) => {
+      clearTimeout(t);
+      t = setTimeout(() => ((usersQuery = e.target.value.trim()), renderUsers().then(() => $('#uq').focus()).catch(fail)), 400);
+    };
+    const put = async (id, body) => {
+      try {
+        await api('PUT', `/api/admin/users/${id}`, body);
+        toast('Saqlandi');
+        renderUsers();
+      } catch (e) { fail(e); }
+    };
+    $$('[data-role]').forEach((b) => (b.onclick = () => put(b.dataset.role, { role_id: +b.dataset.r })));
+    $$('[data-blk]').forEach((b) => (b.onclick = () => put(b.dataset.blk, { is_blocked: b.dataset.b === '1' })));
   }
 
   // ------------------------------------------------------------- categories
   async function renderCategories() {
-    $('#topActions').innerHTML = `<button class="btn primary" id="addCat"><i data-ic="plus"></i>Kategoriya qo'shish</button>`;
+    const list = await api('GET', '/api/categories');
+    $('#topActions').innerHTML = `<button class="btn primary" id="addCat"><i data-ic="plus"></i>Qo'shish</button>`;
     paintIcons($('#topActions'));
-    const load = async () => {
-      const list = await api('GET', '/api/categories/categories');
-      $('#view').innerHTML = list.length
-        ? `<div class="table-wrap"><table><thead><tr><th>O'zbekcha</th><th>Русский</th><th>English</th><th>Kitoblar</th><th></th></tr></thead><tbody>${list
-            .map((c) => `<tr data-id="${c.id}"><td><b>${esc(c.name.uz)}</b></td><td>${esc(c.name.ru)}</td><td>${esc(c.name.en)}</td><td>${c.books_count}</td><td><div class="actions"><button class="btn sm" data-edit><i data-ic="edit"></i></button><button class="btn sm danger" data-del><i data-ic="trash"></i></button></div></td></tr>`)
-            .join('')}</tbody></table></div>`
-        : '<div class="empty">Kategoriyalar yo‘q</div>';
-      paintIcons($('#view'));
-      $('#view').onclick = async (e) => {
-        const tr = e.target.closest('tr');
-        if (!tr) return;
-        const c = list.find((x) => x.id === +tr.dataset.id);
-        if (e.target.closest('[data-edit]')) catModal(c, load);
-        if (e.target.closest('[data-del]') && confirmAsk(`"${c.name.uz}" o'chirilsinmi?`)) {
-          await api('DELETE', `/api/categories/delete-category/${c.id}`).then(() => toast("O'chirildi"), fail);
-          load();
-        }
-      };
-    };
-    $('#addCat').onclick = () => catModal(null, load);
-    await load();
+    $('#addCat').onclick = () => catModal(null);
+    $('#view').innerHTML = list.length ? `<div class="table-wrap"><table><thead><tr><th>Nomi (uz)</th><th>ru</th><th>en</th><th>Kitoblar</th><th></th></tr></thead>
+      <tbody>${list.map((c) => `<tr><td><b>${esc(c.name.uz)}</b></td><td>${esc(c.name.ru)}</td><td>${esc(c.name.en)}</td><td>${num(c.books_count)}</td>
+        <td><div class="actions"><button class="btn sm" data-edit="${c.id}"><i data-ic="edit"></i></button><button class="btn sm danger" data-del="${c.id}"><i data-ic="trash"></i></button></div></td></tr>`).join('')}</tbody></table></div>` : empty("Kategoriyalar yo'q");
+    paintIcons($('#view'));
+    $$('[data-edit]').forEach((b) => (b.onclick = () => catModal(list.find((c) => c.id === +b.dataset.edit))));
+    $$('[data-del]').forEach((b) => (b.onclick = async () => {
+      if (!confirmAsk("Kategoriya o'chirilsinmi? Kitoblar kategoriyasiz qoladi.")) return;
+      try {
+        await api('DELETE', `/api/admin/categories/${b.dataset.del}`);
+        renderCategories();
+      } catch (e) { fail(e); }
+    }));
   }
-
-  function catModal(c, reload) {
-    const v = c ? c.name : {};
+  function catModal(c) {
     const body = openModal(c ? 'Kategoriyani tahrirlash' : 'Yangi kategoriya', `
-      <form id="cForm" class="modal-body" style="padding:0">
-        <label>O'zbekcha<input type="text" name="name1" value="${esc(v.uz)}" required></label>
-        <label>Русский<input type="text" name="name2" value="${esc(v.ru)}"></label>
-        <label>English<input type="text" name="name3" value="${esc(v.en)}"></label>
+      <form id="catForm" class="modal-body" style="padding:0">
+        <label>Nomi (o'zbekcha)<input type="text" name="name_uz" value="${esc(c ? c.name.uz : '')}" required></label>
+        <div class="form-row"><label>Ruscha<input type="text" name="name_ru" value="${esc(c ? c.name.ru : '')}"></label><label>Inglizcha<input type="text" name="name_en" value="${esc(c ? c.name.en : '')}"></label></div>
         <div class="form-foot"><button type="button" class="btn" data-close>Bekor</button><button class="btn primary">Saqlash</button></div>
       </form>`);
-    $('#cForm', body).onsubmit = async (e) => {
+    $('#catForm', body).onsubmit = async (e) => {
       e.preventDefault();
-      const f = e.target;
-      const payload = { name1: f.name1.value, name2: f.name2.value, name3: f.name3.value };
+      const f = Object.fromEntries(new FormData(e.target));
       try {
-        await api(c ? 'PUT' : 'POST', c ? `/api/categories/update-category/${c.id}` : '/api/categories/create-category', payload);
-        toast('Saqlandi');
+        if (c) await api('PUT', `/api/admin/categories/${c.id}`, f);
+        else await api('POST', '/api/admin/categories', f);
         closeModal();
-        reload();
-      } catch (err) {
-        fail(err);
-      }
+        renderCategories();
+      } catch (err) { fail(err); }
     };
   }
 
   // ------------------------------------------------------------- settings
   async function renderSettings() {
-    const c = await api('GET', '/api/references/contact/1');
+    const s = await api('GET', '/api/admin/settings');
     $('#view').innerHTML = `
-      <div class="grid two">
-        <form class="card" id="contactForm" style="display:flex;flex-direction:column;gap:12px">
-          <h3>To'lov rekvizitlari</h3>
-          <div class="hint">Foydalanuvchi kitob sotib olayotganda shu karta ma'lumotlarini ko'radi va to'lov skrinshotini yuboradi.</div>
-          <label>Karta raqami<input type="text" name="card_number" value="${esc(c.card_number)}" placeholder="8600 1234 5678 9012"></label>
-          <label>Karta egasi<input type="text" name="name" value="${esc(c.name)}"></label>
-          <label>Aloqa telefoni<input type="text" name="phone" value="${esc(c.phone)}"></label>
-          <label>Qo'shimcha izoh<input type="text" name="note" value="${esc(c.note)}" placeholder="Masalan: to'lovdan keyin 1 soat ichida tasdiqlanadi"></label>
-          <div><button class="btn primary">Saqlash</button></div>
-        </form>
-        <form class="card" id="passForm" style="display:flex;flex-direction:column;gap:12px">
-          <h3>Mening parolim</h3>
-          <label>Yangi parol<input type="password" name="password" minlength="8" required></label>
-          <div><button class="btn">Parolni o'zgartirish</button></div>
-          <hr style="border:0;border-top:1px solid var(--line);width:100%">
-          <h3>Oflayn tekshirish</h3>
-          <div class="hint">Serversiz tekshirish: <code>npm run convert -- "kitob.docx"</code> buyrug'i <code>backend/offline/index.html</code> kutubxonasini yaratadi.</div>
-        </form>
-      </div>`;
-    $('#contactForm').onsubmit = async (e) => {
+      <form class="card" id="setForm" style="max-width:560px;display:flex;flex-direction:column;gap:14px">
+        <label>Platforma komissiyasi (%)<input type="number" name="commission_percent" min="0" max="90" step="0.5" value="${s.commission_percent}"><span class="hint">Yangi sotuvlarga qo'llaniladi. Muallif ulushi: ${100 - s.commission_percent}%</span></label>
+        <label>Minimal to'lov summasi (so'm)<input type="number" name="payout_min" min="0" step="1000" value="${s.payout_min}"><span class="hint">Bundan kam daromad keyingi oyga o'tadi</span></label>
+        <label>Qo'llab-quvvatlash telefoni<input type="text" name="support_phone" value="${esc(s.support_phone)}"></label>
+        <label>Telegram<input type="text" name="support_telegram" value="${esc(s.support_telegram)}" placeholder="@bookhub_support"></label>
+        <div class="form-foot"><button class="btn primary">Saqlash</button></div>
+        <p class="hint">API hujjatlari va sinov: <a href="/api/docs" target="_blank">/api/docs</a> (Swagger)</p>
+      </form>`;
+    $('#setForm').onsubmit = async (e) => {
       e.preventDefault();
-      const f = e.target;
+      const f = Object.fromEntries(new FormData(e.target));
       try {
-        await api('PUT', '/api/references/contact/1', { card_number: f.card_number.value, name: f.name.value, phone: f.phone.value, note: f.note.value });
+        await api('PUT', '/api/admin/settings', { ...f, commission_percent: +f.commission_percent, payout_min: +f.payout_min });
         toast('Saqlandi');
-      } catch (err) {
-        fail(err);
-      }
-    };
-    $('#passForm').onsubmit = async (e) => {
-      e.preventDefault();
-      try {
-        await api('PUT', `/api/admin/users/${session.user.id}`, { password: e.target.password.value });
-        toast("Parol o'zgartirildi");
-        e.target.reset();
-      } catch (err) {
-        fail(err);
-      }
+      } catch (err) { fail(err); }
     };
   }
 
@@ -863,8 +597,8 @@
   async function start() {
     if (!session) return showLogin();
     try {
-      const me = await api('GET', '/api/users/me');
-      if (me.role_id !== 1) {
+      const me = await api('GET', '/api/me');
+      if (!me.is_admin) {
         saveSession(null);
         $('#loginErr').textContent = 'Bu hisob administrator emas';
         return showLogin();
@@ -883,5 +617,6 @@
     setInterval(refreshBadge, 60000);
   }
   paintIcons();
+  paintLogin();
   start();
 })();

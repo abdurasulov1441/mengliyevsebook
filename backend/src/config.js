@@ -28,7 +28,7 @@ const config = {
     password: env.SMS_PASSWORD || '',
     nickname: env.SMS_NICKNAME || '',
     dryRun: bool(env.SMS_DRY_RUN, !env.SMS_LOGIN),
-    template: env.SMS_TEMPLATE || "Mengliyev's eBook: tasdiqlash kodi {code}. Kodni hech kimga bermang.",
+    template: env.SMS_TEMPLATE || "BookHub: tasdiqlash kodi {code}. Kodni hech kimga bermang.",
   },
   otp: {
     ttlSec: +(env.OTP_TTL_SEC || 300),
@@ -44,6 +44,30 @@ const config = {
     phone: (env.ADMIN_PHONE || '').replace(/\D/g, ''),
     password: env.ADMIN_PASSWORD || '',
     name: env.ADMIN_NAME || 'Administrator',
+    // Numbers that become administrators when they log in with an SMS code.
+    phones: (env.ADMIN_PHONES || '998900961704').split(',').map((p) => p.replace(/\D/g, '')).filter(Boolean),
+  },
+  platform: {
+    name: env.PLATFORM_NAME || 'BookHub',
+    // Defaults; the admin can change both in Settings (stored in the DB).
+    commissionPercent: +(env.COMMISSION_PERCENT || 30),
+    payoutMin: +(env.PAYOUT_MIN || 50000),
+  },
+  payments: {
+    // Demo payments (a button instead of Payme/Click) — for development and
+    // until the merchant contracts are signed. Never enable in production.
+    demo: bool(env.PAYMENTS_DEMO, !isProd),
+    returnUrl: env.PAYMENT_RETURN_URL || '',
+    payme: {
+      merchantId: env.PAYME_MERCHANT_ID || '',
+      key: env.PAYME_KEY || '',
+      test: bool(env.PAYME_TEST, true),
+    },
+    click: {
+      serviceId: env.CLICK_SERVICE_ID || '',
+      merchantId: env.CLICK_MERCHANT_ID || '',
+      secretKey: env.CLICK_SECRET_KEY || '',
+    },
   },
   uploads: {
     maxBookMb: +(env.MAX_BOOK_MB || 100),

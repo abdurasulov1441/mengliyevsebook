@@ -7,6 +7,13 @@ const multer = require('multer');
 const config = require('./config');
 const { HttpError } = require('./util');
 
+const SWAGGER_HTML = `<!doctype html><html><head><meta charset="utf-8"><title>BookHub API</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/api/docs/swagger-ui.css">
+<style>body{margin:0}.topbar{display:none}</style></head><body><div id="ui"></div>
+<script src="/api/docs/swagger-ui-bundle.js"></script><script>
+window.ui = SwaggerUIBundle({ url: '/api/openapi.json', dom_id: '#ui', persistAuthorization: true, tryItOutEnabled: true, displayRequestDuration: true });
+</script></body></html>`;
+
 function createApp() {
   const app = express();
   app.disable('x-powered-by');
@@ -26,15 +33,20 @@ function createApp() {
   // Reader engine (also bundled into the mobile app) and the admin panel.
   app.use('/reader', express.static(path.join(__dirname, '..', 'public', 'reader'), { maxAge: '1h' }));
   app.use('/admin', express.static(path.join(__dirname, '..', 'public', 'admin'), { maxAge: 0 }));
-  app.get('/', (_req, res) => res.redirect('/admin/'));
+  app.get('/', (_req, res) => res.redirect('/api/docs'));
   app.get('/api/health', (_req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
   const api = express.Router();
   api.use(require('./routes/auth'));
-  api.use(require('./routes/catalog'));
   api.use(require('./routes/books'));
-  api.use(require('./routes/payments'));
+  api.use(require('./routes/studio'));
+  api.use(require('./routes/orders'));
   api.use(require('./routes/admin'));
+
+  // API documentation: /api/docs (Swagger UI), /api/openapi.json
+  app.get('/api/openapi.json', (_req, res) => res.json(require('./openapi')()));
+  app.get('/api/docs', (_req, res) => res.type('html').send(SWAGGER_HTML));
+  app.use('/api/docs', express.static(require('swagger-ui-dist').getAbsoluteFSPath(), { index: false }));
   app.use('/api', api);
 
   app.use('/api', (_req, _res, next) => next(new HttpError(404, 'Topilmadi')));

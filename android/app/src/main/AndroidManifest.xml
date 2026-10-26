@@ -29,7 +29,7 @@
 
     <application
         android:name="${applicationName}"
-        android:label="Mengliyev's E-Book"
+        android:label="BookHub"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">

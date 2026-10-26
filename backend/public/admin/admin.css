@@ -1,13 +1,13 @@
 :root {
-  --bg: #f5f3ef; --panel: #fff; --fg: #1e1c19; --muted: #77716a; --line: #e7e2da; --soft: #f0ece5;
-  --accent: #8a5a2b; --accent-2: #a8713c; --accent-soft: #f3e8dc; --ok: #2f8a4c; --ok-soft: #e3f3e8; --warn: #b7791f; --warn-soft: #fbf0d9;
+  --bg: #f5f7fb; --panel: #fff; --fg: #121a2e; --muted: #6b7489; --line: #e3e8f1; --soft: #eef2f8;
+  --accent: #0a3a8c; --accent-2: #2f5db8; --accent-soft: #e8eefa; --ok: #2f8a4c; --ok-soft: #e3f3e8; --warn: #b7791f; --warn-soft: #fbf0d9;
   --bad: #c0392b; --bad-soft: #fbe6e3; --info: #2f6fb3; --info-soft: #e3eef9;
   --radius: 14px; --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 18px rgba(0,0,0,.05);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root { --bg: #151618; --panel: #1f2023; --fg: #e8e5df; --muted: #9a958d; --line: #2e2f33; --soft: #26272b;
-    --accent: #d9a46b; --accent-2: #e6b580; --accent-soft: #3a2f24; --ok: #5cc27e; --ok-soft: #1f3327; --warn: #e3b25a; --warn-soft: #3a3020;
+    --accent: #8fb0f5; --accent-2: #a9c3f8; --accent-soft: #1d2a44; --ok: #5cc27e; --ok-soft: #1f3327; --warn: #e3b25a; --warn-soft: #3a3020;
     --bad: #ef7b6e; --bad-soft: #3d2422; --info: #79aef0; --info-soft: #1f2d3e; --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark; }
 }
 * { box-sizing: border-box; }
@@ -39,7 +39,7 @@ i[data-ic] svg { width: 100%; height: 100%; }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand b { display: block; font-size: 15px; }
 .brand small { color: var(--muted); }
-.logo { width: 40px; height: 40px; border-radius: 11px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font: 700 19px Georgia, serif; flex: 0 0 auto; }
+.logo { width: 40px; height: 40px; border-radius: 11px; background: #fff; object-fit: contain; padding: 4px; flex: 0 0 auto; }
 
 label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 13px; color: var(--muted); }
 input[type=text], input[type=tel], input[type=password], input[type=number], input[type=search], select, textarea {
@@ -171,3 +171,9 @@ tr:hover td { background: color-mix(in srgb, var(--soft) 50%, transparent); }
 .empty { text-align: center; color: var(--muted); padding: 50px 20px; }
 .pager { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 14px; color: var(--muted); }
 .hint { font-size: 12px; color: var(--muted); font-weight: 400; }
+.login-card .tabs { align-self: stretch; }
+.login-card .tabs button { flex: 1; }
+.notice { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--warn-soft); color: var(--warn); text-decoration: none; }
+.notice b { color: var(--fg); }
+h3 { font-size: 15px; }
+@media (prefers-color-scheme: dark) { .btn.primary, .btn.primary:hover { color: #0b1530; } }

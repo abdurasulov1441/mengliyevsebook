@@ -2,31 +2,36 @@ import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Design tokens of the app: warm "paper" surfaces, ink text and the brand
-/// green of the MB logo. Interface text is Inter; book titles use Literata
+/// Design tokens of BookHub: cool light surfaces, ink text and the deep blue
+/// of the logo. Interface text is Inter; book titles use Literata
 /// (with Lora as fallback for glyphs Literata lacks, e.g. Uzbek Cyrillic Ҳ).
 abstract final class AppPalette {
-  static const brand = Color(0xFF0D7C66);
-  static const brandDark = Color(0xFF09594A);
-  static const brandSoft = Color(0xFFE2F0EB);
+  static const brand = Color(0xFF0A3A8C);
+  static const brandDark = Color(0xFF072A68);
+  static const brandMid = Color(0xFF2F5DB8);
+  static const brandSoft = Color(0xFFE8EEFA);
 
-  static const background = Color(0xFFF7F4EE);
+  static const background = Color(0xFFF5F7FB);
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceAlt = Color(0xFFEFEAE1);
+  static const surfaceAlt = Color(0xFFEDF1F8);
 
-  static const ink = Color(0xFF1D1B18);
-  static const inkSoft = Color(0xFF59544C);
-  static const muted = Color(0xFF9A9389);
-  static const line = Color(0xFFE6E0D5);
+  static const ink = Color(0xFF121A2E);
+  static const inkSoft = Color(0xFF4A5468);
+  static const muted = Color(0xFF8A93A6);
+  static const line = Color(0xFFE3E8F1);
 
-  static const gold = Color(0xFFC08A2E);
-  static const goldSoft = Color(0xFFF7ECD8);
-  static const danger = Color(0xFFC2410C);
-  static const success = Color(0xFF2F8A4C);
+  static const gold = Color(0xFFD99A06);
+  static const goldSoft = Color(0xFFFDF3DC);
+  static const danger = Color(0xFFDC2626);
+  static const dangerSoft = Color(0xFFFDECEC);
+  static const success = Color(0xFF16A34A);
+  static const successSoft = Color(0xFFE7F7EE);
+  static const warning = Color(0xFFEA8A00);
+  static const warningSoft = Color(0xFFFFF3E0);
 
   /// Generated covers when a book has no picture.
   static const coverGradients = [
-    [Color(0xFF0D7C66), Color(0xFF0A4F42)],
+    [Color(0xFF0A3A8C), Color(0xFF061F4D)],
     [Color(0xFF7B4A2A), Color(0xFF4A2A16)],
     [Color(0xFF2F4B6E), Color(0xFF1B2D45)],
     [Color(0xFF6B2F45), Color(0xFF41192A)],
@@ -127,7 +132,7 @@ abstract final class AppTheme {
         behavior: SnackBarBehavior.floating,
         backgroundColor: AppPalette.ink,
         contentTextStyle: AppText.body.copyWith(color: Colors.white),
-        actionTextColor: const Color(0xFF7FD8C2),
+        actionTextColor: const Color(0xFF9DB9F2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
       progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppPalette.brand, linearTrackColor: AppPalette.surfaceAlt),

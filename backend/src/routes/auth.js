@@ -5,13 +5,15 @@ const express = require('express');
 const config = require('../config');
 const { q } = require('../db');
 const { HttpError, wrap, normalizePhone, sha256, verifyPassword } = require('../util');
-const { signAccess, issueRefresh, useRefresh, revokeRefresh, requireAuth, ROLE_ADMIN } = require('../auth');
+const { signAccess, issueRefresh, useRefresh, revokeRefresh, requireAuth, ROLE_ADMIN, ROLE_USER } = require('../auth');
 const { sendSms } = require('../sms');
-const { user: serializeUser } = require('../serializers');
+const { upload, moveUpload, removePublic, cleanupTmp } = require('../storage');
+const { isAdminPhone } = require('../services/platform');
+const S = require('../serializers');
 
 const router = express.Router();
 
-// --- small in-memory rate limiter (per IP) for SMS endpoints ---
+// --- small in-memory rate limiter for SMS endpoints ---
 const hits = new Map();
 function limit(key, max, windowMs) {
   const now = Date.now();
@@ -29,18 +31,18 @@ const codeHash = (phone, code) => sha256(`${phone}:${code}:${config.jwtSecret}`)
 
 function phoneOr400(raw) {
   const phone = normalizePhone(raw);
-  if (!phone) throw new HttpError(400, "Telefon raqam noto'g'ri. Format: +998 (90) 123 45 67");
+  if (!phone) throw new HttpError(400, "Telefon raqam noto'g'ri. Format: +998 90 123 45 67");
   return phone;
 }
 
 async function sendOtp(phone, req) {
-  limit(`ip:${req.ip}`, 15, 3600000);
-  limit(`ph:${phone}`, 6, 3600000);
+  limit(`ip:${req.ip}`, 20, 3600000);
+  limit(`ph:${phone}`, 8, 3600000);
   const existing = q.get('SELECT * FROM otp_codes WHERE phone_number = ?', phone);
   const now = Date.now();
   if (existing && now - existing.sent_at < config.otp.resendSec * 1000) {
     const wait = Math.ceil((config.otp.resendSec * 1000 - (now - existing.sent_at)) / 1000);
-    throw new HttpError(429, `Kod yuborilgan. Qayta yuborish uchun ${wait} soniya kuting`);
+    throw new HttpError(429, `Kod yuborilgan. Qayta yuborish uchun ${wait} soniya kuting`, { retry_after: wait });
   }
   const isTest = config.otp.testPhone && phone === config.otp.testPhone && config.otp.testCode;
   const code = isTest ? config.otp.testCode : String(crypto.randomInt(0, 1000000)).padStart(6, '0');
@@ -63,7 +65,7 @@ function checkOtp(phone, code) {
   const row = q.get('SELECT * FROM otp_codes WHERE phone_number = ?', phone);
   if (!row) throw new HttpError(400, 'Avval tasdiqlash kodini oling');
   if (row.expires_at < Date.now()) throw new HttpError(400, 'Kodning amal qilish muddati tugagan. Yangi kod oling');
-  if (row.attempts >= config.otp.maxAttempts) throw new HttpError(429, "Urinishlar soni tugadi. Yangi kod oling");
+  if (row.attempts >= config.otp.maxAttempts) throw new HttpError(429, 'Urinishlar soni tugadi. Yangi kod oling');
   if (row.code_hash !== codeHash(phone, code)) {
     q.run('UPDATE otp_codes SET attempts = attempts + 1 WHERE phone_number = ?', phone);
     throw new HttpError(400, "Kod noto'g'ri");
@@ -71,75 +73,63 @@ function checkOtp(phone, code) {
   q.run('DELETE FROM otp_codes WHERE phone_number = ?', phone);
 }
 
-function tokensFor(user) {
-  q.run("UPDATE users SET last_login_at = datetime('now') WHERE id = ?", user.id);
-  return {
-    accessToken: signAccess(user),
-    refreshToken: issueRefresh(user.id),
-    id: user.id,
-    role_id: user.role_id,
-    user: serializeUser(user),
-  };
+function meOut(u) {
+  const author = q.get('SELECT * FROM author_profiles WHERE user_id = ?', u.id);
+  const unread = q.get('SELECT COUNT(*) AS n FROM notifications WHERE user_id = ? AND read_at IS NULL', u.id).n;
+  return S.user(u, { is_author: !!author, author: S.authorProfile(author, { full: true }), unread_notifications: unread, needs_name: !u.name });
 }
 
-const ok = (message, extra) => ({ status: 200, statusCode: 200, message, ...extra });
+function session(user) {
+  q.run("UPDATE users SET last_login_at = datetime('now') WHERE id = ?", user.id);
+  return { accessToken: signAccess(user), refreshToken: issueRefresh(user.id), user: meOut(user) };
+}
 
-// Sign up: name + phone -> SMS code. An existing number simply gets a code.
-router.post('/auth/register', wrap(async (req, res) => {
-  const phone = phoneOr400(req.body.phone_number);
-  const name = String(req.body.name || '').trim().slice(0, 100);
-  if (!name) throw new HttpError(400, 'Ismingizni kiriting');
-  const existing = q.get('SELECT * FROM users WHERE phone_number = ?', phone);
-  if (existing && existing.is_blocked) throw new HttpError(403, 'Hisob bloklangan');
-  if (!existing) q.run('INSERT INTO users (name, phone_number) VALUES (?, ?)', name, phone);
-  else if (!existing.is_verified) q.run('UPDATE users SET name = ? WHERE id = ?', name, existing.id);
-  await sendOtp(phone, req);
-  res.json(ok('Tasdiqlash kodi SMS orqali yuborildi'));
-}));
-
-// Login: phone -> SMS code (account must exist).
-router.post('/auth/login', wrap(async (req, res) => {
-  const phone = phoneOr400(req.body.phone_number);
+/**
+ * Step 1 of sign-in / sign-up: send an SMS code to any number.
+ * @openapi POST /api/auth/request-otp
+ */
+router.post('/auth/request-otp', wrap(async (req, res) => {
+  const phone = phoneOr400(req.body.phone || req.body.phone_number);
   const user = q.get('SELECT * FROM users WHERE phone_number = ?', phone);
-  if (!user) throw new HttpError(404, "Bu raqam ro'yxatdan o'tmagan. Avval ro'yxatdan o'ting");
-  if (user.is_blocked) throw new HttpError(403, 'Hisob bloklangan');
+  if (user && user.is_blocked) throw new HttpError(403, 'Hisob bloklangan. Yordam: ' + (config.admin.phones[0] ? '+' + config.admin.phones[0] : ''));
   await sendOtp(phone, req);
-  res.json(ok('Tasdiqlash kodi SMS orqali yuborildi'));
+  res.json({ ok: true, message: 'Tasdiqlash kodi SMS orqali yuborildi', is_new: !user, resend_after: config.otp.resendSec, dev_code_hint: config.otp.devCode ? true : undefined });
 }));
 
-const resend = wrap(async (req, res) => {
-  const phone = phoneOr400(req.body.phone_number);
-  if (!q.get('SELECT id FROM users WHERE phone_number = ?', phone)) throw new HttpError(404, "Bu raqam ro'yxatdan o'tmagan");
-  await sendOtp(phone, req);
-  res.json(ok('Kod qayta yuborildi'));
-});
-router.post('/services/zyber/auth/resend', resend); // path used by the current app
-router.post('/auth/resend', resend);
-
+/** Step 2: code -> session. New numbers get an account; the name can come now or later. */
 router.post('/auth/verify', wrap(async (req, res) => {
-  const phone = phoneOr400(req.body.phone_number);
-  limit(`verify:${req.ip}`, 30, 600000);
-  checkOtp(phone, req.body.verification_code);
+  const phone = phoneOr400(req.body.phone || req.body.phone_number);
+  limit(`verify:${req.ip}`, 40, 600000);
+  checkOtp(phone, req.body.code ?? req.body.verification_code);
   let user = q.get('SELECT * FROM users WHERE phone_number = ?', phone);
-  if (!user) throw new HttpError(404, 'Foydalanuvchi topilmadi');
-  if (user.is_blocked) throw new HttpError(403, 'Hisob bloklangan');
-  q.run('UPDATE users SET is_verified = 1, fcm_token = COALESCE(NULLIF(?, \'\'), fcm_token) WHERE id = ?', String(req.body.fcm_token || ''), user.id);
+  const name = String(req.body.name || '').trim().slice(0, 100);
+  if (!user) {
+    const r = q.run('INSERT INTO users (name, phone_number, role_id, is_verified) VALUES (?, ?, ?, 1)', name, phone, isAdminPhone(phone) ? ROLE_ADMIN : ROLE_USER);
+    user = q.get('SELECT * FROM users WHERE id = ?', r.lastInsertRowid);
+  } else {
+    if (user.is_blocked) throw new HttpError(403, 'Hisob bloklangan');
+    if (name && !user.name) q.run('UPDATE users SET name = ? WHERE id = ?', name, user.id);
+  }
+  // Admin numbers are always admins (configured with ADMIN_PHONES).
+  if (isAdminPhone(phone) && user.role_id !== ROLE_ADMIN) q.run('UPDATE users SET role_id = ? WHERE id = ?', ROLE_ADMIN, user.id);
+  if (req.body.fcm_token) q.run('UPDATE users SET fcm_token = ? WHERE id = ?', String(req.body.fcm_token), user.id);
+  q.run('UPDATE users SET is_verified = 1 WHERE id = ?', user.id);
   user = q.get('SELECT * FROM users WHERE id = ?', user.id);
-  res.json(tokensFor(user));
+  res.json(session(user));
 }));
 
 router.post('/auth/refresh', wrap(async (req, res) => {
   const user = useRefresh(req.body.refreshToken || req.body.refresh_token);
   if (!user) throw new HttpError(401, 'Sessiya tugagan. Qaytadan kiring');
-  res.json({ accessToken: signAccess(user), id: user.id, role_id: user.role_id });
+  res.json({ accessToken: signAccess(user) });
 }));
 
 router.post('/auth/logout', wrap(async (req, res) => {
   if (req.body.refreshToken) revokeRefresh(req.body.refreshToken);
-  res.json(ok('Chiqildi'));
+  res.json({ ok: true });
 }));
 
-// Web admin panel: phone + password (set with ADMIN_PASSWORD or npm run create-admin).
+// Web admin panel: phone + password (ADMIN_PHONE/ADMIN_PASSWORD or npm run create-admin).
 router.post('/auth/admin-login', wrap(async (req, res) => {
   limit(`admin:${req.ip}`, 20, 900000);
   const phone = normalizePhone(req.body.phone || req.body.phone_number);
@@ -147,12 +137,43 @@ router.post('/auth/admin-login', wrap(async (req, res) => {
   if (!user || user.role_id !== ROLE_ADMIN || !verifyPassword(req.body.password || '', user.password_hash) || user.is_blocked) {
     throw new HttpError(401, "Telefon yoki parol noto'g'ri");
   }
-  res.json(tokensFor(user));
+  res.json(session(user));
 }));
 
-router.post('/auth/fcm-token', requireAuth, wrap(async (req, res) => {
-  q.run('UPDATE users SET fcm_token = ? WHERE id = ?', String(req.body.fcm_token || ''), req.user.id);
-  res.json(ok('OK'));
+// ---------------------------------------------------------------- me
+router.get('/me', requireAuth, (req, res) => res.json(meOut(req.user)));
+
+router.put('/me', requireAuth, upload.fields([{ name: 'avatar', maxCount: 1 }]), wrap(async (req, res) => {
+  try {
+    const name = req.body.name !== undefined ? String(req.body.name).trim().slice(0, 100) : req.user.name;
+    if (!name) throw new HttpError(400, 'Ismingizni kiriting');
+    let avatar = req.user.avatar;
+    const file = req.files && req.files.avatar && req.files.avatar[0];
+    if (file) {
+      avatar = await moveUpload(file, 'avatars');
+      await removePublic(req.user.avatar);
+    }
+    q.run('UPDATE users SET name = ?, avatar = ? WHERE id = ?', name, avatar, req.user.id);
+    res.json(meOut(q.get('SELECT * FROM users WHERE id = ?', req.user.id)));
+  } finally {
+    await cleanupTmp(req.files);
+  }
 }));
+
+router.post('/me/fcm-token', requireAuth, (req, res) => {
+  q.run('UPDATE users SET fcm_token = ? WHERE id = ?', String(req.body.fcm_token || ''), req.user.id);
+  res.json({ ok: true });
+});
+
+router.get('/me/notifications', requireAuth, (req, res) => {
+  const rows = q.all('SELECT * FROM notifications WHERE user_id = ? ORDER BY id DESC LIMIT 100', req.user.id);
+  const unread = q.get('SELECT COUNT(*) AS n FROM notifications WHERE user_id = ? AND read_at IS NULL', req.user.id).n;
+  res.json({ notifications: rows.map(S.notification), unread });
+});
+
+router.post('/me/notifications/read', requireAuth, (req, res) => {
+  q.run("UPDATE notifications SET read_at = datetime('now') WHERE user_id = ? AND read_at IS NULL", req.user.id);
+  res.json({ ok: true });
+});
 
 module.exports = router;

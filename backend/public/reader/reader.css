@@ -20,9 +20,9 @@
   --line: rgba(0, 0, 0, .09);
   --panel: #ffffff;
   --panel-fg: #1f1d1a;
-  --accent: #0d7c66;
-  --accent-soft: rgba(13, 124, 102, .12);
-  --link: #0b6e5b;
+  --accent: #0a3a8c;
+  --accent-soft: rgba(10, 58, 140, .10);
+  --link: #1f4fa8;
   --shadow: 0 10px 40px rgba(0, 0, 0, .18);
   --hl-yellow: rgba(255, 213, 0, .42);
   --hl-green: rgba(80, 200, 120, .35);
@@ -43,14 +43,14 @@
 }
 :root[data-theme="dark"] {
   --bg: #1e1f22; --fg: #d9d6cf; --muted: #8d8a83; --line: rgba(255, 255, 255, .09);
-  --panel: #2a2b2f; --panel-fg: #e6e3dc; --accent: #5cc3a6; --accent-soft: rgba(92, 195, 166, .16); --link: #6fd0b4;
+  --panel: #2a2b2f; --panel-fg: #e6e3dc; --accent: #8fb0f5; --accent-soft: rgba(143, 176, 245, .16); --link: #a3bff7;
   --hl-yellow: rgba(255, 213, 0, .30); --hl-green: rgba(80, 200, 120, .28); --hl-blue: rgba(70, 150, 255, .30); --hl-pink: rgba(255, 90, 160, .28);
   --shadow: 0 10px 40px rgba(0, 0, 0, .55);
   color-scheme: dark;
 }
 :root[data-theme="black"] {
   --bg: #000; --fg: #c8c5be; --muted: #7d7a74; --line: rgba(255, 255, 255, .1);
-  --panel: #141414; --panel-fg: #dcd9d2; --accent: #5cc3a6; --accent-soft: rgba(92, 195, 166, .16); --link: #6fd0b4;
+  --panel: #141414; --panel-fg: #dcd9d2; --accent: #8fb0f5; --accent-soft: rgba(143, 176, 245, .16); --link: #a3bff7;
   --hl-yellow: rgba(255, 213, 0, .28); --hl-green: rgba(80, 200, 120, .26); --hl-blue: rgba(70, 150, 255, .28); --hl-pink: rgba(255, 90, 160, .26);
   --shadow: 0 10px 40px rgba(0, 0, 0, .7);
   color-scheme: dark;
@@ -263,3 +263,7 @@ input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border: 0; bord
 @media (min-width: 900px) {
   #pageHead, #pageFoot { font-size: 13px; }
 }
+
+#content .preview-end { padding: 2em 1em; line-height: 1.6; }
+#content .preview-end b { font-family: var(--font); font-size: 1.3em; color: var(--fg); display: inline-block; margin-bottom: .3em; }
+#content .preview-end button { margin-top: 14px; padding: 12px 22px; border-radius: 24px; background: var(--accent); color: #fff; font-size: 15px; }

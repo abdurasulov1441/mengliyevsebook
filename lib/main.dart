@@ -1,90 +1,37 @@
 import 'dart:ui';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mengliyevsebook/app/app.dart';
-import 'package:mengliyevsebook/services/db/cache.dart';
-import 'package:mengliyevsebook/services/firebase_notification.dart';
-import 'package:easy_localization/easy_localization.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mengliyevsebook/app/app.dart';
+import 'package:mengliyevsebook/core/session.dart';
+import 'package:mengliyevsebook/services/db/cache.dart';
+import 'package:mengliyevsebook/services/firebase_notification.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     await Firebase.initializeApp();
-    debugPrint('Firebase initialized successfully');
-
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-
-    try {
-      await FirebaseMessaging.instance.requestPermission();
-      debugPrint('Firebase Messaging permission requested');
-    } catch (e) {
-      debugPrint('Firebase Messaging permission error: $e');
-    }
-
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     PlatformDispatcher.instance.onError = (error, stack) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
   } catch (e) {
-    debugPrint('Firebase initialization error: $e');
+    debugPrint('Firebase init error: $e');
   }
 
-  try {
-    await cache.init();
-    debugPrint('Cache initialized successfully');
-  } catch (e) {
-    debugPrint('Cache initialization error: $e');
-  }
+  await cache.init();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark));
 
-  try {
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    debugPrint('Orientation set successfully');
-  } catch (e) {
-    debugPrint('Orientation error: $e');
-  }
-
-  try {
-    EasyLocalization.logger.enableBuildModes = [];
-    await EasyLocalization.ensureInitialized();
-    debugPrint('EasyLocalization initialized successfully');
-  } catch (e) {
-    debugPrint('EasyLocalization error: $e');
-  }
+  // Push notifications are optional: a broken Firebase config must not stop the app.
   NotificationService().initNotifications().catchError((Object e) {
     debugPrint('Notifications init error: $e');
   });
 
-  try {
-    final prefs = await SharedPreferences.getInstance();
-    final savedLocaleCode = prefs.getString('locale') ?? 'uz';
-    debugPrint('Locale loaded: $savedLocaleCode');
-    final initialLocale = ['uz', 'ru'].contains(savedLocaleCode)
-        ? Locale(savedLocaleCode)
-        : Locale('uz');
-
-    runApp(
-      ProviderScope(
-        child: EasyLocalization(
-          path: 'assets/translations',
-          supportedLocales: const [Locale('uz'), Locale('ru'), Locale('uk')],
-          saveLocale: true,
-          startLocale: initialLocale,
-          child: App(),
-        ),
-      ),
-    );
-  } catch (e) {
-    debugPrint('Error starting app: $e');
-  }
+  session.restore();
+  runApp(const BookHubApp());
 }

@@ -1,8 +1,8 @@
 {
-  "name": "mengliyevs-ebook-backend",
+  "name": "bookhub-backend",
   "version": "1.0.0",
   "private": true,
-  "description": "Mengliyev's eBook backend: API, admin panel, Word -> mobile book converter",
+  "description": "BookHub: open e-book platform API, admin panel, Word -> mobile book converter",
   "main": "src/server.js",
   "engines": {
     "node": ">=22.13"
@@ -14,7 +14,7 @@
     "create-admin": "node scripts/create-admin.js",
     "sync-reader": "node scripts/sync-reader.js",
     "test": "node --test test/*.test.js",
-    "app-books": "node scripts/build-app-books.js"
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
@@ -26,6 +26,7 @@
     "mammoth": "^1.13.0",
     "multer": "^2.4.0",
     "sharp": "^0.35.5",
+    "swagger-ui-dist": "^5.34.0",
     "word-extractor": "^1.0.4"
   }
 }

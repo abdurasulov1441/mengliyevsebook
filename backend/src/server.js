@@ -24,8 +24,9 @@ function ensureAdmin() {
 ensureAdmin();
 const app = createApp();
 app.listen(config.port, () => {
-  console.log(`Mengliyev's eBook backend: http://localhost:${config.port}`);
+  console.log(`BookHub backend: http://localhost:${config.port}`);
   console.log(`  admin panel  http://localhost:${config.port}/admin/`);
+  console.log(`  API docs     http://localhost:${config.port}/api/docs`);
   console.log(`  data         ${config.dataDir}`);
   console.log(`  SMS          ${config.sms.dryRun ? 'DRY RUN (codes are printed here)' : 'GetSMS.uz'}`);
   console.log(`  LibreOffice  ${findSoffice() || 'not found (.doc files: text only)'}`);

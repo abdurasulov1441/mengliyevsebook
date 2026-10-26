@@ -3,3 +3,4 @@ data/
 offline/
 .env
 *.log
+seed-books/
