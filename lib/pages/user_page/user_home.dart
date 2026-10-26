@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:mengliyevsebook/pages/user_page/audio/audio_screen.dart';
 import 'package:mengliyevsebook/pages/user_page/books/books_screen.dart';
 import 'package:mengliyevsebook/pages/user_page/shop/shop_screen.dart';
 import 'package:mengliyevsebook/pages/user_page/user/user_account_screen.dart';
-import 'package:mengliyevsebook/services/style/app_colors.dart';
+import 'package:mengliyevsebook/theme/app_theme.dart';
+import 'package:mengliyevsebook/widgets/app_icon.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -14,69 +14,95 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  Widget _child = const BooksScreen();
+  int _index = 0;
+
+  static const _tabs = [
+    ('library-big', 'Kutubxona'),
+    ('headphones', 'Audio'),
+    ('shopping-bag', "Do'kon"),
+    ('user-round', 'Profil'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _child,
+      backgroundColor: AppPalette.background,
+      // IndexedStack keeps each tab's scroll position and state.
+      body: IndexedStack(
+        index: _index,
+        children: [
+          BooksScreen(onOpenShop: () => setState(() => _index = 2)),
+          const AudioScreen(),
+          const ShopScreen(),
+          const UserAccountScreen(),
+        ],
       ),
-      bottomNavigationBar: SafeArea(
-        child: FluidNavBar(
-          icons: [
-            FluidNavBarIcon(
-              svgPath: "assets/icons/books.svg",
-              backgroundColor: AppColors.grade1,
-              extras: {"label": "Books"},
-            ),
-            FluidNavBarIcon(
-              svgPath: "assets/icons/music.svg",
-              backgroundColor: AppColors.grade1,
-              extras: {"label": "Audio"},
-            ),
-            FluidNavBarIcon(
-              svgPath: "assets/icons/shop.svg",
-              backgroundColor: AppColors.grade1,
-              extras: {"label": "Shop"},
-            ),
-            FluidNavBarIcon(
-              svgPath: "assets/icons/user.svg",
-              backgroundColor: AppColors.grade1,
-              extras: {"label": "Account"},
-            ),
-          ],
-          onChange: _handleNavigationChange,
-          style: FluidNavBarStyle(
-            barBackgroundColor: AppColors.grade1,
-            iconUnselectedForegroundColor: AppColors.backgroundColor,
-            iconSelectedForegroundColor: AppColors.backgroundColor,
-          ),
-          scaleFactor: 1.5,
-          defaultIndex: 0,
-        ),
+      bottomNavigationBar: _BottomBar(
+        index: _index,
+        tabs: _tabs,
+        onTap: (i) => setState(() => _index = i),
       ),
     );
   }
+}
 
-  void _handleNavigationChange(int index) {
-    setState(() {
-      switch (index) {
-        case 0:
-          _child = const BooksScreen();
-          break;
-        case 1:
-          _child = const AudioScreen();
-          break;
-        case 2:
-          _child = const ShopScreen();
-          break;
-        case 3:
-          _child = const UserAccountScreen();
-          break;
-      }
-    });
+class _BottomBar extends StatelessWidget {
+  final int index;
+  final List<(String, String)> tabs;
+  final ValueChanged<int> onTap;
+
+  const _BottomBar({required this.index, required this.tabs, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppPalette.surface,
+        border: const Border(top: BorderSide(color: AppPalette.line)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, -4))],
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 66,
+          child: Row(
+            children: [
+              for (var i = 0; i < tabs.length; i++)
+                Expanded(
+                  child: InkWell(
+                    onTap: () => onTap(i),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 220),
+                          curve: Curves.easeOut,
+                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: i == index ? AppPalette.brandSoft : Colors.transparent,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: AppIcon(tabs[i].$1, size: 22, color: i == index ? AppPalette.brand : AppPalette.muted),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          tabs[i].$2,
+                          style: AppText.caption.copyWith(
+                            fontSize: 11.5,
+                            color: i == index ? AppPalette.brand : AppPalette.muted,
+                            fontWeight: i == index ? FontWeight.w700 : FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

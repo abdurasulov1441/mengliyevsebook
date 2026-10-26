@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mengliyevsebook/widgets/app_icon.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mengliyevsebook/services/db/cache.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
@@ -177,12 +178,12 @@ class _BuyBookScreenState extends State<BuyBookScreen> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: chooseImage,
-                      icon: const Icon(Icons.image),
+                      icon: const AppIcon('image', size: 20),
                       label: const Text("Skrinshot yuklash"),
                     ),
                     const SizedBox(width: 12),
                     if (selectedImage != null)
-                      const Icon(Icons.check_circle, color: Colors.green),
+                      const AppIcon('circle-check', color: Colors.green),
                   ],
                 ),
 
@@ -202,7 +203,7 @@ class _BuyBookScreenState extends State<BuyBookScreen> {
                 // DATE PICKER
                 ElevatedButton.icon(
                   onPressed: pickDate,
-                  icon: const Icon(Icons.calendar_month),
+                  icon: const AppIcon('calendar', size: 20),
                   label: Text(
                     approvedAt == null
                         ? "Vaqtni tanlang"
@@ -214,7 +215,7 @@ class _BuyBookScreenState extends State<BuyBookScreen> {
 
                 ElevatedButton.icon(
                   onPressed: submitPayment,
-                  icon: const Icon(Icons.send),
+                  icon: const AppIcon('send', size: 20, color: Colors.white),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     minimumSize: const Size(double.infinity, 50),

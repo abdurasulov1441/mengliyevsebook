@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mengliyevsebook/pages/user_page/shop/buy_book_page.dart';
-import 'package:mengliyevsebook/pages/user_page/books/book_reader_page.dart';
-import 'package:mengliyevsebook/services/utils/constants.dart';
-import 'package:mengliyevsebook/services/gradientbutton.dart';
+import 'package:mengliyevsebook/pages/user_page/shop/book_detail_page.dart';
+import 'package:mengliyevsebook/services/books/book_cover.dart';
+import 'package:mengliyevsebook/services/books/book_events.dart';
+import 'package:mengliyevsebook/services/books/local_catalog.dart';
 import 'package:mengliyevsebook/services/request_helper.dart';
-import 'package:mengliyevsebook/services/style/app_colors.dart';
+import 'package:mengliyevsebook/services/utils/constants.dart';
+import 'package:mengliyevsebook/theme/app_theme.dart';
+import 'package:mengliyevsebook/widgets/app_icon.dart';
 
+/// "Do'kon": paid books with search; a tap opens the book page.
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
 
@@ -16,205 +19,155 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   bool isLoading = true;
   String? errorMessage;
-
-  List<dynamic> paidBooks = [];
+  List<Map> books = [];
+  String query = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchPaidBooks();
+    booksChanged.addListener(_fetch);
+    _fetch();
   }
 
-  Future<void> _fetchPaidBooks() async {
+  @override
+  void dispose() {
+    booksChanged.removeListener(_fetch);
+    super.dispose();
+  }
+
+  Future<void> _fetch() async {
+    errorMessage = null;
     try {
-      setState(() {
-        isLoading = true;
-        errorMessage = null;
-      });
-
-      final resp = await requestHelper.getWithAuth(
-        "/api/books/get-books?page=1&limit=50&is_free=false",
-        log: true,
-      );
-
-      if (resp is Map && resp["books"] is List) {
-        paidBooks = resp["books"];
+      if (Constants.localMode) {
+        books = await LocalCatalog.shopBooks();
+      } else {
+        final resp = await requestHelper.getWithAuth('/api/books/get-books?page=1&limit=100&is_free=false');
+        books = resp is Map && resp['books'] is List ? (resp['books'] as List).cast<Map>() : [];
       }
-
-      setState(() => isLoading = false);
     } catch (e) {
-      setState(() {
-        errorMessage = "Xatolik: $e";
-        isLoading = false;
-      });
+      errorMessage = "Do'konni yuklab bo'lmadi. Internetni tekshiring.";
     }
+    if (mounted) setState(() => isLoading = false);
   }
 
-  void _openBookBuySheet(Map book) {
-    final img = book["photo"] != null
-        ? Constants.fileUrl(book['photo'])!
-        : "https://via.placeholder.com/200";
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-
-      isScrollControlled: true, // ➤ to‘liq ekranga chiqishiga ruxsat
-      builder: (_) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.6, // boshlang'ich ochilish (60%)
-          minChildSize: 0.4,
-          maxChildSize: 0.95, // deyarli to‘liq ekran
-          expand: false,
-          builder: (context, scrollController) {
-            return Container(
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              child: SingleChildScrollView(
-                controller: scrollController, // ➤ scroll boshqaruvchisi
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(img, width: 150, height: 200),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    Text(
-                      book["title"] ?? "",
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    const SizedBox(height: 6),
-
-                    Text(
-                      book["author"]?["uz"] ?? "Muallif",
-                      style: const TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    Text(book["description"] ?? ""),
-
-                    const SizedBox(height: 20),
-
-                    Text(
-                      "Narxi: ${book['price']} so‘m",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-                    GradientButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BuyBookScreen(book: book),
-                          ),
-                        );
-                      },
-                      text: "Sotib olish",
-                    ),
-
-                    const SizedBox(height: 40),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  void _onBookTap(Map book) async {
-    // Already bought: read it right away.
-    if (book['has_access'] == true) {
-      try {
-        await openBook(context, book);
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))));
-        }
-      }
-      return;
-    }
-    _openBookBuySheet(book);
+  List<Map> get _filtered {
+    final q = query.trim().toLowerCase();
+    if (q.isEmpty) return books;
+    return books.where((b) => '${b['title']} ${b['author']?['uz'] ?? ''}'.toLowerCase().contains(q)).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final list = _filtered;
     return Scaffold(
-      backgroundColor: AppColors.ui,
-      appBar: AppBar(
-        title: const Text("Do‘kon (Pullik kitoblar)"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0.4,
-      ),
-
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage != null
-          ? Center(child: Text(errorMessage!))
-          : RefreshIndicator(
-              onRefresh: _fetchPaidBooks,
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  ...paidBooks.map((book) {
-                    final img = book['photo'] != null
-                        ? Constants.fileUrl(book['photo'])!
-                        : 'https://via.placeholder.com/100';
-
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+      body: RefreshIndicator(
+        onRefresh: _fetch,
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            SliverSafeArea(
+              bottom: false,
+              sliver: SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('KITOBLAR DO‘KONI', style: AppText.overline),
+                      const SizedBox(height: 6),
+                      const Text("Do'kon", style: AppText.display),
+                      const SizedBox(height: 16),
+                      TextField(
+                        onChanged: (v) => setState(() => query = v),
+                        style: AppText.body,
+                        decoration: const InputDecoration(
+                          hintText: 'Kitob yoki muallif…',
+                          prefixIcon: Padding(padding: EdgeInsets.all(13), child: AppIcon('search', size: 20, color: AppPalette.muted)),
                         ),
-                        tileColor: AppColors.backgroundColor,
-                        leading: Image.network(
-                          img,
-                          width: 40,
-                          height: 64,
-
-                          fit: BoxFit.fitHeight,
-                        ),
-                        title: Text(
-                          book["title"],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Text(
-                          book['has_access'] == true
-                              ? "${book['author']?['uz'] ?? "Muallif"} • sotib olingan"
-                              : "${book['author']?['uz'] ?? "Muallif"} • ${book['price']} so‘m",
-                        ),
-                        trailing: Icon(
-                          Icons.chevron_right,
-                          color: AppColors.grade1,
-                        ),
-                        onTap: () => _onBookTap(book),
                       ),
-                    );
-                  }).toList(),
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
+            if (isLoading)
+              const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+            else if (errorMessage != null)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(errorMessage!, style: AppText.bodySoft, textAlign: TextAlign.center))),
+              )
+            else if (list.isEmpty)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(child: Text(books.isEmpty ? "Hozircha pullik kitoblar yo'q" : 'Hech narsa topilmadi', style: AppText.bodySoft)),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(20, 22, 20, 28),
+                sliver: SliverLayoutBuilder(builder: (context, constraints) {
+                  final columns = (constraints.crossAxisExtent / 165).floor().clamp(2, 5);
+                  final tileW = (constraints.crossAxisExtent - 18 * (columns - 1)) / columns;
+                  return SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: columns,
+                      mainAxisSpacing: 24,
+                      crossAxisSpacing: 18,
+                      // Cover + two title lines + author + price chip.
+                      mainAxisExtent: tileW * 1.48 + 120,
+                    ),
+                    delegate: SliverChildBuilderDelegate((_, i) => _ShopTile(book: list[i]), childCount: list.length),
+                  );
+                }),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ShopTile extends StatelessWidget {
+  final Map book;
+
+  const _ShopTile({required this.book});
+
+  @override
+  Widget build(BuildContext context) {
+    final owned = book['has_access'] == true;
+    final author = (book['author'] is Map ? book['author']['uz'] : '')?.toString() ?? '';
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => BookDetailPage(book: book))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LayoutBuilder(builder: (context, c) {
+            return Hero(tag: 'cover-${book['id']}', child: BookCover(book: book, width: c.maxWidth, height: c.maxWidth * 1.48));
+          }),
+          const SizedBox(height: 12),
+          Text(book['title'] ?? '', maxLines: 2, overflow: TextOverflow.ellipsis, style: AppText.bookTitle),
+          const SizedBox(height: 3),
+          Text(author.isEmpty ? '—' : author, maxLines: 1, overflow: TextOverflow.ellipsis, style: AppText.caption),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: owned ? AppPalette.brandSoft : AppPalette.goldSoft,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (owned) ...[const AppIcon('circle-check', size: 13, color: AppPalette.brand), const SizedBox(width: 5)],
+                Text(
+                  owned ? 'Sizda bor' : formatPrice(book['price']),
+                  style: AppText.label.copyWith(fontSize: 12, color: owned ? AppPalette.brand : AppPalette.gold),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

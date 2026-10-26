@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:mengliyevsebook/services/books/local_catalog.dart';
 import 'package:mengliyevsebook/services/db/cache.dart';
 import 'package:mengliyevsebook/services/utils/constants.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,6 +24,13 @@ class BookLibrary {
   final Dio _dio = Dio();
   Directory? _root;
 
+  static const _readerFonts = [
+    'Inter-400.ttf', 'Inter-600.ttf',
+    'Literata-400.ttf', 'Literata-400Italic.ttf', 'Literata-700.ttf',
+    'Lora-400.ttf', 'Lora-400Italic.ttf', 'Lora-700.ttf',
+    'PTSerif-400.ttf', 'PTSerif-400Italic.ttf', 'PTSerif-700.ttf',
+  ];
+
   Future<Directory> root() async {
     if (_root != null) return _root!;
     final docs = await getApplicationDocumentsDirectory();
@@ -38,6 +46,15 @@ class BookLibrary {
     for (final name in ['reader.html', 'reader.css', 'reader.js']) {
       final data = await rootBundle.load('assets/reader/$name');
       await File('${dir.path}/$name').writeAsBytes(data.buffer.asUint8List(), flush: true);
+    }
+    // Reading fonts come from the app's own font assets (no duplicate files).
+    final fonts = Directory('${dir.path}/fonts');
+    await fonts.create(recursive: true);
+    for (final f in _readerFonts) {
+      final out = File('${fonts.path}/$f');
+      if (await out.exists()) continue;
+      final data = await rootBundle.load('assets/fonts/$f');
+      await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
     }
     return File('${dir.path}/reader.html');
   }
@@ -65,6 +82,7 @@ class BookLibrary {
   /// Downloads `/api/books/{id}/package.zip` with the user's token and unpacks it.
   Future<void> download(Map book, {void Function(double progress)? onProgress}) async {
     final id = book['id'].toString();
+    if (Constants.localMode) return _copyFromAssets(book, onProgress);
     final dir = await root();
     final zipFile = File('${dir.path}/$id.download.zip');
     final tmpDir = Directory('${dir.path}/$id.tmp');
@@ -87,6 +105,23 @@ class BookLibrary {
       if (await zipFile.exists()) await zipFile.delete();
       if (await tmpDir.exists()) await tmpDir.delete(recursive: true);
     }
+  }
+
+  /// Local mode: the "download" is a copy of the bundled book out of assets.
+  Future<void> _copyFromAssets(Map book, void Function(double)? onProgress) async {
+    final id = book['id'].toString();
+    final files = await LocalCatalog.files(id);
+    if (!files.contains('book.js')) throw Exception('Kitob ilovada topilmadi');
+    final target = await bookDir(id);
+    if (await target.exists()) await target.delete(recursive: true);
+    for (var i = 0; i < files.length; i++) {
+      final data = await rootBundle.load('assets/local_books/$id/${files[i]}');
+      final out = File('${target.path}/${files[i]}');
+      await out.parent.create(recursive: true);
+      await out.writeAsBytes(data.buffer.asUint8List(), flush: true);
+      onProgress?.call((i + 1) / files.length);
+    }
+    await File('${target.path}/.version').writeAsString('${book['package_version'] ?? 1}');
   }
 
   Future<void> remove(String id) async {
@@ -133,6 +168,7 @@ class BookLibrary {
   // ---- reading progress sync -------------------------------------------
 
   Future<Map<String, dynamic>?> fetchReading(String id) async {
+    if (Constants.localMode) return null;
     try {
       final r = await _authed('GET', '/api/books/$id/reading');
       return r is Map<String, dynamic> ? r : null;
@@ -142,6 +178,12 @@ class BookLibrary {
   }
 
   Future<void> pushReading(String id, Map<String, dynamic> state) async {
+    if (Constants.localMode) {
+      // Progress for the "my books" list; the reader keeps the rest itself.
+      final p = state['percent'];
+      if (p is num) await LocalCatalog.saveProgress(id, p);
+      return;
+    }
     try {
       await _authed('PUT', '/api/books/$id/reading', body: state);
     } catch (_) {

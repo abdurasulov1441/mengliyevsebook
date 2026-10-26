@@ -7,6 +7,11 @@ abstract final class Constants {
   static const baseUrl = String.fromEnvironment('API_URL', defaultValue: 'https://etimolog.uz');
   static const callCenter = '+998900961704';
 
+  /// Local mode: no backend at all. Books come from assets/local_books,
+  /// login is skipped, purchases and progress stay on the device.
+  /// Build against the server with --dart-define=LOCAL_MODE=false.
+  static const localMode = bool.fromEnvironment('LOCAL_MODE', defaultValue: true);
+
   /// Uploaded files (covers, author photos, receipts) come as "/covers/x.jpg".
   static String? fileUrl(dynamic path) {
     if (path == null || path.toString().isEmpty) return null;

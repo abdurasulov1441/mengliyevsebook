@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%238a5a2b%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22 font-weight=%22bold%22%3EM%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#fbfaf7">
+<meta name="theme-color" content="#fbf9f5">
 <title>Kitob o'qish</title>
 <link rel="stylesheet" href="reader.css">
 </head>
@@ -65,10 +65,10 @@
     <div class="sizes"><button id="fsMinus" style="font-size:14px">A</button><span id="fsValue">19</span><button id="fsPlus" style="font-size:20px">A</button></div></div>
   <div class="set-row"><label data-i18n="theme">Fon</label>
     <div class="seg" id="segTheme">
-      <button class="swatch t-light" data-v="light">A</button><button class="swatch t-sepia" data-v="sepia">A</button>
-      <button class="swatch t-dark" data-v="dark">A</button><button class="swatch t-black" data-v="black">A</button></div></div>
+      <button class="swatch t-light" data-v="light">Aa</button><button class="swatch t-sepia" data-v="sepia">Aa</button>
+      <button class="swatch t-dark" data-v="dark">Aa</button><button class="swatch t-black" data-v="black">Aa</button></div></div>
   <div class="set-row"><label data-i18n="font">Harf</label>
-    <div class="seg" id="segFont"><button data-v="serif" style="font-family:Georgia,serif">Serif</button><button data-v="sans" style="font-family:system-ui,sans-serif">Sans</button><button data-v="mono" style="font-family:ui-monospace,monospace">Mono</button></div></div>
+    <div class="seg" id="segFont"><button data-v="serif" style="font-family:Literata,serif">Literata</button><button data-v="lora" style="font-family:Lora,serif">Lora</button><button data-v="pt" style="font-family:'PT Serif',serif">PT Serif</button><button data-v="sans" style="font-family:Inter,sans-serif">Inter</button></div></div>
   <div class="set-row"><label data-i18n="spacing">Qator</label>
     <div class="seg" id="segLine"><button data-v="1.35">1.35</button><button data-v="1.6">1.6</button><button data-v="1.9">1.9</button></div></div>
   <div class="set-row"><label data-i18n="margins">Chekka</label>
@@ -77,6 +77,10 @@
     <div class="seg" id="segAlign"><button data-v="justify" data-i18n="justify">Kenglik</button><button data-v="left" data-i18n="left">Chap</button></div></div>
   <div class="set-row"><label data-i18n="mode">Rejim</label>
     <div class="seg" id="segMode"><button data-v="paged" data-i18n="paged">Sahifa</button><button data-v="scroll" data-i18n="scroll">Aylantirish</button></div></div>
+  <div class="set-row"><label data-i18n="pageTurn">Varaqlash</label>
+    <div class="seg" id="segTurn"><button data-v="slide" data-i18n="turnSlide">Surish</button><button data-v="flip" data-i18n="turnFlip">Varaq</button><button data-v="fade" data-i18n="turnFade">Xira</button><button data-v="none" data-i18n="turnNone">Yo'q</button></div></div>
+  <div class="set-row"><label data-i18n="turnSpeed">Tezlik</label>
+    <div class="seg" id="segSpeed"><button data-v="fast" data-i18n="fast">Tez</button><button data-v="normal" data-i18n="normal">O'rta</button><button data-v="slow" data-i18n="slow">Sekin</button></div></div>
   <div class="set-row"><label data-i18n="brightness">Yorug'lik</label>
     <div class="bright"><input type="range" id="brightness" min="0" max="70" value="0"></div></div>
 </section>

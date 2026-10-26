@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mengliyevsebook/app/router.dart';
 import 'package:mengliyevsebook/services/language/language_provider.dart';
+import 'package:mengliyevsebook/theme/app_theme.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
@@ -25,6 +26,7 @@ class _AppState extends ConsumerState<App> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light(),
       title: "Mengliyev's eBook",
       routerConfig: router,
       locale: context.locale,

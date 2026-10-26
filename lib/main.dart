@@ -61,7 +61,9 @@ void main() async {
   } catch (e) {
     debugPrint('EasyLocalization error: $e');
   }
-  NotificationService().initNotifications();
+  NotificationService().initNotifications().catchError((Object e) {
+    debugPrint('Notifications init error: $e');
+  });
 
   try {
     final prefs = await SharedPreferences.getInstance();

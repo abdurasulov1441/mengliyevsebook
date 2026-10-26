@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mengliyevsebook/widgets/app_icon.dart';
+import 'package:mengliyevsebook/theme/app_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:mengliyevsebook/services/books/book_library.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -184,7 +186,7 @@ class _BookReaderPageState extends State<BookReaderPage> {
                     children: [
                       const CircularProgressIndicator(),
                       const SizedBox(height: 16),
-                      Text(widget.title, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey)),
+                      Text(widget.title, textAlign: TextAlign.center, style: AppText.bookTitle.copyWith(color: AppPalette.inkSoft)),
                     ],
                   ),
                 ),
@@ -196,7 +198,7 @@ class _BookReaderPageState extends State<BookReaderPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.error_outline, size: 56, color: Colors.red.shade400),
+                          const AppIcon('book-open', size: 52, color: AppPalette.danger),
                           const SizedBox(height: 12),
                           const Text("Kitobni ochib bo'lmadi", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                           const SizedBox(height: 8),

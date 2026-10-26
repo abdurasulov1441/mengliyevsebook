@@ -56,9 +56,18 @@ class NotificationService {
 
     debugPrint('✅ Разрешения получены.');
 
-    String? token = await messaging.getToken();
-    debugPrint("📲 FCM Token: $token");
-    if (token != null) await cache.setString('fcm_token', token);
+    // Push notifications are optional: a broken Firebase config (e.g. a
+    // deleted API key -> FIS_AUTH_ERROR) or a device without Google Play
+    // services must not stop the app.
+    try {
+      final token = await messaging.getToken();
+      debugPrint("📲 FCM Token: $token");
+      if (token != null) await cache.setString('fcm_token', token);
+    } catch (e) {
+      debugPrint(
+        '⚠️ FCM token olinmadi (bildirishnomalarsiz davom etamiz): $e',
+      );
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint(

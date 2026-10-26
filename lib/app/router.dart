@@ -6,6 +6,7 @@ import 'package:mengliyevsebook/pages/sign/login_screen.dart';
 import 'package:mengliyevsebook/pages/sign/signup_screen.dart';
 import 'package:mengliyevsebook/pages/sign/smsverify.dart';
 import 'package:mengliyevsebook/services/db/cache.dart';
+import 'package:mengliyevsebook/services/utils/constants.dart';
 
 abstract class Routes {
   static const homeScreen = '/homeScreen';
@@ -17,7 +18,8 @@ abstract class Routes {
 }
 
 String _initialLocation() {
-  // return Routes.loginScreen;
+  // Local mode has no server to log in to: open the library directly.
+  if (Constants.localMode) return Routes.userHome;
 
   final userToken = cache.getString("user_token");
   String? refreshToken = cache.getString('refresh_token');

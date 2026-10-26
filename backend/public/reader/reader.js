@@ -38,24 +38,26 @@
     },
   };
 
+  // Lucide icons (ISC licence), same set as the app.
   const ICONS = {
-    back: '<path d="M15 18l-6-6 6-6"/>',
-    search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
-    bookmark: '<path d="M6 3h12v18l-6-4.5L6 21z"/>',
-    bookmarkOn: '<path d="M6 3h12v18l-6-4.5L6 21z" fill="currentColor"/>',
-    list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
-    type: '<path d="M4 7V5h11v2M9.5 5v14M7 19h5M14 12v-1h7v1M17.5 11v8M16 19h3"/>',
-    prev: '<path d="M18 17l-5-5 5-5M11 17l-5-5 5-5"/>',
-    next: '<path d="M6 17l5-5-5-5M13 17l5-5-5-5"/>',
-    close: '<path d="M18 6L6 18M6 6l12 12"/>',
-    note: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
-    copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/>',
-    trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+    back: '<path d="m15 18-6-6 6-6" />',
+    search: '<path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />',
+    bookmark: '<path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />',
+    bookmarkOn: '<path fill="currentColor" d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />',
+    list: '<path d="M3 5h.01" /><path d="M3 12h.01" /><path d="M3 19h.01" /><path d="M8 5h13" /><path d="M8 12h13" /><path d="M8 19h13" />',
+    type: '<path d="m15 16 2.536-7.328a1.02 1.02 1 0 1 1.928 0L22 16" /><path d="M15.697 14h5.606" /><path d="m2 16 4.039-9.69a.5.5 0 0 1 .923 0L11 16" /><path d="M3.304 13h6.392" />',
+    prev: '<path d="m11 17-5-5 5-5" /><path d="m18 17-5-5 5-5" />',
+    next: '<path d="m6 17 5-5-5-5" /><path d="m13 17 5-5-5-5" />',
+    close: '<path d="M18 6 6 18" /><path d="m6 6 12 12" />',
+    note: '<path d="M13 21h8" /><path d="m15 5 4 4" /><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />',
+    copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />',
+    trash: '<path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />',
   };
   const svg = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</svg>`;
 
   const I18N = {
     uz: {
+      pageTurn: 'Varaqlash', turnSlide: 'Surish', turnFlip: 'Varaq', turnFade: 'Xira', turnNone: "Yo'q", turnSpeed: 'Tezlik', fast: 'Tez', normal: "O'rta", slow: 'Sekin',
       loading: 'Kitob yuklanmoqda…', errorTitle: "Kitobni ochib bo'lmadi", back: 'Orqaga', contents: 'Mundarija', bookmarks: "Xatcho'plar",
       notes: 'Belgilar', search: 'Qidirish', fontSize: 'Shrift', theme: 'Fon', font: 'Harf', spacing: 'Qator', margins: 'Chekka', align: 'Tekislash',
       justify: 'Kenglik', left: 'Chap', mode: 'Rejim', paged: 'Sahifa', scroll: 'Aylantirish', brightness: "Yorug'lik", delete: "O'chirish",
@@ -65,6 +67,7 @@
       bookmarkAdded: "Xatcho'p qo'shildi", bookmarkRemoved: "Xatcho'p olib tashlandi", notePlaceholder: 'Izoh yozing…', chapter: 'Bob', percentRead: "o'qildi",
     },
     ru: {
+      pageTurn: 'Листание', turnSlide: 'Сдвиг', turnFlip: 'Страница', turnFade: 'Растворение', turnNone: 'Нет', turnSpeed: 'Скорость', fast: 'Быстро', normal: 'Средне', slow: 'Медленно',
       loading: 'Загрузка книги…', errorTitle: 'Не удалось открыть книгу', back: 'Назад', contents: 'Оглавление', bookmarks: 'Закладки',
       notes: 'Заметки', search: 'Поиск', fontSize: 'Шрифт', theme: 'Фон', font: 'Гарнитура', spacing: 'Интервал', margins: 'Поля', align: 'Выравнивание',
       justify: 'По ширине', left: 'Влево', mode: 'Режим', paged: 'Страницы', scroll: 'Прокрутка', brightness: 'Яркость', delete: 'Удалить',
@@ -74,6 +77,7 @@
       bookmarkAdded: 'Закладка добавлена', bookmarkRemoved: 'Закладка удалена', notePlaceholder: 'Напишите заметку…', chapter: 'Глава', percentRead: 'прочитано',
     },
     en: {
+      pageTurn: 'Page turn', turnSlide: 'Slide', turnFlip: 'Curl', turnFade: 'Fade', turnNone: 'None', turnSpeed: 'Speed', fast: 'Fast', normal: 'Normal', slow: 'Slow',
       loading: 'Loading book…', errorTitle: 'Could not open the book', back: 'Back', contents: 'Contents', bookmarks: 'Bookmarks',
       notes: 'Notes', search: 'Search', fontSize: 'Text size', theme: 'Theme', font: 'Font', spacing: 'Spacing', margins: 'Margins', align: 'Align',
       justify: 'Justify', left: 'Left', mode: 'Mode', paged: 'Pages', scroll: 'Scroll', brightness: 'Brightness', delete: 'Delete',
@@ -85,10 +89,12 @@
   };
   let T = I18N.uz;
 
+  // Bundled fonts (fonts/*.ttf). Lora backs up glyphs others lack (Ҳ, ʻ).
   const FONTS = {
-    serif: 'Georgia, "Noto Serif", "Droid Serif", "Times New Roman", serif',
-    sans: 'system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif',
-    mono: 'ui-monospace, "SF Mono", Menlo, Consolas, monospace',
+    serif: '"Literata", "Lora", Georgia, serif',
+    lora: '"Lora", Georgia, serif',
+    pt: '"PT Serif", "Lora", Georgia, serif',
+    sans: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   };
   const DEFAULT_SETTINGS = {
     fontSize: window.innerWidth >= 900 ? 20 : 19,
@@ -99,6 +105,8 @@
     align: 'justify',
     mode: 'paged',
     brightness: 0,
+    pageTurn: 'slide', // slide | flip | fade | none
+    turnSpeed: 'normal', // fast | normal | slow
   };
 
   // ------------------------------------------------------------------ state
@@ -231,7 +239,8 @@
     root.style.setProperty('--font-size', st.fontSize + 'px');
     root.style.setProperty('--line-height', st.lineHeight);
     root.style.setProperty('--margin', st.margin + 'px');
-    root.style.setProperty('--font', FONTS[st.font] || FONTS.serif);
+    if (!FONTS[st.font]) st.font = 'serif';
+    root.style.setProperty('--font', FONTS[st.font]);
     els.content.classList.toggle('justify', st.align === 'justify');
     els.content.classList.toggle('indent', st.align === 'justify');
     document.body.classList.toggle('mode-scroll', st.mode === 'scroll');
@@ -249,6 +258,9 @@
     mark('segMargin', st.margin);
     mark('segAlign', st.align);
     mark('segMode', st.mode);
+    mark('segTurn', st.pageTurn);
+    mark('segSpeed', st.turnSpeed);
+    root.style.setProperty('--turn-ms', (TURN_MS[st.turnSpeed] || TURN_MS.normal) + 'ms');
     els.brightness.value = st.brightness;
   }
 
@@ -595,9 +607,13 @@
       els.viewport.scrollBy({ top: S.H * 0.9, behavior: 'smooth' });
       return;
     }
-    if (S.page < S.pages - 1) showPage(S.page + 1, true);
-    else if (S.ch < S.book.chapters.length - 1) slideChapter(S.ch + 1, { page: 0 }, 1);
-    else bounce(1);
+    if (S.page < S.pages - 1) {
+      const p = S.page + 1;
+      turn(1, (animate) => showPage(p, animate));
+    } else if (S.ch < S.book.chapters.length - 1) {
+      const c = S.ch + 1;
+      turn(1, () => renderChapter(c, { page: 0 }), true);
+    } else bounce(1);
   }
 
   function prevPage() {
@@ -605,23 +621,135 @@
       els.viewport.scrollBy({ top: -S.H * 0.9, behavior: 'smooth' });
       return;
     }
-    if (S.page > 0) showPage(S.page - 1, true);
-    else if (S.ch > 0) slideChapter(S.ch - 1, { page: 'last' }, -1);
-    else bounce(-1);
+    if (S.page > 0) {
+      const p = S.page - 1;
+      turn(-1, (animate) => showPage(p, animate));
+    } else if (S.ch > 0) {
+      const c = S.ch - 1;
+      turn(-1, () => renderChapter(c, { page: 'last' }), true);
+    } else bounce(-1);
   }
 
-  function slideChapter(index, target, dir) {
-    // Quick fade so a chapter change does not look like a glitch.
-    els.content.style.transition = 'opacity .12s';
-    els.content.style.opacity = '0';
-    setTimeout(() => {
-      renderChapter(index, target);
-      els.content.style.opacity = '1';
-      setTimeout(() => (els.content.style.transition = ''), 150);
-    }, dir ? 110 : 0);
+  // ---- page-turn animations (settings: pageTurn + turnSpeed) ----
+  const TURN_MS = { fast: 170, normal: 300, slow: 520 };
+  const turnMs = () => TURN_MS[S.settings.turnSpeed] || TURN_MS.normal;
+  let turnTimers = [];
+  let turnLayers = [];
+
+  // Ends a running animation at once (fast repeated taps stay responsive).
+  function finishTurn() {
+    turnTimers.forEach(clearTimeout);
+    turnTimers = [];
+    turnLayers.forEach((l) => l.remove());
+    turnLayers = [];
+    const c = els.content;
+    c.style.transition = '';
+    c.style.transitionDuration = '';
+    c.style.opacity = '';
+    c.classList.remove('anim');
+    c.style.transform = `translateX(${-S.page * S.W}px)`;
+  }
+  const later = (fn, ms) => turnTimers.push(setTimeout(fn, ms));
+
+  /**
+   * apply(animate) changes the page or chapter; acrossChapter tells whether
+   * the content is re-rendered (the slide then has to fake the movement).
+   */
+  function turn(dir, apply, acrossChapter) {
+    const busy = turnTimers.length > 0;
+    finishTurn();
+    const kind = busy ? 'none' : S.settings.pageTurn || 'slide';
+    if (kind === 'slide') return acrossChapter ? slideAcross(dir, apply) : apply(true);
+    if (kind === 'fade') return fadeTurn(apply);
+    if (kind === 'flip') return flipTurn(dir, apply);
+    apply(false);
+  }
+
+  function slideAcross(dir, apply) {
+    // The old chapter slides out, the new one slides in from the other side.
+    const c = els.content;
+    const half = Math.round(turnMs() * 0.6);
+    c.style.transitionDuration = half + 'ms';
+    c.classList.add('anim');
+    c.style.transform = `translateX(${-S.page * S.W - dir * S.W}px)`;
+    later(() => {
+      apply(false);
+      const base = -S.page * S.W;
+      c.classList.remove('anim');
+      c.style.transform = `translateX(${base + dir * S.W}px)`;
+      void c.offsetWidth; // commit the start position before animating
+      c.style.transitionDuration = half + 'ms';
+      c.classList.add('anim');
+      c.style.transform = `translateX(${base}px)`;
+      later(() => {
+        c.style.transitionDuration = '';
+        turnTimers = [];
+      }, half + 20);
+    }, half);
+  }
+
+  function fadeTurn(apply) {
+    const c = els.content;
+    const half = Math.round(turnMs() / 2);
+    c.style.transition = `opacity ${half}ms ease`;
+    c.style.opacity = '0';
+    later(() => {
+      apply(false);
+      c.style.transition = `opacity ${half}ms ease`;
+      c.style.opacity = '1';
+      later(() => {
+        c.style.transition = '';
+        turnTimers = [];
+      }, half + 20);
+    }, half);
+  }
+
+  // Paper-like turn: a snapshot of the page rotates around its left edge.
+  function flipTurn(dir, apply) {
+    const ms = Math.round(turnMs() * 1.5);
+    const layer = () => {
+      const ov = document.createElement('div');
+      ov.className = 'turn-layer';
+      const copy = els.content.cloneNode(true); // keeps id="content" so book styles apply
+      copy.classList.remove('anim');
+      ov.appendChild(copy);
+      const shade = document.createElement('div');
+      shade.className = 'turn-shade';
+      ov.appendChild(shade);
+      els.viewport.appendChild(ov);
+      turnLayers.push(ov);
+      return ov;
+    };
+    const animate = (ov, toTurned) => {
+      void ov.offsetWidth;
+      const t = `${ms}ms cubic-bezier(.35, .05, .25, 1)`;
+      ov.style.transition = `transform ${t}, box-shadow ${t}`;
+      ov.querySelector('.turn-shade').style.transition = `opacity ${t}`;
+      ov.classList.toggle('turned', toTurned);
+    };
+    if (dir > 0) {
+      // Current page lifts away to the left, the next one is already below.
+      const ov = layer();
+      apply(false);
+      animate(ov, true);
+    } else {
+      // Previous page comes back over the current one.
+      layer(); // current page stays visible underneath
+      apply(false);
+      const ov = layer();
+      ov.classList.add('turned');
+      animate(ov, false);
+    }
+    later(() => {
+      turnLayers.forEach((l) => l.remove());
+      turnLayers = [];
+      turnTimers = [];
+    }, ms + 40);
   }
 
   function bounce(dir) {
+    // End of the book: a small nudge in every animation mode.
+    finishTurn();
     const base = -S.page * S.W;
     els.content.classList.add('anim');
     els.content.style.transform = `translateX(${base - dir * 30}px)`;
@@ -1178,6 +1306,9 @@
       if (Math.abs(dx) > 10 || Math.abs(dy) > 10) moved = true;
       if (dragging) {
         e.preventDefault();
+        // Only the slide animation follows the finger; others turn on release.
+        if (S.settings.pageTurn && S.settings.pageTurn !== 'slide') return;
+        finishTurn();
         els.content.classList.remove('anim');
         let off = dx;
         if ((S.page === 0 && S.ch === 0 && dx > 0) || (S.page === S.pages - 1 && S.ch === S.book.chapters.length - 1 && dx < 0)) off = dx / 4;
@@ -1346,6 +1477,23 @@
     seg('segMargin', 'margin', Number);
     seg('segAlign', 'align');
     seg('segMode', 'mode');
+    // Turn style/speed: no relayout needed, and show a quick preview.
+    const previewTurn = (key, value) => {
+      S.settings[key] = value;
+      storage.set('mbook:settings', S.settings);
+      applySettings();
+      post('settings', { settings: S.settings });
+      if (S.settings.mode !== 'paged') return;
+      if (S.page < S.pages - 1) {
+        nextPage();
+        setTimeout(() => prevPage(), turnMs() * 1.6 + 250);
+      } else if (S.page > 0) {
+        prevPage();
+        setTimeout(() => nextPage(), turnMs() * 1.6 + 250);
+      }
+    };
+    $$('#segTurn button').forEach((b) => (b.onclick = () => previewTurn('pageTurn', b.dataset.v)));
+    $$('#segSpeed button').forEach((b) => (b.onclick = () => previewTurn('turnSpeed', b.dataset.v)));
     els.brightness.oninput = () => {
       S.settings.brightness = +els.brightness.value;
       els.dim.style.opacity = String(S.settings.brightness / 100);

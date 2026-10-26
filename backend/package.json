@@ -13,7 +13,8 @@
     "convert": "node scripts/convert.js",
     "create-admin": "node scripts/create-admin.js",
     "sync-reader": "node scripts/sync-reader.js",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "app-books": "node scripts/build-app-books.js"
   },
   "dependencies": {
     "cheerio": "^1.2.0",

@@ -77,6 +77,7 @@ Qabul qilinadi: ${SUPPORTED.map((e) => '.' + e).join(' ')}`);
   const files = await collect(args.files);
   await fsp.mkdir(args.out, { recursive: true });
   for (const f of READER_FILES) await fsp.copyFile(path.join(READER_DIR, f), path.join(args.out, f));
+  await fsp.cp(path.join(READER_DIR, 'fonts'), path.join(args.out, 'fonts'), { recursive: true });
 
   let ok = 0;
   const usedIds = new Set();

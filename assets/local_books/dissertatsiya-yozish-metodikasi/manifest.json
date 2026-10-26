@@ -1,0 +1,1844 @@
+{
+ "format": "mbook",
+ "version": 1,
+ "id": "dissertatsiya-yozish-metodikasi",
+ "title": "Dissertatsiya yozish metodikasi",
+ "authors": [
+  "Baxtiyor Mengliyev",
+  "Shahnoza Gulyamova"
+ ],
+ "lang": "uz",
+ "cover": null,
+ "createdAt": "2026-10-22T05:09:20.020Z",
+ "source": {
+  "filename": "DYM. 08.07.2025.docx",
+  "kind": "docx"
+ },
+ "stats": {
+  "chapters": 21,
+  "words": 93862,
+  "chars": 801865,
+  "images": 3,
+  "footnotes": 63,
+  "readingMinutes": 521
+ },
+ "chapters": [
+  {
+   "id": "c1",
+   "title": "Muqova",
+   "kind": "title",
+   "words": 15,
+   "chars": 200
+  },
+  {
+   "id": "c2",
+   "title": "KIRISH",
+   "kind": "chapter",
+   "words": 434,
+   "chars": 3956
+  },
+  {
+   "id": "c3",
+   "title": "1. “Dissertatsiya yozish metodikasi” o‘quv kursining zarurati, maqsad va vazifalari, ilmiy-nazariy asoslari",
+   "kind": "chapter",
+   "words": 4006,
+   "chars": 34671
+  },
+  {
+   "id": "c4",
+   "title": "2. “Dissertatsiya” tushunchasi haqida umumiy ma’lumot",
+   "kind": "chapter",
+   "words": 6533,
+   "chars": 54256
+  },
+  {
+   "id": "c5",
+   "title": "3. Ilmiy rahbar (maslahatchi) kim va uni qanday tanlash kerak?",
+   "kind": "chapter",
+   "words": 4497,
+   "chars": 37486
+  },
+  {
+   "id": "c6",
+   "title": "4. Dissertatsiyaning tadqiq obyekti va tadqiq predmeti",
+   "kind": "chapter",
+   "words": 5796,
+   "chars": 48120
+  },
+  {
+   "id": "c7",
+   "title": "5. Dissertatsiyaning ilmiy gipotezasi",
+   "kind": "chapter",
+   "words": 7274,
+   "chars": 61959
+  },
+  {
+   "id": "c8",
+   "title": "6. Dissertatsiya mavzusi qanday tanlanadi?",
+   "kind": "chapter",
+   "words": 5149,
+   "chars": 42420
+  },
+  {
+   "id": "c9",
+   "title": "7. Dissertatsiya rejasini qanday tuzish kerak?",
+   "kind": "chapter",
+   "words": 4554,
+   "chars": 39302
+  },
+  {
+   "id": "c10",
+   "title": "8. Dissertatsiya yozishda metodning ahamiyati, ularni to‘g‘ri qo‘llash va ilmiy madaniyatga tatbiq etish haqida",
+   "kind": "chapter",
+   "words": 7491,
+   "chars": 65470
+  },
+  {
+   "id": "c11",
+   "title": "9. Dissertatsiya uchun material toʻplash va ularni tartiblash",
+   "kind": "chapter",
+   "words": 4248,
+   "chars": 36993
+  },
+  {
+   "id": "c12",
+   "title": "10. Ilmiy tadqiqot jarayonida kartochkalardan foydalanish",
+   "kind": "chapter",
+   "words": 4106,
+   "chars": 35087
+  },
+  {
+   "id": "c13",
+   "title": "11. Dissertatsiya yozishda akademik uslub",
+   "kind": "chapter",
+   "words": 3833,
+   "chars": 32769
+  },
+  {
+   "id": "c14",
+   "title": "12. Dissertatsiyada adabiyotlar sharhini yozish",
+   "kind": "chapter",
+   "words": 4590,
+   "chars": 38150
+  },
+  {
+   "id": "c15",
+   "title": "13. Dissertatsiya yozishda “Bir maqola – bir dissertatsiya” tamoyili",
+   "kind": "chapter",
+   "words": 4886,
+   "chars": 41087
+  },
+  {
+   "id": "c16",
+   "title": "14. Dissertatsiyaning ilmiy apparatini tayyorlash",
+   "kind": "chapter",
+   "words": 5849,
+   "chars": 51613
+  },
+  {
+   "id": "c17",
+   "title": "15. Dissertatsiya himoyasi: strategiya, taktika, manipulyatsiya",
+   "kind": "chapter",
+   "words": 3631,
+   "chars": 30857
+  },
+  {
+   "id": "c18",
+   "title": "1-ILOVA",
+   "kind": "chapter",
+   "words": 3029,
+   "chars": 28234
+  },
+  {
+   "id": "c19",
+   "title": "2-ILOVA",
+   "kind": "chapter",
+   "words": 6207,
+   "chars": 53673
+  },
+  {
+   "id": "c20",
+   "title": "3-ILOVA",
+   "kind": "chapter",
+   "words": 1117,
+   "chars": 10839
+  },
+  {
+   "id": "c21",
+   "title": "4-ILOVA[63]",
+   "kind": "chapter",
+   "words": 6617,
+   "chars": 54723
+  }
+ ],
+ "toc": [
+  {
+   "title": "Muqova",
+   "level": 1,
+   "chapter": 0,
+   "anchor": null
+  },
+  {
+   "title": "KIRISH",
+   "level": 1,
+   "chapter": 1,
+   "anchor": "h1"
+  },
+  {
+   "title": "1. “Dissertatsiya yozish metodikasi” o‘quv kursining zarurati, maqsad va vazifalari, ilmiy-nazariy asoslari",
+   "level": 1,
+   "chapter": 2,
+   "anchor": "h2"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h3"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h4"
+  },
+  {
+   "title": "3. Oʻzlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h5"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h6"
+  },
+  {
+   "title": "4.1. “Dissertatsiya yozish metodikasi” o‘quv kursi nima uchun kerak?",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h7"
+  },
+  {
+   "title": "4.2. “Dissertatsiya yozish metodikasi” o‘quv kursining maqsad va vazifalari",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h8"
+  },
+  {
+   "title": "4.3. “Dissertatsiya yozish metodikasi” o‘quv kursining ilmiy-nazariy asoslari",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h9"
+  },
+  {
+   "title": "4.4. “Dissertatsiya yozish metodikasi” o‘quv kursining an’anaviy “Ilmiy tadqiqot metodologiyasi” fani bilan o‘xshash va farqli jihatlari",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h10"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h11"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h12"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 2,
+   "anchor": "h13"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h14"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h15"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h16"
+  },
+  {
+   "title": "2. “Dissertatsiya” tushunchasi haqida umumiy ma’lumot",
+   "level": 1,
+   "chapter": 3,
+   "anchor": "h17"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h18"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h19"
+  },
+  {
+   "title": "3. Oʻzlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h20"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h21"
+  },
+  {
+   "title": "4.1. “Dissertatsiya” tushunchasi",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h22"
+  },
+  {
+   "title": "4.2. MD, PhD, ND, DSc",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h23"
+  },
+  {
+   "title": "4.3. Nazariy, amaliy va eksperimental dissertatsiya",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h24"
+  },
+  {
+   "title": "4.4. Yozish, koʻchirish, yozdirish: tanlov Sizniki!",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h25"
+  },
+  {
+   "title": "4.5. Dissertatsiya himoyasidan maqsad",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h26"
+  },
+  {
+   "title": "5. Oʻquv topshiriqlari",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h27"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h28"
+  },
+  {
+   "title": "5.2. Testlar",
+   "level": 3,
+   "chapter": 3,
+   "anchor": "h29"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h30"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h31"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 3,
+   "anchor": "h32"
+  },
+  {
+   "title": "3. Ilmiy rahbar (maslahatchi) kim va uni qanday tanlash kerak?",
+   "level": 1,
+   "chapter": 4,
+   "anchor": "h33"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h34"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h35"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h36"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h37"
+  },
+  {
+   "title": "1. Ilmiy rahbar (maslahatchi) kim va nima uchun kerak?",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h38"
+  },
+  {
+   "title": "4.2. Ilmiy rahbar qanday bo‘lishi kerak?",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h39"
+  },
+  {
+   "title": "4.3. Yaxshi ustoz o‘rgatmaydi, ilhom beradi",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h40"
+  },
+  {
+   "title": "4.4. Ilmiy rahbarning mavzu tanlash, ishni yozish va himoya jarayonidagi roli qanday?",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h41"
+  },
+  {
+   "title": "4.5. Otadan ulug‘ ustozlar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h42"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h43"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h44"
+  },
+  {
+   "title": "5.2. Testlar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h45"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h46"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h47"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h48"
+  },
+  {
+   "title": "4. Dissertatsiyaning tadqiq obyekti va tadqiq predmeti",
+   "level": 1,
+   "chapter": 5,
+   "anchor": "h49"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h50"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h51"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h52"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h53"
+  },
+  {
+   "title": "4.1. Narsaning serqirraligi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h54"
+  },
+  {
+   "title": "4.2. Tadqiq obyekti va uning xususiyatlari",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h55"
+  },
+  {
+   "title": "4.3. Tadqiq predmeti va uning chegaralanishi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h56"
+  },
+  {
+   "title": "4.4. Tadqiq obyekti va tadqiq predmetining o‘zaro munosabati hamda nisbiyligi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h57"
+  },
+  {
+   "title": "4.5. Dissertatsiya mavzusidagi tadqiq obyekti va predmetiga doir xatolar va ularning oldini olish",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h58"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h59"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h60"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h61"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h62"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h63"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h64"
+  },
+  {
+   "title": "5. Dissertatsiyaning ilmiy gipotezasi",
+   "level": 1,
+   "chapter": 6,
+   "anchor": "h65"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h66"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h67"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h68"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h69"
+  },
+  {
+   "title": "4.1. Ilmiy gipoteza tushunchasi va uning mohiyati",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h70"
+  },
+  {
+   "title": "4.2.Dissertatsiyada ilmiy gipotezaning o‘rni va ahamiyati",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h71"
+  },
+  {
+   "title": "4.3. Ilmiy gipotezani shakllantirish bosqichlari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h72"
+  },
+  {
+   "title": "4.4. Ilmiy gipotezaning tekshirilishi va isbotlanishi",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h73"
+  },
+  {
+   "title": "4.5. Dissertatsiyada ilmiy gipotezani bayon qilish usullari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h74"
+  },
+  {
+   "title": "4.6. Dissertatsiya savoli, ilmiy gipotezasi va ilmiy yangiligi tizimi uchun muayyan dalillar",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h75"
+  },
+  {
+   "title": "5.O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h76"
+  },
+  {
+   "title": "5.1.Savol va vazifalar",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h77"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h78"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h79"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h80"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h81"
+  },
+  {
+   "title": "6. Dissertatsiya mavzusi qanday tanlanadi?",
+   "level": 1,
+   "chapter": 7,
+   "anchor": "h82"
+  },
+  {
+   "title": "1.Kirish",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h83"
+  },
+  {
+   "title": "2.Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h84"
+  },
+  {
+   "title": "3.O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h85"
+  },
+  {
+   "title": "4.Asosiy qism",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h86"
+  },
+  {
+   "title": "4.1. Mavzu tanlash va tadqiqot mazmunining o‘zaro bog‘liqligi",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h87"
+  },
+  {
+   "title": "4.2. Mavzu tanlash jarayoni",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h88"
+  },
+  {
+   "title": "4.3. Mavzu tanlashdagi ehtimoliy xatolar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h89"
+  },
+  {
+   "title": "4.4. Mavzu tanlash jarayonida amaliy maslahatlar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h90"
+  },
+  {
+   "title": "4.5. Savol-javoblar va qo‘shimcha tavsiyalar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h91"
+  },
+  {
+   "title": "5.O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h92"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h93"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h94"
+  },
+  {
+   "title": "6.Glossariy",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h95"
+  },
+  {
+   "title": "7.Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h96"
+  },
+  {
+   "title": "8.Xulosa",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h97"
+  },
+  {
+   "title": "7. Dissertatsiya rejasini qanday tuzish kerak?",
+   "level": 1,
+   "chapter": 8,
+   "anchor": "h98"
+  },
+  {
+   "title": "1.Kirish",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h99"
+  },
+  {
+   "title": "2.Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h100"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h101"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h102"
+  },
+  {
+   "title": "4.1. Reja va uning ilmiy ishdagi ahamiyati nimadan iborat ekanligi",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h103"
+  },
+  {
+   "title": "4.2. Mavzuni tanlash va dissertatsiya rejasini tuzish bosqichlari haqida",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h104"
+  },
+  {
+   "title": "4.3. Dissertatsiya mavzusidagi “[tadqiq obyekti] ning [tadqiq predmeti]” qolipining rejada nisbiy xususiylashuvi to‘g‘risida",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h105"
+  },
+  {
+   "title": "4.4. Samarali va mufassal rejaning tarkibiy qismlari qanday bo‘lishi kerakligi",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h106"
+  },
+  {
+   "title": "1-bosqich",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h107"
+  },
+  {
+   "title": "2-bosqich",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h108"
+  },
+  {
+   "title": "3-bosqich",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h109"
+  },
+  {
+   "title": "4.5. Rejani takomillashtirishning ijodiy va texnik jihatlari borasida",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h110"
+  },
+  {
+   "title": "5.O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h111"
+  },
+  {
+   "title": "5.1.Savol va vazifalar",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h112"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h113"
+  },
+  {
+   "title": "Glossariy",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h114"
+  },
+  {
+   "title": "7.Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h115"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h116"
+  },
+  {
+   "title": "8. Dissertatsiya yozishda metodning ahamiyati, ularni to‘g‘ri qo‘llash va ilmiy madaniyatga tatbiq etish haqida",
+   "level": 1,
+   "chapter": 9,
+   "anchor": "h117"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h118"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h119"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h120"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h121"
+  },
+  {
+   "title": "4.1. “Metod” tushunchasining mohiyati va ilmiy tadqiqotdagi o‘rni",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h122"
+  },
+  {
+   "title": "4.2. Metodlarni tanlashdagi asosiy omillar va ularning tasnifi",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h123"
+  },
+  {
+   "title": "4.3. Metodlarni dissertatsiyaga integratsiya qilish bosqichlari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h124"
+  },
+  {
+   "title": "4.4. Metodlarni bilmaslik yoki noto‘g‘ri qo‘llashning salbiy oqibatlari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h125"
+  },
+  {
+   "title": "4.5. Metodlarni puxta egallash va ilmiy madaniyatni oshirish yo‘llari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h126"
+  },
+  {
+   "title": "4.6. Metodlarni o‘zlashtirishning ijobiy natijalari va ilmiy yutuqlarga yo‘l",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h127"
+  },
+  {
+   "title": "4.7. Muammoning yechimi va taklif etilayotgan chora-tadbirlar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h128"
+  },
+  {
+   "title": "5. O‘quv vazifalari",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h129"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h130"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h131"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h132"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h133"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h134"
+  },
+  {
+   "title": "9. Dissertatsiya uchun material toʻplash va ularni tartiblash",
+   "level": 1,
+   "chapter": 10,
+   "anchor": "h135"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h136"
+  },
+  {
+   "title": "2.Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h137"
+  },
+  {
+   "title": "3. Oʻzlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h138"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h139"
+  },
+  {
+   "title": "4.1. Dissertatsiya uchun material to‘plash metodikasi",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h140"
+  },
+  {
+   "title": "4.2. Manbalarning turlari",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h141"
+  },
+  {
+   "title": "4.3. Materiallarni baholash va tanlash",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h142"
+  },
+  {
+   "title": "4.4. Maʼlumotlarni tartiblash",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h143"
+  },
+  {
+   "title": "4.5. Tilshunoslik va adabiyotshunoslikda material to‘plash",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h144"
+  },
+  {
+   "title": "4.6. Tadqiqotchiga alohida tavsiyalar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h145"
+  },
+  {
+   "title": "5. Oʻquv topshiriqlari",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h146"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h147"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h148"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h149"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h150"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h151"
+  },
+  {
+   "title": "10. Ilmiy tadqiqot jarayonida kartochkalardan foydalanish",
+   "level": 1,
+   "chapter": 11,
+   "anchor": "h152"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h153"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h154"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h155"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h156"
+  },
+  {
+   "title": "4.1. Nima uchun aynan kartochkalar bilan ishlash kerak?",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h157"
+  },
+  {
+   "title": "4.2. Tilshunoslik sohasida kartochkalar bilan ishlash metodikasi",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h158"
+  },
+  {
+   "title": "4.3. Adabiyotshunoslik sohasida kartochkalar bilan ishlash metodikasi",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h159"
+  },
+  {
+   "title": "4.4. Kartochkalar to‘plashga doir aniq misollar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h160"
+  },
+  {
+   "title": "4.5. Kartochkalar tizimining ijobiy va salbiy jihatlari",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h161"
+  },
+  {
+   "title": "4.6. Kartochkalarni to‘plash va ulardan foydalanish bo‘yicha alohida tavsiyalar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h162"
+  },
+  {
+   "title": "5.O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h163"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h164"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h165"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h166"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h167"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h168"
+  },
+  {
+   "title": "11. Dissertatsiya yozishda akademik uslub",
+   "level": 1,
+   "chapter": 12,
+   "anchor": "h169"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h170"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h171"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h172"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h173"
+  },
+  {
+   "title": "4.1. “Akademik uslub” tushunchasi va uning asosiy xususiyatlari",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h174"
+  },
+  {
+   "title": "4.2. Akademik uslubda soʻz qoʻllash va leksik xususiyatlar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h175"
+  },
+  {
+   "title": "4.3. Akademik uslubning sintaktik xususiyatlari",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h176"
+  },
+  {
+   "title": "4.4. Akademik matn tuzilishi: kirish, asosiy qism va xulosa",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h177"
+  },
+  {
+   "title": "4.5. Iqtibos keltirish va manbalar bilan ishlash usullari",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h178"
+  },
+  {
+   "title": "4.6. Tilshunoslik va adabiyotshunoslikda akademik uslubga xos maxsus jihatlar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h179"
+  },
+  {
+   "title": "4.7. Akademik yozuvda uslubiy xatolardan saqlanish yo‘llari",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h180"
+  },
+  {
+   "title": "4.8. Akademik uslubni mustahkamlash uchun maslahatlar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h181"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h182"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h183"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h184"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h185"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h186"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h187"
+  },
+  {
+   "title": "12. Dissertatsiyada adabiyotlar sharhini yozish",
+   "level": 1,
+   "chapter": 13,
+   "anchor": "h188"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h189"
+  },
+  {
+   "title": "2.Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h190"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h191"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h192"
+  },
+  {
+   "title": "4.1. Adabiyotlar sharhining maqsadi va nazariy asoslari",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h193"
+  },
+  {
+   "title": "4.2. Adabiyotlar sharhini rejalashtirish va mavzuni chegaralash",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h194"
+  },
+  {
+   "title": "4.3. Manbalarni tanlash va tahlil qilish metodlari",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h195"
+  },
+  {
+   "title": "4.4. Adabiyotlar sharhini tuzish yondashuvlari",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h196"
+  },
+  {
+   "title": "4.5. Tilshunoslik va adabiyotshunoslik bo‘yicha adabiyotlar sharhiga misollar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h197"
+  },
+  {
+   "title": "4.6. Adabiyotlar sharhining tanqidiy qismi",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h198"
+  },
+  {
+   "title": "4.9. Adabiyotlar sharhini yozish jarayonida ko‘p uchraydigan xatolar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h199"
+  },
+  {
+   "title": "4.8. Mukammal adabiyotlar sharhi yozish bo‘yicha amaliy tavsiyalar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h200"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h201"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h202"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h203"
+  },
+  {
+   "title": "6.Glossariy",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h204"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h205"
+  },
+  {
+   "title": "13. Dissertatsiya yozishda “Bir maqola – bir dissertatsiya” tamoyili",
+   "level": 1,
+   "chapter": 14,
+   "anchor": "h206"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h207"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h208"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h209"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h210"
+  },
+  {
+   "title": "4.1. Maqola yozishning ahamiyati va umumiy mezonlar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h211"
+  },
+  {
+   "title": "4.2. Mavzu tanlash va reja tuzish",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h212"
+  },
+  {
+   "title": "4.3. Nazariy manbalar va tahlil",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h213"
+  },
+  {
+   "title": "4.4. Metodologiya: uslublar va dalillar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h214"
+  },
+  {
+   "title": "4.5. Ilmiy natijalar va ularni taqdim etish",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h215"
+  },
+  {
+   "title": "4.6. Muhokama, tahrir va uslub",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h216"
+  },
+  {
+   "title": "4.7. Nashr jarayoni va taqrizchilar bilan ishlash",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h217"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h218"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h219"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h220"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h221"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h222"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h223"
+  },
+  {
+   "title": "14. Dissertatsiyaning ilmiy apparatini tayyorlash",
+   "level": 1,
+   "chapter": 15,
+   "anchor": "h224"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h225"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h226"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h227"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h228"
+  },
+  {
+   "title": "4.1. Dissertatsiya mavzusining dolzarbligi va uning belgilanishi",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h229"
+  },
+  {
+   "title": "4.3. Dissertatsiya mavzusining amaliy zarurati: tarjima, korpus lingvistikasi va xorijiy til ta’limi",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h230"
+  },
+  {
+   "title": "4.4. O‘zbek va ingliz tillarining qomusiy xususiyatlari: mustaqillik yillarida erishilgan natijalar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h231"
+  },
+  {
+   "title": "4.5. Ilmiy apparatning tarkibiy qismlari: maqsad, vazifalar va nazariy asos",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h232"
+  },
+  {
+   "title": "4.6. Xorijiy ilmiy-tadqiqotlar sharhi va metodologik yondashuvlar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h233"
+  },
+  {
+   "title": "4.7. Adabiyotshunoslikda dissertatsiyaning ilmiy apparatini shakllantirish",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h234"
+  },
+  {
+   "title": "4.8. Qiyosiy-tarjima tadqiqotlari: fe’l aspektualligi misolida",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h235"
+  },
+  {
+   "title": "4.9. Dissertatsiya natijalarini joriy etish va ilmiy-amaliy ahamiyat",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h236"
+  },
+  {
+   "title": "4.10. Dissertatsiyani yozish jarayonidagi tavsiyalar va xulosa",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h237"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h238"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h239"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h240"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h241"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h242"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h243"
+  },
+  {
+   "title": "15. Dissertatsiya himoyasi: strategiya, taktika, manipulyatsiya",
+   "level": 1,
+   "chapter": 16,
+   "anchor": "h244"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h245"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h246"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h247"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h248"
+  },
+  {
+   "title": "4.1. Dissertatsiya himoyasining mohiyati va ahamiyati",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h249"
+  },
+  {
+   "title": "4.2. Taktik yondashuvlarning mazmuni va ularning zarurati",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h250"
+  },
+  {
+   "title": "4.3. Qiyin vaziyatlar: sabablari va yechim yo‘llari",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h251"
+  },
+  {
+   "title": "4.4. Manipulyativ yondashuvlarning mohiyati va ulardan himoyalanish",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h252"
+  },
+  {
+   "title": "4.5. Himoya taktikalari",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h253"
+  },
+  {
+   "title": "4.6. Savol-javob jarayonida muloqot madaniyati va strategiyalari",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h254"
+  },
+  {
+   "title": "4.7. Qanday hollarda qarshi hujum (kontrargument) usuli qo‘llanadi?",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h255"
+  },
+  {
+   "title": "4.8. Psixologik tayyorgarlik va ruhiy zo’riqishlarni boshqarish",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h256"
+  },
+  {
+   "title": "1. Ilmiy fikrlash saviyasi",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h257"
+  },
+  {
+   "title": "2. Mavzuni anglash va talqin qilish darajasi",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h258"
+  },
+  {
+   "title": "3. Ilmiy pozitsiya",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h259"
+  },
+  {
+   "title": "4. Tilda fikr ifoda qilish darajasi",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h260"
+  },
+  {
+   "title": "5. Savollarga javobdagi farqlar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h261"
+  },
+  {
+   "title": "6. Ilmiy jasorat",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h262"
+  },
+  {
+   "title": "4.9. Himoyadan keyingi jarayonlar: xulosalar va kelajak rejalari",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h263"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h264"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h265"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h266"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h267"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h268"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h269"
+  },
+  {
+   "title": "1-ILOVA",
+   "level": 1,
+   "chapter": 17,
+   "anchor": "h270"
+  },
+  {
+   "title": "Dissertatsiyaning ilmiy apparati",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h271"
+  },
+  {
+   "title": "MUNDARIJA",
+   "level": 1,
+   "chapter": 17,
+   "anchor": "h272"
+  },
+  {
+   "title": "2-ILOVA",
+   "level": 1,
+   "chapter": 18,
+   "anchor": "h273"
+  },
+  {
+   "title": "3-ILOVA",
+   "level": 1,
+   "chapter": 19,
+   "anchor": "h274"
+  },
+  {
+   "title": "Tilshunoslik va adabiyotshunoslik bo‘yicha bugunning eng dolzabr dissertatsiya mavzulari[61]",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h275"
+  },
+  {
+   "title": "4-ILOVA[63]",
+   "level": 1,
+   "chapter": 20,
+   "anchor": "h276"
+  },
+  {
+   "title": "5-ILOVA.",
+   "level": 2,
+   "chapter": 20,
+   "anchor": "h277"
+  }
+ ]
+}

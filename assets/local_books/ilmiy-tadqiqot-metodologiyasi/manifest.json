@@ -1,0 +1,1991 @@
+{
+ "format": "mbook",
+ "version": 1,
+ "id": "ilmiy-tadqiqot-metodologiyasi",
+ "title": "Ilmiy tadqiqot metodologiyasi",
+ "authors": [],
+ "lang": "uz",
+ "cover": null,
+ "createdAt": "2026-10-22T05:09:20.877Z",
+ "source": {
+  "filename": "ILMIY TADQIQOT METODOLOGIYASI.docx",
+  "kind": "docx"
+ },
+ "stats": {
+  "chapters": 27,
+  "words": 38428,
+  "chars": 329982,
+  "images": 0,
+  "footnotes": 1,
+  "readingMinutes": 213
+ },
+ "chapters": [
+  {
+   "id": "c1",
+   "title": "Muqova",
+   "kind": "title",
+   "words": 15,
+   "chars": 162
+  },
+  {
+   "id": "c2",
+   "title": "Annotatsiya",
+   "kind": "front",
+   "words": 99,
+   "chars": 912
+  },
+  {
+   "id": "c3",
+   "title": "Mundarija",
+   "kind": "chapter",
+   "words": 269,
+   "chars": 2500
+  },
+  {
+   "id": "c4",
+   "title": "KIRISH",
+   "kind": "chapter",
+   "words": 543,
+   "chars": 4701
+  },
+  {
+   "id": "c5",
+   "title": "1-mavzu. “Ilmiy tadqiqot metodologiyasi” fanining umumiy masalalari",
+   "kind": "chapter",
+   "words": 2043,
+   "chars": 17705
+  },
+  {
+   "id": "c6",
+   "title": "2-mavzu. Olamning ilmiy manzarasi",
+   "kind": "chapter",
+   "words": 2146,
+   "chars": 17617
+  },
+  {
+   "id": "c7",
+   "title": "3-mavzu. Tadqiqot va uning mohiyati",
+   "kind": "chapter",
+   "words": 2048,
+   "chars": 17443
+  },
+  {
+   "id": "c8",
+   "title": "4-mavzu. Tadqiqotning tiplari",
+   "kind": "chapter",
+   "words": 1623,
+   "chars": 14115
+  },
+  {
+   "id": "c9",
+   "title": "5-mavzu. Tadqiqot jarayoni va uning tarkibiy qismlari",
+   "kind": "chapter",
+   "words": 2403,
+   "chars": 20712
+  },
+  {
+   "id": "c10",
+   "title": "6-mavzu. Muammo va dalil – tadqiqotning boshlangʻich asosi",
+   "kind": "chapter",
+   "words": 2542,
+   "chars": 21952
+  },
+  {
+   "id": "c11",
+   "title": "7-mavzu. Tadqiqotda qisqartma, havola va bibliografik ma’lumotlarni berish",
+   "kind": "chapter",
+   "words": 2503,
+   "chars": 21115
+  },
+  {
+   "id": "c12",
+   "title": "8-mavzu. Asosiy metodologik yondashuv va tamoyillar",
+   "kind": "chapter",
+   "words": 2451,
+   "chars": 21544
+  },
+  {
+   "id": "c13",
+   "title": "9-mavzu. Lingvistik metod va metodologiya",
+   "kind": "chapter",
+   "words": 1850,
+   "chars": 15873
+  },
+  {
+   "id": "c14",
+   "title": "10-mavzu. Tilshunoslikdagi asosiy paradigmalar",
+   "kind": "chapter",
+   "words": 2206,
+   "chars": 19113
+  },
+  {
+   "id": "c15",
+   "title": "11-mavzu. Qiyosiy-tarixiy tilshunoslik",
+   "kind": "chapter",
+   "words": 1754,
+   "chars": 15844
+  },
+  {
+   "id": "c16",
+   "title": "12-mavzu. Amaliy tilshunoslik",
+   "kind": "chapter",
+   "words": 2041,
+   "chars": 18040
+  },
+  {
+   "id": "c17",
+   "title": "13-mavzu. Sun’iy intellekt va tilshunoslik",
+   "kind": "chapter",
+   "words": 3222,
+   "chars": 26698
+  },
+  {
+   "id": "c18",
+   "title": "14-mavzu. Tadqiqotni rasmiylashtirish va natijalarning joriy qilinishi (magistrlik dissertatsiya misolida)",
+   "kind": "chapter",
+   "words": 2700,
+   "chars": 23781
+  },
+  {
+   "id": "c19",
+   "title": "15-mavzu. Akademik uslub",
+   "kind": "chapter",
+   "words": 1801,
+   "chars": 14684
+  },
+  {
+   "id": "c20",
+   "title": "16-mavzu. Tadqiqot jarayonida tushunish va tushuntirishning ahamiyati",
+   "kind": "chapter",
+   "words": 1542,
+   "chars": 13508
+  },
+  {
+   "id": "c21",
+   "title": "Ilova[1]“Batareya” olim bo‘lib qolmang",
+   "kind": "chapter",
+   "words": 378,
+   "chars": 3142
+  },
+  {
+   "id": "c22",
+   "title": "Ilmiy darajangiz ilmingiz bilan sizni boqishi ham kerak",
+   "kind": "chapter",
+   "words": 598,
+   "chars": 4944
+  },
+  {
+   "id": "c23",
+   "title": "Ilmiy aqidaparastlik zararlari",
+   "kind": "chapter",
+   "words": 442,
+   "chars": 3634
+  },
+  {
+   "id": "c24",
+   "title": "Ilmiy demagog – soxta olim",
+   "kind": "chapter",
+   "words": 275,
+   "chars": 2316
+  },
+  {
+   "id": "c25",
+   "title": "Ilmingizni farroshga ham tushuntirib bera oling",
+   "kind": "chapter",
+   "words": 215,
+   "chars": 1807
+  },
+  {
+   "id": "c26",
+   "title": "Bir tadqiqot – bir jumla",
+   "kind": "chapter",
+   "words": 272,
+   "chars": 2258
+  },
+  {
+   "id": "c27",
+   "title": "Mahdudlikdan chiqib, ilmiy bag‘rikeng bo‘ling",
+   "kind": "chapter",
+   "words": 447,
+   "chars": 3862
+  }
+ ],
+ "toc": [
+  {
+   "title": "Muqova",
+   "level": 1,
+   "chapter": 0,
+   "anchor": null
+  },
+  {
+   "title": "Annotatsiya",
+   "level": 1,
+   "chapter": 1,
+   "anchor": null
+  },
+  {
+   "title": "Mundarija",
+   "level": 1,
+   "chapter": 2,
+   "anchor": "h1"
+  },
+  {
+   "title": "Содержание",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h2"
+  },
+  {
+   "title": "Table of Contents",
+   "level": 2,
+   "chapter": 2,
+   "anchor": "h3"
+  },
+  {
+   "title": "KIRISH",
+   "level": 1,
+   "chapter": 3,
+   "anchor": "h4"
+  },
+  {
+   "title": "1-mavzu. “Ilmiy tadqiqot metodologiyasi” fanining umumiy masalalari",
+   "level": 1,
+   "chapter": 4,
+   "anchor": "h5"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h6"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h7"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h8"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h9"
+  },
+  {
+   "title": "4.1. Tadqiq obyekti va predmeti",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h10"
+  },
+  {
+   "title": "4.2. Tadqiqotning maqsad va vazifalari",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h11"
+  },
+  {
+   "title": "4.3. Tadqiqot metodlari",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h12"
+  },
+  {
+   "title": "4.4. Tadqiqotning tashkiliy tamoyillari",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h13"
+  },
+  {
+   "title": "4.5. Tadqiqotchi axloqi",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h14"
+  },
+  {
+   "title": "4.6. Tadqiqotni ommalashtirish va himoya qilish",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h15"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h16"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h17"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h18"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h19"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h20"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h21"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 4,
+   "anchor": "h22"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 4,
+   "anchor": "h23"
+  },
+  {
+   "title": "2-mavzu. Olamning ilmiy manzarasi",
+   "level": 1,
+   "chapter": 5,
+   "anchor": "h24"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h25"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h26"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h27"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h28"
+  },
+  {
+   "title": "4.1. Olamning kelib chiqishi va rivojlanishi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h29"
+  },
+  {
+   "title": "4.2. Olamning tuzilishi va tarkibi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h30"
+  },
+  {
+   "title": "4.3. Kosmik tadqiqotlar va ularning ahamiyati",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h31"
+  },
+  {
+   "title": "4.4. Olamning kelajagi",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h32"
+  },
+  {
+   "title": "4.5. Insoniyatning kosmosdagi o‘rni",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h33"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h34"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h35"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h36"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h37"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h38"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h39"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 5,
+   "anchor": "h40"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 5,
+   "anchor": "h41"
+  },
+  {
+   "title": "3-mavzu. Tadqiqot va uning mohiyati",
+   "level": 1,
+   "chapter": 6,
+   "anchor": "h42"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h43"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h44"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h45"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h46"
+  },
+  {
+   "title": "4.1. Ilmiy bilishning mohiyati",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h47"
+  },
+  {
+   "title": "4.2. Tadqiqotning asosiy turlari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h48"
+  },
+  {
+   "title": "4.3. Tadqiqot jarayoni bosqichlari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h49"
+  },
+  {
+   "title": "4.4. Tadqiqot metodlari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h50"
+  },
+  {
+   "title": "4.5. Tadqiqot va innovatsiya",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h51"
+  },
+  {
+   "title": "4.6. Tadqiqotdan foydalanish va uning amaliy ahamiyati",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h52"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h53"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h54"
+  },
+  {
+   "title": "5.2. Mavzuni mustahkamlash uchun test topshiriqlari",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h55"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h56"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h57"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h58"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 6,
+   "anchor": "h59"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 6,
+   "anchor": "h60"
+  },
+  {
+   "title": "4-mavzu. Tadqiqotning tiplari",
+   "level": 1,
+   "chapter": 7,
+   "anchor": "h61"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h62"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h63"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h64"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h65"
+  },
+  {
+   "title": "4.1. Fundamental va amaliy tadqiqot",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h66"
+  },
+  {
+   "title": "4.2. Kvantitativ va kvalitativ tadqiqot",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h67"
+  },
+  {
+   "title": "4.3. Tadqiqotning “yo‘l xaritasi”",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h68"
+  },
+  {
+   "title": "4.4. Tadqiqotlarda axloqiy muammolar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h69"
+  },
+  {
+   "title": "4.5. Tadqiqotlarda ijtimoiy mas’uliyat",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h70"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h71"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h72"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h73"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h74"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h75"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h76"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 7,
+   "anchor": "h77"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 7,
+   "anchor": "h78"
+  },
+  {
+   "title": "5-mavzu. Tadqiqot jarayoni va uning tarkibiy qismlari",
+   "level": 1,
+   "chapter": 8,
+   "anchor": "h79"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h80"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h81"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h82"
+  },
+  {
+   "title": "4.1. Tadqiqot jarayoni bosqichlari",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h83"
+  },
+  {
+   "title": "4.2. Axborotlarni qidirish va tahlil qilish",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h84"
+  },
+  {
+   "title": "4.3. Ilmiy manbalar va ular bilan ishlash",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h85"
+  },
+  {
+   "title": "4.4 Empirik ma’lumotlarni to‘plash usullari",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h86"
+  },
+  {
+   "title": "4.5. Nazariy umumlashma qilish va xulosalar chiqarish",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h87"
+  },
+  {
+   "title": "4.6. Tadqiqot natijalarini rasmiylashtirish va e’lon qilish",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h88"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h89"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h90"
+  },
+  {
+   "title": "5.2.Test",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h91"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h92"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h93"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h94"
+  },
+  {
+   "title": "7.2.Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 8,
+   "anchor": "h95"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 8,
+   "anchor": "h96"
+  },
+  {
+   "title": "6-mavzu. Muammo va dalil – tadqiqotning boshlangʻich asosi",
+   "level": 1,
+   "chapter": 9,
+   "anchor": "h97"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h98"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h99"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h100"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h101"
+  },
+  {
+   "title": "4.1. Muammoning mohiyati va uni shakllantirish",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h102"
+  },
+  {
+   "title": "4.2. Tadqiqot dalillari va ularning turlari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h103"
+  },
+  {
+   "title": "4.3. Dalillarni to‘plash manbalari va usullari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h104"
+  },
+  {
+   "title": "4.4. Dalillarning ishonchliligini baholash mezonlari",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h105"
+  },
+  {
+   "title": "4.5. Muammo va dalil o‘rtasidagi bog‘liqlik",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h106"
+  },
+  {
+   "title": "4.6. Muammo va dalilni shakllantirishda yo‘l qo‘yiladigan ehtimoliy xatolar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h107"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h108"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h109"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h110"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h111"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h112"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h113"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 9,
+   "anchor": "h114"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 9,
+   "anchor": "h115"
+  },
+  {
+   "title": "7-mavzu. Tadqiqotda qisqartma, havola va bibliografik ma’lumotlarni berish",
+   "level": 1,
+   "chapter": 10,
+   "anchor": "h116"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h117"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h118"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h119"
+  },
+  {
+   "title": "4.1. Tadqiqotlarda qisqartmalardan foydalanish",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h120"
+  },
+  {
+   "title": "4.2. Tadqiqotlarda havolalarni berish",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h121"
+  },
+  {
+   "title": "4.3. Bibliografik ma'lumotlarni berish",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h122"
+  },
+  {
+   "title": "4.4. Turli sohadagi ilmiy ishlarda qisqartma, havola va bibliografik ma’lumotlarni berishning o‘ziga xos xususiyatlari",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h123"
+  },
+  {
+   "title": "4.5. Tadqiqotlarda qisqartma, havola va bibliografik ma’lumotlarni berishda axborot-kommunikatsiya texnologiyalaridan foydalanish",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h124"
+  },
+  {
+   "title": "4.6. Tadqiqotlarda qisqartma, havola va bibliografik ma’lumotlarni berishda e’tiborga olish kerak bo‘lgan boshqa jihatlar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h125"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h126"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h127"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h128"
+  },
+  {
+   "title": "6.Glossariy",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h129"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h130"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h131"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 10,
+   "anchor": "h132"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 10,
+   "anchor": "h133"
+  },
+  {
+   "title": "8-mavzu. Asosiy metodologik yondashuv va tamoyillar",
+   "level": 1,
+   "chapter": 11,
+   "anchor": "h134"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h135"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h136"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h137"
+  },
+  {
+   "title": "4.1. Ilmiy bilish va uning o‘ziga xos xususiyatlari",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h138"
+  },
+  {
+   "title": "4.2. Tadqiqot bosqichlari",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h139"
+  },
+  {
+   "title": "4.3. Asosiy metodologik yondashuvlar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h140"
+  },
+  {
+   "title": "4.4. Tadqiqot tamoyillari",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h141"
+  },
+  {
+   "title": "4.5. Ilmiy axloq va plagiat",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h142"
+  },
+  {
+   "title": "4.6. Turli fan sohalarida metodologiyaning o‘ziga xos xususiyatlari",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h143"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h144"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h145"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h146"
+  },
+  {
+   "title": "6.Glossariy",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h147"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h148"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h149"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 11,
+   "anchor": "h150"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 11,
+   "anchor": "h151"
+  },
+  {
+   "title": "9-mavzu. Lingvistik metod va metodologiya",
+   "level": 1,
+   "chapter": 12,
+   "anchor": "h152"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h153"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h154"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h155"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h156"
+  },
+  {
+   "title": "4.1. Til – murakkab ijtimoiy hodisa sifatida",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h157"
+  },
+  {
+   "title": "4.2. Lingvistik metodlarning tasnifi",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h158"
+  },
+  {
+   "title": "4.3. Sinxroniya va diaxroniya",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h159"
+  },
+  {
+   "title": "4.5. Lingvistik tadqiqot bosqichlari",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h160"
+  },
+  {
+   "title": "4.6. Lingvistik metodlarning amaliy ahamiyati",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h161"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h162"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h163"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h164"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h165"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h166"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 12,
+   "anchor": "h167"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 12,
+   "anchor": "h168"
+  },
+  {
+   "title": "10-mavzu. Tilshunoslikdagi asosiy paradigmalar",
+   "level": 1,
+   "chapter": 13,
+   "anchor": "h169"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h170"
+  },
+  {
+   "title": "2.Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h171"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h172"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h173"
+  },
+  {
+   "title": "4.1. Strukturalizm",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h174"
+  },
+  {
+   "title": "4.2. Generativ grammatika",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h175"
+  },
+  {
+   "title": "4.3. Funksional tilshunoslik",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h176"
+  },
+  {
+   "title": "4.4. Pragmalingvistika",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h177"
+  },
+  {
+   "title": "4.5. Sosti (o/a) lingvistika",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h178"
+  },
+  {
+   "title": "4.6. Psixolingvistika",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h179"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h180"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h181"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h182"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h183"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h184"
+  },
+  {
+   "title": "7.4. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 13,
+   "anchor": "h185"
+  },
+  {
+   "title": "9. Xulosa",
+   "level": 2,
+   "chapter": 13,
+   "anchor": "h186"
+  },
+  {
+   "title": "11-mavzu. Qiyosiy-tarixiy tilshunoslik",
+   "level": 1,
+   "chapter": 14,
+   "anchor": "h187"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h188"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h189"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h190"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h191"
+  },
+  {
+   "title": "4.1. Qiyosiy-tarixiy tilshunoslikning kelib chiqishi",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h192"
+  },
+  {
+   "title": "4.2. Til o‘zgarishini o‘rganish",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h193"
+  },
+  {
+   "title": "4.3. Til qiyosi",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h194"
+  },
+  {
+   "title": "4.4. Zamonaviy tilshunoslikda qiyosiy-tarixiy tilshunoslikning o‘rni",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h195"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h196"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h197"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h198"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h199"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h200"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h201"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 14,
+   "anchor": "h202"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 14,
+   "anchor": "h203"
+  },
+  {
+   "title": "12-mavzu. Amaliy tilshunoslik",
+   "level": 1,
+   "chapter": 15,
+   "anchor": "h204"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h205"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h206"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h207"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h208"
+  },
+  {
+   "title": "4.1. Amaliy tilshunoslikning maqsadi",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h209"
+  },
+  {
+   "title": "4.2. Amaliy tilshunoslik usullari",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h210"
+  },
+  {
+   "title": "4.3. Amaliy tilshunoslik istiqbollari",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h211"
+  },
+  {
+   "title": "4.3. Amaliy tilshunoslikning boshqa paradigmalar bilan aloqasi",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h212"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h213"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h214"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h215"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h216"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h217"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h218"
+  },
+  {
+   "title": "7.2.Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 15,
+   "anchor": "h219"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 15,
+   "anchor": "h220"
+  },
+  {
+   "title": "13-mavzu. Sun’iy intellekt va tilshunoslik",
+   "level": 1,
+   "chapter": 16,
+   "anchor": "h221"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h222"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h223"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h224"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h225"
+  },
+  {
+   "title": "4.1. Sun’iy intellekt va avtomatik tarjima",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h226"
+  },
+  {
+   "title": "4.2. Sun’iy intellekt va nutqni transkripsiya qilish",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h227"
+  },
+  {
+   "title": "4.3. Sun’iy intellekt va grammatik tahlil",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h228"
+  },
+  {
+   "title": "4.4. Sun’iy intellekt va korpus tahlili",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h229"
+  },
+  {
+   "title": "4.5. Sun’iy intellekt va sentiment tahlil",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h230"
+  },
+  {
+   "title": "4.6. Sun’iy intellekt va avtomatik lug‘at yaratish",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h231"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h232"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h233"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 16,
+   "anchor": "h234"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h235"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h236"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 16,
+   "anchor": "h237"
+  },
+  {
+   "title": "14-mavzu. Tadqiqotni rasmiylashtirish va natijalarning joriy qilinishi (magistrlik dissertatsiya misolida)",
+   "level": 1,
+   "chapter": 17,
+   "anchor": "h238"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h239"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h240"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h241"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h242"
+  },
+  {
+   "title": "4.1. Tadqiqotning rasmiylashtirilishi",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h243"
+  },
+  {
+   "title": "4.2. Magistrlik dissertatsiyasini tayyorlash",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h244"
+  },
+  {
+   "title": "4.3. Ilmiy natijalarning joriylanishi",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h245"
+  },
+  {
+   "title": "4.4. Jamoatchilik bilan aloqa",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h246"
+  },
+  {
+   "title": "4.5. Tadqiqotning jamiyatga foydasi",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h247"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h248"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h249"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h250"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h251"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h252"
+  },
+  {
+   "title": "7.1. Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h253"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 17,
+   "anchor": "h254"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 17,
+   "anchor": "h255"
+  },
+  {
+   "title": "15-mavzu. Akademik uslub",
+   "level": 1,
+   "chapter": 18,
+   "anchor": "h256"
+  },
+  {
+   "title": "1.Kirish",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h257"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h258"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h259"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h260"
+  },
+  {
+   "title": "4.1. Akademik uslubning mohiyati",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h261"
+  },
+  {
+   "title": "4.2. Akademik uslubning asosiy xususiyatlari",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h262"
+  },
+  {
+   "title": "4.3. Akademik uslubda yozish qoidalari",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h263"
+  },
+  {
+   "title": "4.4. Akademik uslubning ilmiy jamoatchilikda ahamiyati",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h264"
+  },
+  {
+   "title": "4.5. Akademik uslubni o‘zlashtirishning amaliy ahamiyati",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h265"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h266"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h267"
+  },
+  {
+   "title": "5.2. Mavzuni mustahkamlash uchun test topshiriqlari",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h268"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h269"
+  },
+  {
+   "title": "7. Tavsiya etiladigan adabiyotlar",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h270"
+  },
+  {
+   "title": "7.1.Asosiy adabiyotlar",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h271"
+  },
+  {
+   "title": "7.2. Qo‘shimcha adabiyotlar",
+   "level": 3,
+   "chapter": 18,
+   "anchor": "h272"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 18,
+   "anchor": "h273"
+  },
+  {
+   "title": "16-mavzu. Tadqiqot jarayonida tushunish va tushuntirishning ahamiyati",
+   "level": 1,
+   "chapter": 19,
+   "anchor": "h274"
+  },
+  {
+   "title": "1. Kirish",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h275"
+  },
+  {
+   "title": "2. Tayanch tushunchalar",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h276"
+  },
+  {
+   "title": "3. O‘zlashtiriladigan tushunchalar",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h277"
+  },
+  {
+   "title": "4. Asosiy qism",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h278"
+  },
+  {
+   "title": "4.1. Tushunish",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h279"
+  },
+  {
+   "title": "4.2. Tushuntirish",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h280"
+  },
+  {
+   "title": "4.3. Tushunish va tushuntirishning o‘zaro bog‘liqligi",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h281"
+  },
+  {
+   "title": "4.6. Tushunish va tushuntirish axloqi",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h282"
+  },
+  {
+   "title": "5. O‘quv topshiriqlari",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h283"
+  },
+  {
+   "title": "5.1. Savol va vazifalar",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h284"
+  },
+  {
+   "title": "5.2. Test",
+   "level": 3,
+   "chapter": 19,
+   "anchor": "h285"
+  },
+  {
+   "title": "6. Glossariy",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h286"
+  },
+  {
+   "title": "8. Xulosa",
+   "level": 2,
+   "chapter": 19,
+   "anchor": "h287"
+  },
+  {
+   "title": "Ilova[1]“Batareya” olim bo‘lib qolmang",
+   "level": 1,
+   "chapter": 20,
+   "anchor": "h288"
+  },
+  {
+   "title": "Ilmiy darajangiz ilmingiz bilan sizni boqishi ham kerak",
+   "level": 1,
+   "chapter": 21,
+   "anchor": "h289"
+  },
+  {
+   "title": "Ilmiy aqidaparastlik zararlari",
+   "level": 1,
+   "chapter": 22,
+   "anchor": "h290"
+  },
+  {
+   "title": "Ilmiy demagog – soxta olim",
+   "level": 1,
+   "chapter": 23,
+   "anchor": "h291"
+  },
+  {
+   "title": "Ilmingizni farroshga ham tushuntirib bera oling",
+   "level": 1,
+   "chapter": 24,
+   "anchor": "h292"
+  },
+  {
+   "title": "Bir tadqiqot – bir jumla",
+   "level": 1,
+   "chapter": 25,
+   "anchor": "h293"
+  },
+  {
+   "title": "Mahdudlikdan chiqib, ilmiy bag‘rikeng bo‘ling",
+   "level": 1,
+   "chapter": 26,
+   "anchor": "h294"
+  }
+ ]
+}

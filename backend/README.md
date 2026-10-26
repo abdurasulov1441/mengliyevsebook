@@ -86,6 +86,23 @@ docker compose up -d --build
 
 Категории, авторы и контакты для оплаты: `/api/categories/*`, `/api/authors/*`, `/api/references/contact/1`.
 
+## Приложение без сервера (локальный режим)
+
+Сейчас приложение по умолчанию собирается в локальном режиме (`Constants.localMode`). В нём нет входа: сразу открывается библиотека, книги лежат внутри приложения, «покупка» в магазине — демо и разблокирует книгу на устройстве, прогресс чтения тоже хранится на устройстве. Кнопка «Demo ma'lumotlarni tozalash» в аккаунте всё это сбрасывает.
+
+Обновить книги в приложении:
+
+```bash
+cd backend
+npm run convert -- "C:\путь\книга.docx"            # → backend/offline
+npm run app-books -- --paid dissertatsiya-yozish-metodikasi=45000 --skip universal-3-nashr
+cd .. && flutter run
+```
+
+`app-books` копирует книги из `backend/offline` в `assets/local_books` (без book.epub), пишет `catalog.json` и сам прописывает папки в `pubspec.yaml`. Без `--paid` все книги бесплатные; id — это имя папки в `backend/offline`.
+
+Работа через сервер: `flutter run --dart-define=LOCAL_MODE=false --dart-define=API_URL=...`.
+
 ## Приложение Flutter
 
 Читалка встроена в приложение (`assets/reader`) и открывает скачанные книги офлайн через WebView. После изменений в `public/reader` выполните `npm run sync-reader`.
